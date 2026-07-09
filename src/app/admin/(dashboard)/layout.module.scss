@@ -1,19 +1,22 @@
-// src/app/admin/(dashboard)/layout.module.scss
-// FINAL FIX: Full responsive — sidebar on desktop, top-bar + content offset on tablet/mobile.
 @use '../styles/admin' as *;
 
 .shell {
   display:    flex;
   min-height: 100vh;
   background: $bg;
+  position:   relative;
 
+  // Blueprint grid + copper wash
   &::before {
     content:  '';
     position: fixed;
     inset:    0;
-    background:
-      radial-gradient(ellipse 70% 40% at -10% 0%, rgba($orange, 0.04), transparent 55%),
-      radial-gradient(ellipse 60% 50% at 110% 100%, rgba($blue, 0.03), transparent 55%);
+    background-image:
+      linear-gradient(var(--admin-grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--admin-grid-line) 1px, transparent 1px),
+      radial-gradient(ellipse 55% 40% at 0% 0%, $glow-accent, transparent 55%),
+      radial-gradient(ellipse 45% 45% at 100% 100%, $glow-cool, transparent 55%);
+    background-size: 48px 48px, 48px 48px, auto, auto;
     pointer-events: none;
     z-index: 0;
   }
@@ -21,19 +24,22 @@
 
 .main {
   flex:       1;
-  padding:    2rem 2.5rem;
+  padding:    1.75rem 2rem 2.25rem;
   overflow-y: auto;
   position:   relative;
   z-index:    1;
-  min-width:  0; // prevent flex overflow
+  min-width:  0;
 
-  // Tablet: reduce side padding, add top offset for mobile top bar
   @media (max-width: 900px) {
-    padding:    calc(56px + 1.25rem) 1.25rem 1.25rem;
+    padding: calc(56px + 1.1rem) 1.1rem 1.35rem;
+    padding-left:  max(1.1rem, env(safe-area-inset-left));
+    padding-right: max(1.1rem, env(safe-area-inset-right));
+    padding-bottom: max(1.35rem, env(safe-area-inset-bottom));
   }
 
-  // Mobile: tight padding
   @media (max-width: 480px) {
-    padding: calc(56px + 1rem) 1rem 1rem;
+    padding-top: calc(56px + 0.9rem);
+    padding-left:  max(0.9rem, env(safe-area-inset-left));
+    padding-right: max(0.9rem, env(safe-area-inset-right));
   }
 }

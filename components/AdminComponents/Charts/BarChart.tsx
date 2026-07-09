@@ -9,6 +9,7 @@ import {
   LinearScale,
   Tooltip,
 } from 'chart.js';
+import { useAdminChartTheme } from './useAdminChartTheme';
 
 Chart.register(BarController, BarElement, CategoryScale, LinearScale, Tooltip);
 
@@ -23,31 +24,32 @@ interface BarChartProps {
 
 export default function BarChart({
   data,
-  color      = '#7c3aed',
+  color,
   horizontal = false,
   height     = 260,
 }: BarChartProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const chartRef  = useRef<Chart | null>(null);
+  const theme     = useAdminChartTheme();
+  const barColor  = color ?? theme.accent;
 
   useEffect(() => {
     if (!canvasRef.current) return;
     if (chartRef.current) { chartRef.current.destroy(); chartRef.current = null; }
 
-    // Truncate long labels for readability
     const truncate = (s: string, max = 32) =>
       s.length > max ? `…${s.slice(-(max - 1))}` : s;
 
     chartRef.current = new Chart(canvasRef.current, {
-      type: horizontal ? 'bar' : 'bar',
+      type: 'bar',
       data: {
         labels:   data.map(d => truncate(d.label)),
         datasets: [{
-          data:            data.map(d => d.count),
-          backgroundColor: `${color}cc`,
-          hoverBackgroundColor: color,
-          borderRadius:    4,
-          borderSkipped:   false,
+          data:                 data.map(d => d.count),
+          backgroundColor:      `${barColor}cc`,
+          hoverBackgroundColor: barColor,
+          borderRadius:         4,
+          borderSkipped:        false,
         }],
       },
       options: {
@@ -57,11 +59,11 @@ export default function BarChart({
         plugins: {
           legend: { display: false },
           tooltip: {
-            backgroundColor: '#161e16',
-            borderColor:     'rgba(255,255,255,0.1)',
+            backgroundColor: theme.tooltipBg,
+            borderColor:     theme.tooltipBorder,
             borderWidth:     1,
-            titleColor:      '#ffffff',
-            bodyColor:       'rgba(255,255,255,0.6)',
+            titleColor:      theme.tooltipTitle,
+            bodyColor:       theme.tooltipBody,
             padding:         10,
             callbacks: {
               title: ctx => data[ctx[0].dataIndex]?.label ?? ctx[0].label,
@@ -71,12 +73,19 @@ export default function BarChart({
         },
         scales: {
           x: {
-            grid:  { color: horizontal ? 'rgba(255,255,255,0.04)' : 'transparent' },
-            ticks: { color: 'rgba(255,255,255,0.28)', font: { size: 11 }, maxRotation: 35 },
+            grid:  { color: horizontal ? theme.grid : 'transparent' },
+            ticks: {
+              color: theme.tick,
+              font:  { size: 11, family: 'DM Sans, sans-serif' },
+              maxRotation: 35,
+            },
           },
           y: {
-            grid:        { color: horizontal ? 'transparent' : 'rgba(255,255,255,0.04)' },
-            ticks:       { color: 'rgba(255,255,255,0.28)', font: { size: 11 } },
+            grid:  { color: horizontal ? 'transparent' : theme.grid },
+            ticks: {
+              color: theme.tick,
+              font:  { size: 11, family: 'DM Sans, sans-serif' },
+            },
             beginAtZero: true,
           },
         },
@@ -84,7 +93,7 @@ export default function BarChart({
     });
 
     return () => { chartRef.current?.destroy(); chartRef.current = null; };
-  }, [data, color, horizontal]);
+  }, [data, barColor, horizontal, theme]);
 
   return (
     <div style={{ position: 'relative', height }}>

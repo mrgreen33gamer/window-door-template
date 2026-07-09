@@ -1,4 +1,3 @@
-// src/app/admin/(dashboard)/leads/[id]/LeadDetailClient.tsx
 'use client';
 import { useState } from 'react';
 import styles from './detail.module.scss';
@@ -7,11 +6,11 @@ const STATUSES = ['new', 'contacted', 'qualified', 'converted', 'lost'] as const
 type Status = typeof STATUSES[number];
 
 const STATUS_COLORS: Record<Status, string> = {
-  new:       '#b1de00',
+  new:       '#64748b',
   contacted: '#378add',
-  qualified: '#ef9f27',
-  converted: '#5dcaa5',
-  lost:      'rgba(255,255,255,0.3)',
+  qualified: '#d97706',
+  converted: '#0d9488',
+  lost:      '#64748b',
 };
 
 export default function LeadDetailClient({
@@ -21,13 +20,13 @@ export default function LeadDetailClient({
   leadId: string;
   lead:   any;
 }) {
-  const [status, setStatus]     = useState<Status>(lead.status ?? 'new');
-  const [notes, setNotes]       = useState<string>(lead.adminNotes ?? '');
-  const [value, setValue]       = useState<string>(
+  const [status, setStatus] = useState<Status>(lead.status ?? 'new');
+  const [notes, setNotes]   = useState<string>(lead.adminNotes ?? '');
+  const [value, setValue]   = useState<string>(
     lead.confirmedValue != null ? String(lead.confirmedValue) : ''
   );
-  const [saving, setSaving]     = useState(false);
-  const [saved, setSaved]       = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved]   = useState(false);
 
   const patch = async (fields: Record<string, any>) => {
     setSaving(true);
@@ -46,12 +45,15 @@ export default function LeadDetailClient({
 
   return (
     <div className={styles.crmSection}>
-      <p className={styles.sectionTitle}>CRM</p>
+      <p className={styles.sectionTitle}>
+        CRM
+        {saving && <span className={styles.saving}> · Saving…</span>}
+      </p>
 
-      {/* Status */}
       <div className={styles.crmRow}>
-        <label>Status</label>
+        <label htmlFor="crm-status">Status</label>
         <select
+          id="crm-status"
           value={status}
           onChange={e => {
             const s = e.target.value as Status;
@@ -59,20 +61,20 @@ export default function LeadDetailClient({
             patch({ status: s });
           }}
           className={styles.statusSelect}
-          style={{ color: STATUS_COLORS[status], borderColor: `${STATUS_COLORS[status]}35` }}
+          style={{ color: STATUS_COLORS[status], borderColor: `${STATUS_COLORS[status]}55` }}
         >
           {STATUSES.map(s => (
-            <option key={s} value={s} style={{ background: '#111811' }}>
+            <option key={s} value={s}>
               {s.charAt(0).toUpperCase() + s.slice(1)}
             </option>
           ))}
         </select>
       </div>
 
-      {/* Confirmed value */}
       <div className={styles.crmRow}>
-        <label>Confirmed value ($)</label>
+        <label htmlFor="crm-value">Confirmed value ($)</label>
         <input
+          id="crm-value"
           type="number"
           value={value}
           placeholder="0"
@@ -82,9 +84,8 @@ export default function LeadDetailClient({
         />
       </div>
 
-      {/* Notes */}
-      <div style={{ marginTop: '0.75rem' }}>
-        <p className={styles.sectionTitle} style={{ marginBottom: '0' }}>Admin notes</p>
+      <div>
+        <p className={styles.sectionTitle}>Admin notes</p>
         <textarea
           value={notes}
           onChange={e => setNotes(e.target.value)}

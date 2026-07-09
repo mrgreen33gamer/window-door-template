@@ -1,8 +1,8 @@
 // components/AdminComponents/Charts/HourHeatmap.tsx
-// FIX9: Fixed "closest(...) is null" crash — use useRef on the wrapper div
-// instead of DOM traversal. Tooltip position is now calculated correctly.
 'use client';
 import { useState, useRef } from 'react';
+import { useAdminChartTheme } from './useAdminChartTheme';
+import styles from './HourHeatmap.module.scss';
 
 interface HourData { hour: number; count: number; }
 
@@ -15,6 +15,7 @@ const LABEL = (h: number) => {
 export default function HourHeatmap({ data }: { data: HourData[] }) {
   const [tooltip, setTooltip] = useState<{ hour: number; count: number; x: number } | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const theme = useAdminChartTheme();
 
   const maxCount = Math.max(...data.map(d => d.count), 1);
 
@@ -24,18 +25,22 @@ export default function HourHeatmap({ data }: { data: HourData[] }) {
   });
 
   return (
-    <div ref={containerRef} style={{ width: '100%', position: 'relative', userSelect: 'none' }}>
-      {/* Bars */}
-      <div style={{ display: 'flex', alignItems: 'flex-end', gap: '3px', height: '100px' }}>
+    <div ref={containerRef} className={styles.wrap}>
+      <div className={styles.bars}>
         {hours.map(({ hour, count }) => {
           const pct      = count / maxCount;
           const heightPx = Math.max(6, Math.round(pct * 96));
-          const opacity  = count === 0 ? 0.12 : (0.2 + pct * 0.8);
+          const opacity  = count === 0 ? 0.14 : (0.22 + pct * 0.78);
           const isActive = tooltip?.hour === hour;
 
           return (
             <div
               key={hour}
+              className={`${styles.bar} ${isActive ? styles.barActive : ''}`}
+              style={{
+                height:     `${heightPx}px`,
+                background: `rgba(100, 116, 139, ${isActive ? Math.min(opacity + 0.2, 1) : opacity})`,
+              }}
               onMouseEnter={e => {
                 if (!containerRef.current) return;
                 const containerRect = containerRef.current.getBoundingClientRect();
@@ -47,82 +52,47 @@ export default function HourHeatmap({ data }: { data: HourData[] }) {
                 });
               }}
               onMouseLeave={() => setTooltip(null)}
-              style={{
-                flex:         1,
-                height:       `${heightPx}px`,
-                background:   isActive
-                  ? `rgba(177,222,0,${Math.min(opacity + 0.25, 1)})`
-                  : `rgba(177,222,0,${opacity})`,
-                borderRadius: '3px 3px 0 0',
-                cursor:       'pointer',
-                transition:   'height 0.4s ease, background 0.15s ease',
-                minWidth:     0,
-                outline:      isActive ? '1px solid rgba(222, 107, 0, 0.5)' : 'none',
+              onFocus={e => {
+                if (!containerRef.current) return;
+                const containerRect = containerRef.current.getBoundingClientRect();
+                const barRect       = (e.currentTarget as HTMLElement).getBoundingClientRect();
+                setTooltip({
+                  hour,
+                  count,
+                  x: barRect.left - containerRect.left + barRect.width / 2,
+                });
               }}
+              onBlur={() => setTooltip(null)}
+              tabIndex={0}
+              role="img"
+              aria-label={`${LABEL(hour)}: ${count} clicks`}
             />
           );
         })}
       </div>
 
-      {/* Hour labels — every 6 hours */}
-      <div style={{
-        display:    'flex',
-        marginTop:  '6px',
-        fontSize:   '10px',
-        color:      'rgba(255,255,255,0.28)',
-        fontFamily: 'var(--font-poppins)',
-      }}>
+      <div className={styles.labels}>
         {hours.map(({ hour }) => (
-          <div key={hour} style={{ flex: 1, textAlign: 'center', minWidth: 0 }}>
+          <div key={hour} className={styles.labelCell}>
             {hour % 6 === 0 ? LABEL(hour) : ''}
           </div>
         ))}
       </div>
 
-      {/* Floating tooltip */}
       {tooltip && (
-        <div style={{
-          position:      'absolute',
-          bottom:        '116px',
-          left:          `${tooltip.x}px`,
-          transform:     'translateX(-50%)',
-          background:    '#161e16',
-          border:        '1px solid rgba(177,222,0,0.25)',
-          borderRadius:  '8px',
-          padding:       '6px 12px',
-          pointerEvents: 'none',
-          zIndex:        10,
-          whiteSpace:    'nowrap',
-          boxShadow:     '0 4px 16px rgba(0,0,0,0.45)',
-        }}>
-          <div style={{
-            fontFamily:   'var(--font-poppins)',
-            fontSize:     '0.7rem',
-            color:        'rgba(255,255,255,0.45)',
-            marginBottom: '2px',
-          }}>
-            {LABEL(tooltip.hour)}
-          </div>
-          <div style={{
-            fontFamily: 'var(--font-poppins)',
-            fontSize:   '0.9rem',
-            fontWeight: 700,
-            color:      '#7c3aed',
-          }}>
+        <div
+          className={styles.tooltip}
+          style={{
+            left:            `${tooltip.x}px`,
+            background:      theme.tooltipBg,
+            borderColor:     'rgba(100, 116, 139, 0.3)',
+            color:           theme.tooltipTitle,
+          }}
+        >
+          <div className={styles.tooltipHour}>{LABEL(tooltip.hour)}</div>
+          <div className={styles.tooltipCount}>
             {tooltip.count} click{tooltip.count !== 1 ? 's' : ''}
           </div>
-          {/* Arrow */}
-          <div style={{
-            position:    'absolute',
-            bottom:      '-5px',
-            left:        '50%',
-            transform:   'translateX(-50%)',
-            width:       0,
-            height:      0,
-            borderLeft:  '5px solid transparent',
-            borderRight: '5px solid transparent',
-            borderTop:   '5px solid rgba(222, 118, 0, 0.25)',
-          }} />
         </div>
       )}
     </div>

@@ -1,22 +1,10 @@
 // src/app/api/admin/analytics/route.ts
-// FIXED:
-//  - isDevTest leads NOW SHOWN in dashboard (flagged but included) so localhost
-//    testing actually shows data. They appear with a DEV badge.
-//  - Funnel simplified: Sessions → Page Views → CTA Clicks → Leads
-//  - form_open removed from funnel (that event type is retired)
-//  - pageViewsByCity added for Overview map
-//  - leadsByCity enriched with lat/lng for Leads map
+// Range-aware overview metrics. Supports 24h (hourly series) + multi-day windows.
 import { NextRequest, NextResponse } from 'next/server';
 import { MongoDB } from '&/mongodb';
-import { requireAdminSession } from '&/adminAuth';
-
-function getRangeDate(range: string): Date | null {
-  const days: Record<string, number> = { '7d': 7, '14d': 14, '30d': 30, '49d': 49, '90d': 90 };
-  if (!days[range]) return null;
-  const d = new Date();
-  d.setDate(d.getDate() - days[range]);
-  return d;
-}
+import { requireAdminSession, sessionIsDemo } from '&/adminAuth';
+import { fillSeries, getRangeDate, seriesDateFormat, type SeriesPoint } from '&/adminRange';
+import { getDemoAnalytics } from '&/demoAdminData';
 
 const TX_COORDS: Record<string, [number, number]> = {
   'Waco':           [-97.1467, 31.5493],
@@ -71,23 +59,27 @@ export async function GET(req: NextRequest) {
   try {
     const range     = req.nextUrl.searchParams.get('range') ?? '30d';
     const sinceDate = getRangeDate(range);
-    const db        = await MongoDB.getDb();
+    if (!sinceDate) {
+      return NextResponse.json({ error: 'Invalid range. Use 24h, 7d, 14d, 30d, 49d, or 90d.' }, { status: 400 });
+    }
 
-    // FIXED: Include ALL leads (including isDevTest) so localhost testing shows data.
-    // The dashboard shows a DEV badge on test entries.
-    const dateFilter = sinceDate
-      ? { submittedAt: { $gte: sinceDate } }
-      : {};
+    if (sessionIsDemo(session)) {
+      return NextResponse.json(getDemoAnalytics(range));
+    }
 
-    const pvFilter = sinceDate ? { timestamp: { $gte: sinceDate } } : {};
-    const evFilter = sinceDate ? { timestamp: { $gte: sinceDate } } : {};
+    const db         = await MongoDB.getDb();
+    const dateFormat = seriesDateFormat(range);
+
+    const dateFilter = { submittedAt: { $gte: sinceDate } };
+    const pvFilter   = { timestamp:   { $gte: sinceDate } };
+    const evFilter   = { timestamp:   { $gte: sinceDate } };
 
     const [
       totalLeads,
       leadsThisPeriod,
       devLeadsThisPeriod,
       uniqueSessions,
-      leadsByDay,
+      leadsByDayRaw,
       leadsByService,
       leadsByCity,
       topJourneyPaths,
@@ -96,38 +88,33 @@ export async function GET(req: NextRequest) {
       funnelPageViews,
       funnelCtaClicks,
       pageViewsByCity,
+      topPageResult,
+      avgJourneyResult,
     ] = await Promise.all([
-      // Total leads all time (ALL including dev)
       db.collection('Leads').countDocuments({}),
-
-      // Leads this period (ALL)
       db.collection('Leads').countDocuments(dateFilter),
-
-      // How many are dev test this period
       db.collection('Leads').countDocuments({ ...dateFilter, isDevTest: true }),
-
-      // Unique sessions
       db.collection('PageViews').distinct('sessionId', pvFilter).then(ids => ids.filter(Boolean).length),
 
-      // Leads per day
       db.collection('Leads').aggregate([
         { $match: dateFilter },
-        { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: '$submittedAt' } }, count: { $sum: 1 } } },
+        { $group: {
+          _id:   { $dateToString: { format: dateFormat, date: '$submittedAt' } },
+          count: { $sum: 1 },
+        }},
         { $sort: { _id: 1 } },
         { $project: { date: '$_id', count: 1, _id: 0 } },
       ]).toArray(),
 
-      // Leads by service
       db.collection('Leads').aggregate([
         { $match: dateFilter },
         { $unwind: { path: '$services', preserveNullAndEmptyArrays: false } },
         { $group: { _id: '$services', count: { $sum: 1 } } },
         { $sort: { count: -1 } },
         { $limit: 10 },
-        { $project: { service: '$_id', count: 1, _id: 0 } },
+        { $project: { service: '$_id', label: '$_id', count: 1, _id: 0 } },
       ]).toArray(),
 
-      // Leads by city
       db.collection('Leads').aggregate([
         { $match: { ...dateFilter, ipCity: { $nin: ['Unknown', null, ''] } } },
         { $group: { _id: '$ipCity', count: { $sum: 1 } } },
@@ -136,39 +123,42 @@ export async function GET(req: NextRequest) {
         { $project: { city: '$_id', count: 1, _id: 0 } },
       ]).toArray(),
 
-      // Top journey paths (only from non-dev leads with journey data)
       db.collection('Leads').aggregate([
-        { $match: { ...dateFilter, isDevTest: { $ne: true }, journeyPath: { $exists: true, $not: { $size: 0 } } } },
+        { $match: {
+          ...dateFilter,
+          isDevTest: { $ne: true },
+          journeyPath: { $exists: true, $not: { $size: 0 } },
+        }},
         { $group: { _id: '$journeyPath', count: { $sum: 1 } } },
         { $sort: { count: -1 } },
         { $limit: 10 },
         { $project: { path: '$_id', count: 1, _id: 0 } },
       ]).toArray(),
 
-      // Device breakdown
-      db.collection('Leads').aggregate([
-        { $match: dateFilter },
-        { $group: { _id: { $toLower: { $ifNull: ['$deviceType', 'desktop'] } }, count: { $sum: 1 } } },
+      // Device mix from PageViews (traffic), not leads — more accurate for overview
+      db.collection('PageViews').aggregate([
+        { $match: pvFilter },
+        { $group: {
+          _id:   { $toLower: { $ifNull: ['$deviceType', 'desktop'] } },
+          count: { $sum: 1 },
+        }},
         { $project: { device: '$_id', count: 1, _id: 0 } },
       ]).toArray(),
 
-      // Status breakdown (all leads)
+      // Status breakdown for leads in this range (not all-time)
       db.collection('Leads').aggregate([
-        { $match: {} },
+        { $match: dateFilter },
         { $group: { _id: { $ifNull: ['$status', 'new'] }, count: { $sum: 1 } } },
         { $project: { status: '$_id', count: 1, _id: 0 } },
       ]).toArray(),
 
-      // Funnel: page views
       db.collection('PageViews').countDocuments(pvFilter),
 
-      // Funnel: CTA clicks (click + phone_click + email_click)
       db.collection('Events').countDocuments({
         ...evFilter,
         eventType: { $in: ['click', 'phone_click', 'email_click'] },
       }),
 
-      // Page view locations for Overview map
       db.collection('PageViews').aggregate([
         { $match: { ...pvFilter, city: { $nin: ['Unknown', null, ''] } } },
         { $group: { _id: '$city', count: { $sum: 1 } } },
@@ -176,53 +166,61 @@ export async function GET(req: NextRequest) {
         { $limit: 100 },
         { $project: { city: '$_id', count: 1, _id: 0 } },
       ]).toArray(),
+
+      db.collection('Leads').aggregate([
+        { $match: {
+          ...dateFilter,
+          isDevTest: { $ne: true },
+          lastTouchSource: { $exists: true, $ne: null },
+        }},
+        { $group: { _id: '$lastTouchSource', count: { $sum: 1 } } },
+        { $sort: { count: -1 } },
+        { $limit: 1 },
+      ]).toArray(),
+
+      db.collection('Leads').aggregate([
+        { $match: { ...dateFilter, isDevTest: { $ne: true }, journeyLength: { $gt: 0 } } },
+        { $group: { _id: null, avg: { $avg: '$journeyLength' } } },
+      ]).toArray(),
     ]);
 
-    // Top converting page
-    const topPageResult = await db.collection('Leads').aggregate([
-      { $match: { ...dateFilter, isDevTest: { $ne: true }, lastTouchSource: { $exists: true, $ne: null } } },
-      { $group: { _id: '$lastTouchSource', count: { $sum: 1 } } },
-      { $sort: { count: -1 } },
-      { $limit: 1 },
-    ]).toArray();
-
     const topConvertingPage = topPageResult[0]?._id ?? 'N/A';
-
-    const realLeads       = leadsThisPeriod - devLeadsThisPeriod;
-    const conversionRate  = uniqueSessions > 0
+    const realLeads = Math.max(0, leadsThisPeriod - devLeadsThisPeriod);
+    const conversionRate = uniqueSessions > 0
       ? ((realLeads / uniqueSessions) * 100).toFixed(1)
       : '0.0';
-
-    const avgJourneyResult = await db.collection('Leads').aggregate([
-      { $match: { ...dateFilter, isDevTest: { $ne: true }, journeyLength: { $gt: 0 } } },
-      { $group: { _id: null, avg: { $avg: '$journeyLength' } } },
-    ]).toArray();
-
     const avgJourneyLength = avgJourneyResult[0]?.avg?.toFixed(1) ?? '0';
 
-    // Enrich with coords
-    const leadsByCityWithCoords = (leadsByCity as any[]).map(item => {
-      const coords = getCoordsForCity(item.city);
-      return { ...item, lng: coords?.[0] ?? null, lat: coords?.[1] ?? null };
-    }).filter(item => item.lat && item.lng);
+    const leadsByDay = fillSeries(range, sinceDate, leadsByDayRaw as SeriesPoint[]);
 
-    const pageViewsByCityWithCoords = (pageViewsByCity as any[]).map(item => {
-      const coords = getCoordsForCity(item.city);
-      return { ...item, lng: coords?.[0] ?? null, lat: coords?.[1] ?? null };
-    }).filter(item => item.lat && item.lng);
+    const leadsByCityWithCoords = (leadsByCity as any[])
+      .map(item => {
+        const coords = getCoordsForCity(item.city);
+        return { ...item, lng: coords?.[0] ?? null, lat: coords?.[1] ?? null };
+      })
+      .filter(item => item.lat && item.lng);
+
+    const pageViewsByCityWithCoords = (pageViewsByCity as any[])
+      .map(item => {
+        const coords = getCoordsForCity(item.city);
+        return { ...item, lng: coords?.[0] ?? null, lat: coords?.[1] ?? null };
+      })
+      .filter(item => item.lat && item.lng);
 
     return NextResponse.json({
+      range,
+      since: sinceDate.toISOString(),
       totalLeads,
       leadsThisPeriod,
       devLeadsThisPeriod,
       uniqueSessions,
-      conversionRate:    `${conversionRate}%`,
+      conversionRate: `${conversionRate}%`,
       avgJourneyLength,
       topConvertingPage,
       leadsByDay,
       leadsByService,
-      leadsByCity:       leadsByCityWithCoords,
-      pageViewsByCity:   pageViewsByCityWithCoords,
+      leadsByCity:     leadsByCityWithCoords,
+      pageViewsByCity: pageViewsByCityWithCoords,
       topJourneyPaths,
       deviceBreakdown,
       statusBreakdown,

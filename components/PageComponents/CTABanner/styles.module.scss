@@ -9,6 +9,26 @@
   border-bottom: 1px solid rgba($orange, 0.15);
 }
 
+.photoBg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.photoBgImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(0.75) brightness(0.45);
+}
+
+.photoScrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, rgba($obsidian, 0.92) 0%, rgba($obsidian, 0.78) 55%, rgba($obsidian, 0.55) 100%);
+}
+
 // ── GRID LINES BG ─────────────────────────────────────────────────────────────
 .grid {
   position: absolute; inset: 0; pointer-events: none; z-index: 0;
@@ -17,11 +37,11 @@
     radial-gradient(ellipse 70% 60% at 50% 50%, rgba($orange, 0.07) 0%, transparent 70%);
 }
 
-// ── ROTATING SNOWFLAKE ────────────────────────────────────────────────────────
-.bgFlake {
+// ── TRADE MOTIF (bolt) ────────────────────────────────────────────────────────
+.bgMotif {
   position: absolute; top: 10%; left: 50%;
   transform: translate(-50%, -50%);
-  color: rgba($orange, 0.04);
+  color: rgba($orange, 0.06);
   pointer-events: none; z-index: 0;
 }
 

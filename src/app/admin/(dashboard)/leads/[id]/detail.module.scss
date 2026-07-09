@@ -1,6 +1,4 @@
-// src/app/admin/(dashboard)/leads/[id]/detail.module.scss
 @use '../../../styles/admin' as *;
-@use 'sass:color';
 
 .page {
   display:        flex;
@@ -12,10 +10,12 @@
 .backLink {
   display:         inline-flex;
   align-items:     center;
-  font-family:     $font-sans;
+  font-family:     $font-head;
   font-size:       0.82rem;
+  font-weight:     500;
   color:           $text-muted;
   text-decoration: none;
+  min-height:      40px;
   transition:      color 0.15s ease;
 
   &:hover { color: $orange; }
@@ -28,25 +28,14 @@
   gap:             1rem;
   flex-wrap:       wrap;
 
-  h1 {
-    font-family:    $font-title;
-    font-size:      2.2rem;
-    color:          $text-primary;
-    margin:         0;
-    letter-spacing: 0.04em;
-  }
-
-  p {
-    font-family: $font-sans;
-    font-size:   0.82rem;
-    color:       $text-muted;
-    margin:      0.25rem 0 0;
-  }
+  h1 { @include page-title; }
+  p  { @include page-subtitle; }
 }
 
 .devBadge {
-  color: #ef9f27;
-  font-weight: 600;
+  color:       $status-warn;
+  font-weight: 700;
+  font-family: $font-head;
 }
 
 .grid {
@@ -66,16 +55,16 @@
 .cardTitle {
   @include section-title;
   margin-bottom: 0.875rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  display:       flex;
+  align-items:   center;
+  gap:           0.5rem;
 }
 
 .saving {
-  font-family: $font-sans;
-  font-size:   0.72rem;
-  color:       $orange;
-  font-weight: 400;
+  font-family:    $font-head;
+  font-size:      0.72rem;
+  color:          $orange;
+  font-weight:    500;
   letter-spacing: 0;
   text-transform: none;
 }
@@ -88,19 +77,20 @@
   font-size:             0.82rem;
 
   dt {
-    color:       $text-muted;
-    font-weight: 600;
-    font-size:   0.73rem;
+    color:          $text-muted;
+    font-weight:    600;
+    font-family:    $font-head;
+    font-size:      0.73rem;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    white-space: nowrap;
-    padding-top: 2px;
+    white-space:    nowrap;
+    padding-top:    2px;
   }
 
   dd {
-    color:    $text-secondary;
-    margin:   0;
-    overflow: hidden;
+    color:         $text-secondary;
+    margin:        0;
+    overflow:      hidden;
     text-overflow: ellipsis;
 
     a {
@@ -112,34 +102,34 @@
 }
 
 .message {
-  margin-top: 1rem;
+  margin-top:  1rem;
   padding-top: 0.875rem;
-  border-top: 1px solid $border;
+  border-top:  1px solid $border;
 }
 
 .messageLabel {
-  font-family:    $font-sans;
+  font-family:    $font-head;
   font-size:      0.7rem;
   font-weight:    600;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color:          $text-muted;
   margin:         0 0 0.35rem;
 }
 
 .messageText {
-  font-family:  $font-sans;
-  font-size:    0.85rem;
-  color:        $text-secondary;
-  line-height:  1.65;
-  margin:       0;
-  white-space:  pre-wrap;
+  font-family: $font-sans;
+  font-size:   0.85rem;
+  color:       $text-secondary;
+  line-height: 1.65;
+  margin:      0;
+  white-space: pre-wrap;
 }
 
 .journeyPath {
-  display:   flex;
-  flex-wrap: wrap;
-  gap:       4px;
+  display:    flex;
+  flex-wrap:  wrap;
+  gap:        4px;
   margin-top: 0.5rem;
 }
 
@@ -147,7 +137,7 @@
   font-family:   $font-sans;
   font-size:     0.75rem;
   color:         $text-secondary;
-  background:    rgba(255,255,255,0.04);
+  background:    $input-bg;
   border:        1px solid $border;
   border-radius: $radius-sm;
   padding:       2px 6px;
@@ -159,25 +149,13 @@
 }
 
 .notesArea {
-  width:         100%;
-  box-sizing:    border-box;
-  padding:       0.75rem 0.875rem;
-  background:    rgba(255,255,255,0.03);
-  border:        1px solid $border2;
-  border-radius: $radius-md;
-  font-family:   $font-sans;
-  font-size:     0.85rem;
-  color:         $text-primary;
-  resize:        vertical;
-  min-height:    100px;
-  transition:    border-color 0.15s ease;
-
-  &::placeholder { color: $text-muted; }
-  &:focus { outline: none; border-color: rgba($orange, 0.4); }
+  @include input-field;
+  resize:      vertical;
+  min-height:  100px;
 }
 
 .valueLabel {
-  font-family:    $font-sans;
+  font-family:    $font-head;
   font-size:      0.78rem;
   font-weight:    600;
   letter-spacing: 0.08em;
@@ -187,19 +165,60 @@
 }
 
 .valueInput {
-  width:         120px;
-  padding:       0.5rem 0.75rem;
-  background:    rgba(255,255,255,0.04);
-  border:        1px solid $border2;
-  border-radius: $radius-md;
-  font-family:   $font-sans;
-  font-size:     0.9rem;
-  color:         $text-primary;
-  transition:    border-color 0.15s ease;
+  @include input-field;
+  width: 140px;
 
-  &:focus { outline: none; border-color: rgba($orange, 0.4); }
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+}
+
+.crmSection {
+  margin-top: 0.25rem;
+}
+
+.sectionTitle {
+  @include section-title;
+  margin-bottom: 0.75rem;
+}
+
+.crmRow {
+  display:     flex;
+  align-items: center;
+  gap:         0.75rem;
+  margin-bottom: 0.75rem;
+  flex-wrap:   wrap;
+
+  label {
+    font-family:    $font-head;
+    font-size:      0.72rem;
+    font-weight:    600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color:          $text-muted;
+    min-width:      110px;
+  }
+}
+
+.statusSelect {
+  @include input-field;
+  width: auto;
+  min-width: 160px;
+  cursor: pointer;
+}
+
+.notesField {
+  @include input-field;
+  resize: vertical;
+  min-height: 100px;
+  margin-top: 0.5rem;
+}
+
+.savedMsg {
+  font-family: $font-head;
+  font-size:   0.8rem;
+  font-weight: 600;
+  color:       $status-converted;
+  margin:      0.5rem 0 0;
 }
 
 .loading,

@@ -11,18 +11,21 @@ export interface ServiceCard {
   body:     string;
   link:     string;
   tag?:     string;
+  image?:   string;
 }
 
 interface ServiceCardComponentProps {
   cards:     ServiceCard[];
   heading?:  string;
   subheading?: string;
+  eyebrow?:  string;
 }
 
 export default function ServiceCardComponent({
   cards,
-  heading    = 'Everything Your Home Needs for Windows & Doors',
-  subheading = 'From full window replacements to entry doors and energy upgrades, ClearView handles it all — on time, on price.',
+  heading    = 'Our Services',
+  subheading = 'Professional ClearView service — flat-rate pricing, done right.',
+  eyebrow    = 'Services',
 }: ServiceCardComponentProps) {
   return (
     <section className={styles.section} aria-label="Our services">
@@ -37,7 +40,7 @@ export default function ServiceCardComponent({
         >
           <span className={styles.eyebrow}>
             <span className={styles.eyebrowDot} />
-            Window & Door Services
+            {eyebrow}
           </span>
           <h2 className={styles.heading}>{heading}</h2>
           <p className={styles.subheading}>{subheading}</p>
@@ -47,7 +50,7 @@ export default function ServiceCardComponent({
           {cards.map((card, i) => (
             <motion.div
               key={card.title}
-              className={styles.card}
+              className={`${styles.card} ${card.image ? styles.cardWithImage : ''}`}
               initial={{ opacity: 0, y: 22 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
@@ -55,9 +58,18 @@ export default function ServiceCardComponent({
             >
               {card.tag && <span className={styles.cardTag}>{card.tag}</span>}
 
-              <div className={styles.cardIcon}>
-                <FontAwesomeIcon icon={card.icon} />
-              </div>
+              {card.image ? (
+                <div className={styles.cardMedia}>
+                  <img src={card.image} alt="" className={styles.cardImg} />
+                  <div className={styles.cardIconOverlay}>
+                    <FontAwesomeIcon icon={card.icon} />
+                  </div>
+                </div>
+              ) : (
+                <div className={styles.cardIcon}>
+                  <FontAwesomeIcon icon={card.icon} />
+                </div>
+              )}
 
               <div className={styles.cardBody}>
                 <h3 className={styles.cardTitle}>{card.title}</h3>

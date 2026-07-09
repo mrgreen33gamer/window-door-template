@@ -1,6 +1,4 @@
-// src/app/admin/(dashboard)/leads/page.tsx
-// FIX11: Status column shows a static colored pill + gear ⚙ icon to the right.
-// Clicking ⚙ opens LeadSettingsModal for status changes with full confirmation flow.
+// Leads CRM list — live data, theme-aware UI.
 'use client';
 import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
@@ -41,14 +39,22 @@ interface LeadsData {
 }
 
 const STATUSES = ['all', 'new', 'contacted', 'qualified', 'converted', 'lost'];
+const RANGES = ['24h', '7d', '30d', '90d'] as const;
+type Range = typeof RANGES[number];
+const RANGE_LABEL: Record<Range, string> = {
+  '24h': '24h', '7d': '7d', '30d': '30d', '90d': '90d',
+};
 const STATUS_COLORS: Record<string, string> = {
-  new: '#7c3aed', contacted: '#378add', qualified: '#27ef27',
-  converted: '#5dcaa5', lost: 'rgba(255,255,255,0.28)',
+  new: '#64748b',
+  contacted: '#378add',
+  qualified: '#d97706',
+  converted: '#0d9488',
+  lost: 'var(--admin-text-muted)',
 };
 
-async function fetchLeads(page: number, search: string, status: string): Promise<LeadsData | null> {
+async function fetchLeads(page: number, search: string, status: string, range: Range): Promise<LeadsData | null> {
   try {
-    const params = new URLSearchParams({ page: String(page), limit: '20' });
+    const params = new URLSearchParams({ page: String(page), limit: '20', range });
     if (search) params.set('search', search);
     if (status && status !== 'all') params.set('status', status);
     const res = await fetch(`/api/admin/leads?${params}`, { cache: 'no-store' });
@@ -62,28 +68,28 @@ export default function AdminLeadsPage() {
   const [search,  setSearch]  = useState('');
   const [query,   setQuery]   = useState('');
   const [status,  setStatus]  = useState('all');
+  const [range,   setRange]   = useState<Range>('30d');
   const [data,    setData]    = useState<LeadsData | null>(null);
   const [loading, setLoading] = useState(true);
-  // Track optimistic status updates so UI reflects changes instantly
   const [localStatuses, setLocalStatuses] = useState<Record<string, string>>({});
   const prevDataRef = useRef<string>('');
 
   const load = useCallback(async () => {
-    const result = await fetchLeads(page, query, status);
+    const result = await fetchLeads(page, query, status, range);
     if (result) {
       const serialized = JSON.stringify(result);
       if (serialized !== prevDataRef.current) {
         prevDataRef.current = serialized;
         setData(result);
-        // Reset local overrides when fresh data arrives
         setLocalStatuses({});
       }
     }
     setLoading(false);
-  }, [page, query, status]);
+  }, [page, query, status, range]);
 
   useEffect(() => { setLoading(true); prevDataRef.current = ''; load(); }, [load]);
   useEffect(() => { const t = setInterval(load, 30_000); return () => clearInterval(t); }, [load]);
+  useEffect(() => { setPage(1); }, [range]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -92,7 +98,6 @@ export default function AdminLeadsPage() {
   };
 
   const handleStatusChange = (leadId: string, newStatus: string) => {
-    // Optimistically update the pill without waiting for a re-fetch
     setLocalStatuses(prev => ({ ...prev, [leadId]: newStatus }));
   };
 
@@ -107,18 +112,36 @@ export default function AdminLeadsPage() {
 
   return (
     <div className={styles.page}>
-      {/* Header */}
       <div className={styles.header}>
         <div>
-          <h1>Leads</h1>
+          <h1>Lead Pipeline</h1>
           <p>
             {totalLeads} total
             {devLeadsCount > 0 && (
-              <span style={{ color: '#ef9f27' }}> · {devLeadsCount} dev/test</span>
+              <span className={styles.devNote}> · {devLeadsCount} dev/test</span>
             )}
           </p>
         </div>
         <div className={styles.statsRow}>
+          <div style={{ display: 'flex', gap: 0, border: '1px solid var(--admin-border-2)', overflow: 'hidden' }}>
+            {RANGES.map(r => (
+              <button
+                key={r}
+                type="button"
+                onClick={() => setRange(r)}
+                className={styles.searchBtn}
+                style={{
+                  borderRadius: 0,
+                  border: 'none',
+                  borderRight: '1px solid var(--admin-border-2)',
+                  background: r === range ? '#64748b' : 'transparent',
+                  color: r === range ? '#fff' : undefined,
+                }}
+              >
+                {RANGE_LABEL[r]}
+              </button>
+            ))}
+          </div>
           {[
             { val: String(totalLeads),    label: 'Total'    },
             { val: String(realLeads),     label: 'Real'     },
@@ -132,18 +155,19 @@ export default function AdminLeadsPage() {
         </div>
       </div>
 
-      {/* Charts */}
       <div className={styles.chartRow}>
         <div className={styles.chartCard}>
-          <p className={styles.chartTitle}>Leads Per Day</p>
+          <p className={styles.chartTitle}>
+            {range === '24h' ? 'Leads Per Hour' : 'Leads Per Day'} — {RANGE_LABEL[range]}
+          </p>
           {tableData.leadsPerDay?.length ? (
-            <LineChart data={tableData.leadsPerDay} label="Leads" color="#7c3aed" height={200} />
+            <LineChart data={tableData.leadsPerDay} label="Leads" color="#64748b" height={200} />
           ) : (
             <p className={styles.empty}>{loading ? 'Loading…' : 'No leads yet.'}</p>
           )}
         </div>
         <div className={styles.chartCard}>
-          <p className={styles.chartTitle}>Leads by Service</p>
+          <p className={styles.chartTitle}>Leads by Service — {RANGE_LABEL[range]}</p>
           {tableData.leadsByService?.length ? (
             <DoughnutChart
               data={tableData.leadsByService.map(d => ({ label: d.label, count: d.count }))}
@@ -156,31 +180,18 @@ export default function AdminLeadsPage() {
         </div>
       </div>
 
-      {/* Map */}
       <div className={styles.mapCard}>
-        <p className={styles.cardTitle}>Lead Geography</p>
-        <p style={{
-          fontFamily: 'var(--font-poppins)',
-          fontSize:   '0.73rem',
-          color:      'rgba(255,255,255,0.28)',
-          margin:     '0 0 0.75rem',
-        }}>
-          Where leads are submitting from. Size = volume.
-        </p>
+        <p className={styles.cardTitle}>Lead Geography — {RANGE_LABEL[range]}</p>
+        <p className={styles.cardHint}>Where leads submitted from in this window. Size = volume.</p>
         {tableData.leadsByCity?.length ? (
           <LeadMap data={tableData.leadsByCity} height={320} />
         ) : (
-          <div style={{
-            height: 320, display: 'flex', alignItems: 'center',
-            justifyContent: 'center', background: 'rgba(255,255,255,0.02)',
-            borderRadius: 8, border: '1px solid rgba(255,255,255,0.06)',
-          }}>
+          <div className={styles.mapPlaceholder}>
             <p className={styles.empty}>{loading ? 'Loading map…' : 'No location data yet.'}</p>
           </div>
         )}
       </div>
 
-      {/* Filters */}
       <div className={styles.filters}>
         <form className={styles.searchForm} onSubmit={handleSearch}>
           <input
@@ -188,11 +199,15 @@ export default function AdminLeadsPage() {
             placeholder="Search name, email, city…"
             value={search}
             onChange={e => setSearch(e.target.value)}
+            aria-label="Search leads"
           />
           <button type="submit" className={styles.searchBtn}>Search</button>
           {query && (
-            <button type="button" className={styles.clearBtn}
-              onClick={() => { setSearch(''); setQuery(''); setPage(1); }}>
+            <button
+              type="button"
+              className={styles.clearBtn}
+              onClick={() => { setSearch(''); setQuery(''); setPage(1); }}
+            >
               Clear
             </button>
           )}
@@ -202,11 +217,12 @@ export default function AdminLeadsPage() {
           {STATUSES.map(s => (
             <button
               key={s}
-              className={`${styles.statusBtn} ${s === status ? styles.statusActive : ''}`}
+              type="button"
+              className={`${styles.statusBtn} ${s === status ? styles.statusActive : ''} ${s === status ? styles.active : ''}`}
               onClick={() => { setStatus(s); setPage(1); }}
               style={s === status && s !== 'all'
-                ? { color: STATUS_COLORS[s], borderColor: `${STATUS_COLORS[s]}55` }
-                : {}}
+                ? { color: STATUS_COLORS[s], borderColor: `${STATUS_COLORS[s]}88` }
+                : undefined}
             >
               {s === 'all' ? 'All' : s.charAt(0).toUpperCase() + s.slice(1)}
             </button>
@@ -214,7 +230,6 @@ export default function AdminLeadsPage() {
         </div>
       </div>
 
-      {/* Table */}
       <div className={styles.tableCard}>
         {loading ? (
           <div className={styles.emptyState}>
@@ -241,8 +256,7 @@ export default function AdminLeadsPage() {
                     <th className={styles.hideOnMobile}>Location</th>
                     <th>Status</th>
                     <th className={styles.hideOnTablet}>Date</th>
-                    {/* Settings column — no header text, aligned right */}
-                    <th style={{ width: '40px' }} />
+                    <th className={styles.settingsCell} aria-label="Settings" />
                   </tr>
                 </thead>
                 <tbody>
@@ -250,7 +264,6 @@ export default function AdminLeadsPage() {
                     const service = lead.services?.length
                       ? lead.services[0]
                       : (lead.serviceType ?? '—');
-                    // Use optimistic local status if we just changed it
                     const displayStatus = localStatuses[lead._id] ?? lead.status;
 
                     return (
@@ -258,44 +271,29 @@ export default function AdminLeadsPage() {
                         <td>
                           <Link href={`/admin/leads/${lead._id}`} className={styles.nameCell}>
                             {lead.name}
-                            {lead.isDevTest && (
-                              <span style={{
-                                color: '#ef9f27', fontSize: '0.65rem',
-                                marginLeft: '0.35rem', fontWeight: 600,
-                              }}>DEV</span>
-                            )}
+                            {lead.isDevTest && <span className="adminDevBadge">DEV</span>}
                           </Link>
                         </td>
-
                         <td className={`${styles.emailCell} ${styles.hideOnMobile}`}>
                           {lead.email}
                         </td>
-
-                        <td className={styles.hideOnTablet}
-                            style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.55)' }}>
+                        <td className={`${styles.serviceCell} ${styles.hideOnTablet}`}>
                           {service}
                         </td>
-
-                        <td className={styles.hideOnMobile}
-                            style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.45)' }}>
+                        <td className={`${styles.locationCell} ${styles.hideOnMobile}`}>
                           {lead.ipCity && lead.ipCity !== 'Unknown'
                             ? lead.ipCity
                             : (lead.cityName ?? '—')}
                         </td>
-
-                        {/* Status pill — read-only display */}
-                        <td style={{ whiteSpace: 'nowrap' }}>
+                        <td>
                           <LeadStatusTag status={displayStatus} />
                         </td>
-
                         <td className={`${styles.dateCell} ${styles.hideOnTablet}`}>
                           {new Date(lead.submittedAt).toLocaleDateString('en-US', {
                             month: 'short', day: 'numeric', year: '2-digit',
                           })}
                         </td>
-
-                        {/* Gear settings icon — far right */}
-                        <td style={{ textAlign: 'right', paddingRight: '0.875rem' }}>
+                        <td className={styles.settingsCell}>
                           <LeadSettingsModal
                             leadId={lead._id}
                             leadName={lead.name}
@@ -313,13 +311,25 @@ export default function AdminLeadsPage() {
 
             {tableData.pages > 1 && (
               <div className={styles.pagination}>
-                <button className={styles.pageBtn} disabled={page <= 1}
-                  onClick={() => setPage(p => p - 1)}>← Prev</button>
+                <button
+                  type="button"
+                  className={styles.pageBtn}
+                  disabled={page <= 1}
+                  onClick={() => setPage(p => p - 1)}
+                >
+                  ← Prev
+                </button>
                 <span className={styles.pageInfo}>
                   Page {tableData.page} of {tableData.pages} ({tableData.total.toLocaleString()} total)
                 </span>
-                <button className={styles.pageBtn} disabled={page >= tableData.pages}
-                  onClick={() => setPage(p => p + 1)}>Next →</button>
+                <button
+                  type="button"
+                  className={styles.pageBtn}
+                  disabled={page >= tableData.pages}
+                  onClick={() => setPage(p => p + 1)}
+                >
+                  Next →
+                </button>
               </div>
             )}
           </>

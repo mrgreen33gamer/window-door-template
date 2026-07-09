@@ -1,0 +1,73 @@
+@use '../../../src/app/admin/styles/admin' as *;
+
+.wrap {
+  width:    100%;
+  position: relative;
+  user-select: none;
+}
+
+.bars {
+  display:     flex;
+  align-items: flex-end;
+  gap:         3px;
+  height:      100px;
+}
+
+.bar {
+  flex:         1;
+  min-width:    0;
+  border-radius: 3px 3px 0 0;
+  cursor:       pointer;
+  transition:   height 0.4s ease, background 0.15s ease, outline 0.15s ease;
+  outline:      none;
+
+  &:focus-visible {
+    outline: 2px solid rgba($orange, 0.55);
+    outline-offset: 1px;
+  }
+}
+
+.barActive {
+  outline: 1px solid rgba($orange, 0.5);
+}
+
+.labels {
+  display:     flex;
+  margin-top:  6px;
+  font-size:   10px;
+  color:       $text-muted;
+  font-family: $font-head;
+}
+
+.labelCell {
+  flex:       1;
+  text-align: center;
+  min-width:  0;
+}
+
+.tooltip {
+  position:      absolute;
+  bottom:        116px;
+  transform:     translateX(-50%);
+  border:        1px solid;
+  border-radius: 8px;
+  padding:       6px 12px;
+  pointer-events: none;
+  z-index:       10;
+  white-space:   nowrap;
+  box-shadow:    $shadow;
+}
+
+.tooltipHour {
+  font-family:   $font-head;
+  font-size:     0.7rem;
+  color:         $text-muted;
+  margin-bottom: 2px;
+}
+
+.tooltipCount {
+  font-family: $font-head;
+  font-size:   0.9rem;
+  font-weight: 700;
+  color:       $orange;
+}

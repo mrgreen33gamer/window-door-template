@@ -1,17 +1,16 @@
 // src/app/admin/login/page.tsx
-// FIXED:
-//  1. Shows setup form only if no admin exists (checked via /api/admin/setup GET)
-//  2. Redirects to /admin if already authenticated
-//  3. Session-expiry redirect: middleware handles this, but login page double-checks
 'use client';
 import { useState, useEffect } from 'react';
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { useAdminTheme } from '../AdminThemeProvider';
+import { DEMO_ADMIN_EMAIL, DEMO_ADMIN_PASSWORD } from '&/demoAuth';
 import styles from './styles.module.scss';
 
 export default function AdminLoginPage() {
   const { data: session, status } = useSession();
-  const router  = useRouter();
+  const router = useRouter();
+  const { theme, toggleTheme } = useAdminTheme();
 
   const [setupComplete, setSetupComplete] = useState<boolean | null>(null);
   const [name,     setName]     = useState('');
@@ -20,19 +19,17 @@ export default function AdminLoginPage() {
   const [loading,  setLoading]  = useState(false);
   const [error,    setError]    = useState('');
 
-  // If already authenticated, redirect to dashboard immediately
   useEffect(() => {
     if (status === 'authenticated') {
       router.replace('/admin');
     }
   }, [status, router]);
 
-  // Check if admin account exists
   useEffect(() => {
     fetch('/api/admin/setup')
       .then(r => r.json())
       .then(data => setSetupComplete(data.setupComplete))
-      .catch(() => setSetupComplete(true)); // fallback: assume setup done, show login
+      .catch(() => setSetupComplete(true));
   }, []);
 
   const handleSetup = async (e: React.FormEvent) => {
@@ -56,7 +53,6 @@ export default function AdminLoginPage() {
       const data = await res.json();
       if (!res.ok) { setError(data.error ?? 'Setup failed.'); setLoading(false); return; }
 
-      // Auto-login after setup
       const loginResult = await signIn('credentials', {
         redirect: false,
         email: email.trim(),
@@ -101,12 +97,11 @@ export default function AdminLoginPage() {
     }
   };
 
-  // Loading state while session status resolves or setup check is in flight
   if (status === 'loading' || setupComplete === null) {
     return (
       <div className={styles.page}>
         <div className={styles.card}>
-          <div className={styles.loading}>
+          <div className={styles.loading} aria-label="Loading">
             <span className={styles.dot} />
             <span className={styles.dot} />
             <span className={styles.dot} />
@@ -116,7 +111,6 @@ export default function AdminLoginPage() {
     );
   }
 
-  // Already authenticated — show brief redirect message
   if (status === 'authenticated') {
     return (
       <div className={styles.page}>
@@ -131,17 +125,60 @@ export default function AdminLoginPage() {
 
   return (
     <div className={styles.page}>
+      <button
+        type="button"
+        className={styles.themeFloat}
+        onClick={toggleTheme}
+        aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+      >
+        {theme === 'dark' ? '☀ Light' : '☾ Dark'}
+      </button>
+
       <div className={styles.card}>
         <div className={styles.brand}>
-          <span className={styles.eyebrow}>ClearView Windows & Doors</span>
-          <h1 className={styles.title}>Admin</h1>
+          <span className={styles.eyebrow}>window door</span>
+          <h1 className={styles.title}>Ops Login</h1>
+          <p className={styles.subtitle}>
+            {isSetup ? 'Create the sole admin account for this site' : 'Sign in to the live command board'}
+          </p>
         </div>
 
         {isSetup && (
-          <p className={styles.setupBadge}>⚡ First-time setup — create your admin account</p>
+          <p className={styles.setupBadge}>First-time setup — create your admin account</p>
         )}
 
-        {error && <p className={styles.error}>{error}</p>}
+        {/* Template demo credentials — sample data only, never real analytics */}
+        <div className={styles.demoBox}>
+          <p className={styles.demoTitle}>Template demo login</p>
+          <p className={styles.demoHint}>
+            Explore the full dashboard with sample data (not live site traffic).
+          </p>
+          <div className={styles.demoCreds}>
+            <div>
+              <span className={styles.demoKey}>Email</span>
+              <code className={styles.demoVal}>{DEMO_ADMIN_EMAIL}</code>
+            </div>
+            <div>
+              <span className={styles.demoKey}>Password</span>
+              <code className={styles.demoVal}>{DEMO_ADMIN_PASSWORD}</code>
+            </div>
+          </div>
+          {!isSetup && (
+            <button
+              type="button"
+              className={styles.demoFill}
+              onClick={() => {
+                setEmail(DEMO_ADMIN_EMAIL);
+                setPassword(DEMO_ADMIN_PASSWORD);
+                setError('');
+              }}
+            >
+              Fill demo credentials
+            </button>
+          )}
+        </div>
+
+        {error && <p className={styles.error} role="alert">{error}</p>}
 
         <form onSubmit={isSetup ? handleSetup : handleLogin} className={styles.form} noValidate>
           {isSetup && (
@@ -153,7 +190,7 @@ export default function AdminLoginPage() {
                 type="text"
                 value={name}
                 onChange={e => setName(e.target.value)}
-                placeholder="Joshua Feliciano"
+                placeholder="Your name"
                 autoComplete="name"
                 disabled={loading}
               />
@@ -168,7 +205,7 @@ export default function AdminLoginPage() {
               type="email"
               value={email}
               onChange={e => setEmail(e.target.value)}
-              placeholder="admin@clearviewwindowsdoors.com"
+              placeholder="you@company.com"
               autoComplete="email"
               disabled={loading}
             />
@@ -195,8 +232,8 @@ export default function AdminLoginPage() {
 
         <p className={styles.footer}>
           {isSetup
-            ? 'This form only appears once. After setup it will show the login form.'
-            : 'Authorized personnel only.'}
+            ? 'This form only appears once. After setup it shows the login form.'
+            : 'Authorized personnel only · Live site analytics'}
         </p>
       </div>
     </div>

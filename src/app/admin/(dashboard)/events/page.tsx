@@ -1,18 +1,11 @@
-// src/app/admin/(dashboard)/events/page.tsx
-// FIX8:
-//  - Top clicked elements table now shows "Component" column (section field)
-//  - Refresh flicker fix preserved (prevDataRef)
-//  - HourHeatmap now gets proper interactive hover via the updated component
-// FIX9:
-//  - Added 'form_submit' to TYPE_LABELS so it renders correctly in the doughnut
-//  - Added "Form Submits" stat card to the header row
+// Events — CTA clicks, phone/email, form submits.
 'use client';
 import { useState, useEffect, useCallback, useRef } from 'react';
 import styles from './events.module.scss';
 import HourHeatmap   from '#/AdminComponents/Charts/HourHeatmap';
 import DoughnutChart from '#/AdminComponents/Charts/DoughnutChart';
 
-const RANGES = ['7d', '30d', '90d'] as const;
+const RANGES = ['24h', '7d', '30d', '90d'] as const;
 type Range = typeof RANGES[number];
 
 const TYPE_LABELS: Record<string, string> = {
@@ -45,7 +38,6 @@ async function fetchEvents(range: Range): Promise<EventsData | null> {
   } catch { return null; }
 }
 
-// Pretty-print section names
 function fmtSection(s: string): string {
   if (!s || s === 'Unknown') return '—';
   return s
@@ -54,7 +46,6 @@ function fmtSection(s: string): string {
     .trim();
 }
 
-// Shorten page paths for display
 function fmtPage(p: string): string {
   if (!p) return '—';
   if (p.length <= 36) return p;
@@ -65,10 +56,12 @@ export default function AdminEventsPage() {
   const [range,       setRange]       = useState<Range>('30d');
   const [data,        setData]        = useState<EventsData | null>(null);
   const [loading,     setLoading]     = useState(true);
+  const [refreshing,  setRefreshing]  = useState(false);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
   const prevDataRef = useRef<string>('');
 
-  const load = useCallback(async () => {
+  const load = useCallback(async (isManual = false) => {
+    if (isManual) setRefreshing(true);
     const result = await fetchEvents(range);
     if (result) {
       const serialized = JSON.stringify(result);
@@ -79,10 +72,11 @@ export default function AdminEventsPage() {
       setLastUpdated(new Date());
     }
     setLoading(false);
+    setRefreshing(false);
   }, [range]);
 
   useEffect(() => { setLoading(true); prevDataRef.current = ''; load(); }, [load]);
-  useEffect(() => { const t = setInterval(load, 30_000); return () => clearInterval(t); }, [load]);
+  useEffect(() => { const t = setInterval(() => load(false), 30_000); return () => clearInterval(t); }, [load]);
 
   const maxPageCount   = Math.max(...(data?.eventsByPage?.map(d => d.count) ?? [1]));
   const totalEvents    = data?.eventsByType?.reduce((a, d) => a + d.count, 0) ?? 0;
@@ -93,26 +87,39 @@ export default function AdminEventsPage() {
 
   return (
     <div className={styles.page}>
-      {/* Header */}
       <div className={styles.header}>
         <div>
-          <h1>Events</h1>
+          <h1>Event Log</h1>
           <p>
             CTA clicks, phone &amp; email interactions, and form submissions
-            {lastUpdated && ` · ${lastUpdated.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}`}
+            {lastUpdated && ` · updated ${lastUpdated.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}`}
           </p>
         </div>
-        <div className={styles.rangeSelect}>
-          {RANGES.map(r => (
-            <button key={r} onClick={() => setRange(r)}
-              className={`${styles.rangeBtn} ${range === r ? styles.active : ''}`}>
-              {r}
-            </button>
-          ))}
+        <div className={styles.headerActions}>
+          <div className={styles.rangeSelect}>
+            {RANGES.map(r => (
+              <button
+                key={r}
+                type="button"
+                onClick={() => setRange(r)}
+                className={`${styles.rangeBtn} ${range === r ? styles.active : ''}`}
+              >
+                {r}
+              </button>
+            ))}
+          </div>
+          <button
+            type="button"
+            className={styles.refreshBtn}
+            onClick={() => load(true)}
+            disabled={refreshing || loading}
+            aria-label="Refresh events"
+          >
+            {refreshing ? '…' : '↻'}
+          </button>
         </div>
       </div>
 
-      {/* Stat cards */}
       <div className={styles.statsRow}>
         {[
           { label: 'Total Events',   value: totalEvents.toLocaleString()  },
@@ -123,12 +130,11 @@ export default function AdminEventsPage() {
         ].map(({ label, value }) => (
           <div key={label} className={styles.statCard}>
             <p className={styles.label}>{label}</p>
-            <p className={styles.value}>{value}</p>
+            <p className={styles.value}>{loading && !data ? '—' : value}</p>
           </div>
         ))}
       </div>
 
-      {/* Top clicked elements — now with Component column */}
       <div className={styles.card}>
         <p className={styles.cardTitle}>Top Clicked Elements</p>
         {data?.topElements?.length ? (
@@ -151,8 +157,7 @@ export default function AdminEventsPage() {
                         {fmtSection(item.section)}
                       </span>
                     </td>
-                    <td className={`${styles.pageCell} ${styles.hideOnMobile}`}
-                        title={item.page}>
+                    <td className={`${styles.pageCell} ${styles.hideOnMobile}`} title={item.page}>
                       {fmtPage(item.page)}
                     </td>
                     <td className={styles.countCell}>{item.count}</td>
@@ -170,7 +175,6 @@ export default function AdminEventsPage() {
         )}
       </div>
 
-      {/* Type doughnut + Page breakdown */}
       <div className={styles.grid}>
         <div className={styles.card}>
           <p className={styles.cardTitle}>Events by Type</p>
@@ -203,10 +207,7 @@ export default function AdminEventsPage() {
                   <div className={styles.barTrack}>
                     <div
                       className={styles.barFill}
-                      style={{
-                        width:      `${Math.round((item.count / maxPageCount) * 100)}%`,
-                        background: '#286a99',
-                      }}
+                      style={{ width: `${Math.round((item.count / maxPageCount) * 100)}%` }}
                     />
                   </div>
                 </div>
@@ -218,16 +219,10 @@ export default function AdminEventsPage() {
         </div>
       </div>
 
-      {/* Hour heatmap */}
       <div className={styles.card}>
         <p className={styles.cardTitle}>Click Activity by Hour of Day</p>
-        <p style={{
-          fontFamily: 'var(--font-poppins)',
-          fontSize:   '0.73rem',
-          color:      'rgba(255,255,255,0.28)',
-          margin:     '0 0 1rem',
-        }}>
-          Hover any bar to see exact click count. Includes CTA clicks and form submissions. Useful for timing campaigns.
+        <p className={styles.cardHint}>
+          Hover any bar for exact counts. Includes CTA clicks and form submissions — useful for campaign timing.
         </p>
         <HourHeatmap data={data?.clicksByHour ?? []} />
       </div>

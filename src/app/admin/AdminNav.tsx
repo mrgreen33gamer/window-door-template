@@ -1,10 +1,11 @@
 // src/app/admin/AdminNav.tsx
-// FINAL FIX: Full responsive — desktop sidebar + tablet/mobile hamburger drawer.
+// Desktop sidebar + tablet/mobile top bar + drawer. Theme toggle + live indicator.
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { signOut } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
+import { useAdminTheme } from './AdminThemeProvider';
 import styles from './nav.module.scss';
 
 const NAV = [
@@ -22,6 +23,9 @@ const NAV = [
 export default function AdminNav() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const { theme, toggleTheme } = useAdminTheme();
+  const { data: session } = useSession();
+  const isDemo = Boolean((session?.user as { isDemo?: boolean } | undefined)?.isDemo);
 
   const isActive = (href: string) =>
     href === '/admin'
@@ -30,16 +34,36 @@ export default function AdminNav() {
 
   const close = () => setOpen(false);
 
+  // Close drawer on route change
+  useEffect(() => { setOpen(false); }, [pathname]);
+
+  // Escape closes drawer
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false); };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [open]);
+
+  // Lock body scroll when drawer open
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = prev; };
+  }, [open]);
+
   const navContent = (
     <>
-      {/* Brand */}
       <div className={styles.brand}>
-        <span className={styles.eyebrow}>ARCTIC AIR window and door</span>
-        <span className={styles.siteName}>Dashboard</span>
-        <span className={styles.badge}>Admin</span>
+        <span className={styles.eyebrow}>window door</span>
+        <span className={styles.siteName}>Ops Console</span>
+        <span className={styles.badge}>{isDemo ? 'Demo' : 'Private'}</span>
+        {isDemo && (
+          <span className={styles.demoBanner}>Sample data only — not live traffic</span>
+        )}
       </div>
 
-      {/* Nav sections */}
       {NAV.map(({ section, links }) => (
         <div key={section} className={styles.section}>
           <span className={styles.sectionLabel}>{section}</span>
@@ -50,21 +74,32 @@ export default function AdminNav() {
               className={`${styles.link} ${isActive(href) ? styles.active : ''}`}
               onClick={close}
             >
-              <span className={styles.icon}>{icon}</span>
+              <span className={styles.icon} aria-hidden="true">{icon}</span>
               {label}
             </Link>
           ))}
         </div>
       ))}
 
-      {/* Live indicator */}
       <div className={styles.liveIndicator}>
         <div className={styles.dot} />
-        <span>Live tracking active</span>
+        <span>Live feed on</span>
       </div>
 
-      {/* Sign out */}
       <button
+        type="button"
+        className={styles.themeToggle}
+        onClick={toggleTheme}
+        aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+      >
+        <span className={styles.themeIcon} aria-hidden="true">
+          {theme === 'dark' ? '☀' : '☾'}
+        </span>
+        {theme === 'dark' ? 'Light mode' : 'Dark mode'}
+      </button>
+
+      <button
+        type="button"
         onClick={() => signOut({ callbackUrl: '/admin/login' })}
         className={styles.signOut}
       >
@@ -75,32 +110,49 @@ export default function AdminNav() {
 
   return (
     <>
-      {/* ── Desktop sidebar ──────────────────────────────── */}
-      <nav className={styles.nav}>
+      <nav className={styles.nav} aria-label="Admin">
         {navContent}
       </nav>
 
-      {/* ── Mobile top bar + drawer ──────────────────────── */}
       <div className={styles.mobileBar}>
         <div className={styles.mobileBrand}>
-          <span className={styles.mobileTitle}>Dashboard</span>
-          <span className={styles.badge}>Admin</span>
+          <span className={styles.mobileTitle}>Ops</span>
+          <span className={styles.badge}>Private</span>
         </div>
-        <button
-          className={styles.hamburger}
-          onClick={() => setOpen(o => !o)}
-          aria-label="Toggle navigation"
-          aria-expanded={open}
-        >
-          {open ? '✕' : '☰'}
-        </button>
+        <div className={styles.mobileActions}>
+          <button
+            type="button"
+            className={styles.iconBtn}
+            onClick={toggleTheme}
+            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+          >
+            {theme === 'dark' ? '☀' : '☾'}
+          </button>
+          <button
+            type="button"
+            className={styles.hamburger}
+            onClick={() => setOpen(o => !o)}
+            aria-label="Toggle navigation"
+            aria-expanded={open}
+          >
+            {open ? '✕' : '☰'}
+          </button>
+        </div>
       </div>
 
-      {/* Overlay */}
-      {open && <div className={styles.overlay} onClick={close} aria-hidden="true" />}
+      {open && (
+        <div
+          className={styles.overlay}
+          onClick={close}
+          aria-hidden="true"
+        />
+      )}
 
-      {/* Drawer */}
-      <nav className={`${styles.drawer} ${open ? styles.drawerOpen : ''}`}>
+      <nav
+        className={`${styles.drawer} ${open ? styles.drawerOpen : ''}`}
+        aria-label="Admin mobile"
+        aria-hidden={!open}
+      >
         {navContent}
       </nav>
     </>

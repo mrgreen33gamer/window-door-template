@@ -8,12 +8,11 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import { useAdminChartTheme, CHART_PALETTE } from './useAdminChartTheme';
 
 Chart.register(DoughnutController, ArcElement, Tooltip, Legend);
 
 interface Slice { label: string; count: number; }
-
-const PALETTE = ['#7c3aed', '#286a99', '#ef9f27', '#5dcaa5', '#e24b4a', '#c9dd77', '#586426'];
 
 interface DoughnutChartProps {
   data:   Slice[];
@@ -24,6 +23,7 @@ interface DoughnutChartProps {
 export default function DoughnutChart({ data, height = 200, showLegend = true }: DoughnutChartProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const chartRef  = useRef<Chart | null>(null);
+  const theme     = useAdminChartTheme();
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -39,8 +39,8 @@ export default function DoughnutChart({ data, height = 200, showLegend = true }:
         labels:   data.map(d => d.label),
         datasets: [{
           data:            data.map(d => d.count),
-          backgroundColor: PALETTE.slice(0, data.length),
-          borderColor:     '#0a0f0a',
+          backgroundColor: CHART_PALETTE.slice(0, Math.max(data.length, 1)),
+          borderColor:     theme.doughnutBorder,
           borderWidth:     3,
           hoverOffset:     6,
         }],
@@ -54,20 +54,20 @@ export default function DoughnutChart({ data, height = 200, showLegend = true }:
             display:  showLegend,
             position: 'right',
             labels: {
-              color:      'rgba(255,255,255,0.55)',
-              font:       { size: 11 },
-              boxWidth:   10,
-              boxHeight:  10,
+              color:        theme.tick,
+              font:         { size: 11, family: 'DM Sans, sans-serif' },
+              boxWidth:     10,
+              boxHeight:    10,
               borderRadius: 2,
-              padding:    12,
+              padding:      12,
             },
           },
           tooltip: {
-            backgroundColor: '#161e16',
-            borderColor:     'rgba(255,255,255,0.1)',
+            backgroundColor: theme.tooltipBg,
+            borderColor:     theme.tooltipBorder,
             borderWidth:     1,
-            titleColor:      '#ffffff',
-            bodyColor:       'rgba(255,255,255,0.6)',
+            titleColor:      theme.tooltipTitle,
+            bodyColor:       theme.tooltipBody,
             padding:         10,
             callbacks: {
               label: ctx => {
@@ -82,7 +82,7 @@ export default function DoughnutChart({ data, height = 200, showLegend = true }:
     });
 
     return () => { chartRef.current?.destroy(); chartRef.current = null; };
-  }, [data, showLegend]);
+  }, [data, showLegend, theme]);
 
   return (
     <div style={{ position: 'relative', height }}>

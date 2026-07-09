@@ -1,0 +1,120 @@
+@use '../../styles/admin' as *;
+
+.wrap {
+  display:        flex;
+  flex-direction: column;
+  gap:            0.5rem;
+  min-width:      0;
+}
+
+.row {
+  display:     flex;
+  align-items: center;
+  gap:         0.5rem;
+}
+
+.selectWrap {
+  position: relative;
+  display:  inline-flex;
+  align-items: center;
+}
+
+.select {
+  padding:          0.45rem 2rem 0.45rem 0.85rem;
+  min-height:       40px;
+  border-radius:    $radius-pill;
+  font-family:      $font-head;
+  font-size:        0.78rem;
+  font-weight:      600;
+  cursor:           pointer;
+  appearance:       none;
+  -webkit-appearance: none;
+  outline:          none;
+  transition:       opacity 0.2s ease;
+  min-width:        110px;
+  border:           1px solid;
+
+  &:disabled {
+    cursor:  not-allowed;
+    opacity: 0.6;
+  }
+}
+
+.chevron {
+  position:       absolute;
+  right:          0.55rem;
+  pointer-events: none;
+  font-size:      0.6rem;
+  line-height:    1;
+}
+
+.spinner {
+  display:      inline-block;
+  width:        14px;
+  height:       14px;
+  border:       2px solid $border2;
+  border-top-color: $orange;
+  border-radius: 50%;
+  animation:    spin 0.65s linear infinite;
+  flex-shrink:  0;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.ok {
+  color:      $status-converted;
+  font-size:  0.95rem;
+  line-height: 1;
+}
+
+.err {
+  color:       #ef4444;
+  font-size:   0.72rem;
+  font-family: $font-head;
+}
+
+.dealPanel {
+  display:       flex;
+  align-items:   center;
+  gap:           0.4rem;
+  padding:       0.45rem 0.7rem;
+  background:    rgba(13, 148, 136, 0.1);
+  border:        1px solid rgba(13, 148, 136, 0.28);
+  border-radius: $radius-md;
+}
+
+.dealLabel {
+  font-family:    $font-head;
+  font-size:      0.68rem;
+  color:          $text-muted;
+  white-space:    nowrap;
+  font-weight:    600;
+  letter-spacing: 0.05em;
+}
+
+.dealInput {
+  width:         80px;
+  background:    transparent;
+  border:        none;
+  border-bottom: 1px solid rgba(13, 148, 136, 0.4);
+  color:         $status-converted;
+  font-family:   $font-head;
+  font-size:     0.88rem;
+  font-weight:   700;
+  outline:       none;
+  padding:       0.1rem 0.2rem;
+  min-height:    32px;
+}
+
+.miniSpinner {
+  display:      inline-block;
+  width:        10px;
+  height:       10px;
+  border:       1.5px solid rgba(13, 148, 136, 0.2);
+  border-top-color: $status-converted;
+  border-radius: 50%;
+  animation:    spin 0.65s linear infinite;
+  flex-shrink:  0;
+}

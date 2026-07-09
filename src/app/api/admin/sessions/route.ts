@@ -1,20 +1,29 @@
 // src/app/api/admin/sessions/route.ts
-// FIXED: Complete sessions analytics endpoint — browser, device, top pages, page views per day
-import { NextResponse } from 'next/server';
+// Range-aware page-view analytics. Supports 24h hourly + multi-day series.
+import { NextRequest, NextResponse } from 'next/server';
 import { MongoDB } from '&/mongodb';
-import { requireAdminSession } from '&/adminAuth';
+import { requireAdminSession, sessionIsDemo } from '&/adminAuth';
+import { fillSeries, getRangeDate, seriesDateFormat, type SeriesPoint } from '&/adminRange';
+import { getDemoSessions } from '&/demoAdminData';
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   const session = await requireAdminSession();
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   try {
-    const db = await MongoDB.getDb();
+    const range = req.nextUrl.searchParams.get('range') ?? '30d';
+    const since = getRangeDate(range);
+    if (!since) {
+      return NextResponse.json({ error: 'Invalid range. Use 24h, 7d, 14d, 30d, 49d, or 90d.' }, { status: 400 });
+    }
 
-    // Last 30 days
-    const since = new Date();
-    since.setDate(since.getDate() - 30);
-    const pvFilter = { timestamp: { $gte: since } };
+    if (sessionIsDemo(session)) {
+      return NextResponse.json(getDemoSessions(range));
+    }
+
+    const db         = await MongoDB.getDb();
+    const pvFilter   = { timestamp: { $gte: since } };
+    const dateFormat = seriesDateFormat(range);
 
     const [
       totalPageViews,
@@ -22,23 +31,18 @@ export async function GET() {
       deviceBreakdown,
       browserBreakdown,
       topPages,
-      pageViewsByDay,
+      pageViewsByDayRaw,
     ] = await Promise.all([
-      // Total page views (30d)
       db.collection('PageViews').countDocuments(pvFilter),
-
-      // Unique session IDs
       db.collection('PageViews').distinct('sessionId', pvFilter),
 
-      // Device breakdown
       db.collection('PageViews').aggregate([
         { $match: pvFilter },
-        { $group: { _id: { $toLower: '$deviceType' }, count: { $sum: 1 } } },
+        { $group: { _id: { $toLower: { $ifNull: ['$deviceType', 'desktop'] } }, count: { $sum: 1 } } },
         { $sort: { count: -1 } },
-        { $project: { device: { $ifNull: ['$_id', 'desktop'] }, count: 1, _id: 0 } },
+        { $project: { device: '$_id', count: 1, _id: 0 } },
       ]).toArray(),
 
-      // Browser breakdown
       db.collection('PageViews').aggregate([
         { $match: pvFilter },
         { $group: { _id: '$browser', count: { $sum: 1 } } },
@@ -47,7 +51,6 @@ export async function GET() {
         { $project: { browser: { $ifNull: ['$_id', 'Unknown'] }, count: 1, _id: 0 } },
       ]).toArray(),
 
-      // Top pages by views
       db.collection('PageViews').aggregate([
         { $match: pvFilter },
         { $group: { _id: '$path', count: { $sum: 1 } } },
@@ -56,11 +59,10 @@ export async function GET() {
         { $project: { path: '$_id', count: 1, _id: 0 } },
       ]).toArray(),
 
-      // Page views per day
       db.collection('PageViews').aggregate([
         { $match: pvFilter },
         { $group: {
-          _id: { $dateToString: { format: '%Y-%m-%d', date: '$timestamp' } },
+          _id:   { $dateToString: { format: dateFormat, date: '$timestamp' } },
           count: { $sum: 1 },
         }},
         { $sort: { _id: 1 } },
@@ -68,9 +70,13 @@ export async function GET() {
       ]).toArray(),
     ]);
 
+    const pageViewsByDay = fillSeries(range, since, pageViewsByDayRaw as SeriesPoint[]);
+
     return NextResponse.json({
+      range,
+      since: since.toISOString(),
       totalPageViews,
-      uniqueSessions:   uniqueSessionIds.filter(Boolean).length,
+      uniqueSessions: uniqueSessionIds.filter(Boolean).length,
       deviceBreakdown,
       browserBreakdown,
       topPages,

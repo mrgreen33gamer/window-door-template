@@ -1,22 +1,10 @@
 // src/app/api/admin/events/route.ts
-// FIX8:
-//  - topElements now groups by { label, page, section } so component column is available
-//  - section returned in topElements results
-// FIX9:
-//  - Added 'form_submit' to INTERACTION_TYPES so form submissions appear in
-//    topElements, eventsByType breakdown, and clicksByHour heatmap.
+// Range-aware event analytics including 24h.
 import { NextRequest, NextResponse } from 'next/server';
 import { MongoDB } from '&/mongodb';
-import { requireAdminSession } from '&/adminAuth';
-
-function getRangeDate(range: string): Date | null {
-  const days: Record<string, number> = { '7d': 7, '30d': 30, '90d': 90 };
-  const d = days[range];
-  if (!d) return null;
-  const date = new Date();
-  date.setDate(date.getDate() - d);
-  return date;
-}
+import { requireAdminSession, sessionIsDemo } from '&/adminAuth';
+import { getRangeDate } from '&/adminRange';
+import { getDemoEvents } from '&/demoAdminData';
 
 export async function GET(req: NextRequest) {
   const session = await requireAdminSession();
@@ -25,25 +13,21 @@ export async function GET(req: NextRequest) {
   try {
     const range     = req.nextUrl.searchParams.get('range') ?? '30d';
     const sinceDate = getRangeDate(range);
-    const db        = await MongoDB.getDb();
+    if (!sinceDate) {
+      return NextResponse.json({ error: 'Invalid range. Use 24h, 7d, 14d, 30d, 49d, or 90d.' }, { status: 400 });
+    }
 
-    const filter: Record<string, any> = sinceDate
-      ? { timestamp: { $gte: sinceDate } }
-      : {};
+    if (sessionIsDemo(session)) {
+      return NextResponse.json(getDemoEvents(range));
+    }
 
-    // form_submit added — lets the dashboard surface which forms are converting
+    const db     = await MongoDB.getDb();
+    const filter = { timestamp: { $gte: sinceDate } };
+
     const INTERACTION_TYPES = ['click', 'phone_click', 'email_click', 'view', 'form_submit'];
+    const CLICK_TYPES       = ['click', 'phone_click', 'email_click', 'form_submit'];
 
-    // Click-type events used for the hour heatmap (intentional actions, not views)
-    const CLICK_TYPES = ['click', 'phone_click', 'email_click', 'form_submit'];
-
-    const [
-      topElements,
-      eventsByType,
-      eventsByPage,
-      clicksByHour,
-    ] = await Promise.all([
-      // Top clicked elements — grouped by label + page + section so we can show component
+    const [topElements, eventsByType, eventsByPage, clicksByHour] = await Promise.all([
       db.collection('Events').aggregate([
         { $match: { ...filter, eventType: { $in: INTERACTION_TYPES } } },
         { $group: {
@@ -61,7 +45,6 @@ export async function GET(req: NextRequest) {
         }},
       ]).toArray(),
 
-      // Events by type (all types — no filter, so new types appear automatically)
       db.collection('Events').aggregate([
         { $match: filter },
         { $group: { _id: '$eventType', count: { $sum: 1 } } },
@@ -69,7 +52,6 @@ export async function GET(req: NextRequest) {
         { $project: { type: '$_id', count: 1, _id: 0 } },
       ]).toArray(),
 
-      // Events by page (top 15)
       db.collection('Events').aggregate([
         { $match: filter },
         { $group: { _id: '$page', count: { $sum: 1 } } },
@@ -78,7 +60,7 @@ export async function GET(req: NextRequest) {
         { $project: { page: '$_id', count: 1, _id: 0 } },
       ]).toArray(),
 
-      // Intentional actions by hour of day (includes form_submit)
+      // Hour-of-day distribution within the selected window
       db.collection('Events').aggregate([
         { $match: { ...filter, eventType: { $in: CLICK_TYPES } } },
         { $group: { _id: { $hour: '$timestamp' }, count: { $sum: 1 } } },
@@ -87,7 +69,21 @@ export async function GET(req: NextRequest) {
       ]).toArray(),
     ]);
 
-    return NextResponse.json({ topElements, eventsByType, eventsByPage, clicksByHour });
+    // Ensure all 24 hours exist for accurate heatmap
+    const hourMap = new Map((clicksByHour as { hour: number; count: number }[]).map(h => [h.hour, h.count]));
+    const clicksByHourFilled = Array.from({ length: 24 }, (_, hour) => ({
+      hour,
+      count: hourMap.get(hour) ?? 0,
+    }));
+
+    return NextResponse.json({
+      range,
+      since: sinceDate.toISOString(),
+      topElements,
+      eventsByType,
+      eventsByPage,
+      clicksByHour: clicksByHourFilled,
+    });
   } catch (err) {
     console.error('[admin/events] error:', err);
     return NextResponse.json({ error: 'Server error.' }, { status: 500 });

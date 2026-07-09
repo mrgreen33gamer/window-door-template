@@ -35,36 +35,42 @@ export default function HomePage() {
       title: "Window Replacement",
       body: "Full-home and partial window replacements with vinyl, fiberglass, and wood-clad options. Low-E glass packages built for Texas heat.",
       link: "/services/window-replacement",
+      image: "/pages/home/services/service-1.jpg",
     },
     {
       icon: faDoorOpen,
       title: "Entry Door Installation",
       body: "Steel, fiberglass, and wood entry doors with proper flashing, weather sealing, and curb-appeal hardware packages.",
       link: "/services/entry-door-installation",
+      image: "/pages/home/services/service-2.jpg",
     },
     {
       icon: faBorderAll,
       title: "Patio & Sliding Doors",
       body: "Patio doors, French doors, and sliding glass doors that open outdoor living without drafts or sticky tracks.",
       link: "/services/patio-sliding-doors",
+      image: "/pages/home/services/service-3.jpg",
     },
     {
       icon: faShieldHalved,
       title: "Storm & Impact Windows",
       body: "Impact-rated and storm window solutions for Central Texas wind events, security, and year-round efficiency.",
       link: "/services/storm-impact-windows",
+      image: "/pages/home/services/service-4.jpg",
     },
     {
       icon: faWrench,
       title: "Window Repair",
       body: "Fogged glass, failed seals, broken balances, and hardware fixes — when a full replacement is not yet needed.",
       link: "/services/window-repair",
+      image: "/pages/home/services/service-1.jpg",
     },
     {
       icon: faLeaf,
       title: "Energy Efficiency Upgrades",
       body: "Low-E retrofits, weatherization, and targeted upgrades that cut cooling costs and improve comfort room by room.",
       link: "/services/energy-efficiency-upgrades",
+      image: "/pages/home/services/service-2.jpg",
     },
   ];
 
@@ -180,13 +186,10 @@ export default function HomePage() {
 
   return (
     <main className={styles.pageWrapper}>
-
       <WelcomePage />
-
       <TrustBar
         headline="Waco's trusted window and door company — factory-certified, insured, and warrantied on every install"
       />
-
       <div className={styles.section}>
         <ServiceCardComponent
           heading="Windows & Doors Done Right"
@@ -194,52 +197,43 @@ export default function HomePage() {
           cards={services}
         />
       </div>
-
-      <div className={styles.section}>
-        <ImpactMetrics metrics={metrics} cityName="Waco" />
-      </div>
-
       <div className={styles.section}>
         <WhyChooseUs cityName="Waco" features={whyFeatures} />
       </div>
-
       <div className={styles.section}>
         <ProcessTimeline steps={processSteps} />
       </div>
-
       <div className={styles.section}>
-        <WhatToExpect expectations={expectations} />
+        <ImpactMetrics metrics={metrics} cityName="Waco" />
       </div>
-
       <div className={styles.section}>
         <Testimonials testimonials={reviews} />
       </div>
-
       <div className={styles.section}>
         <GuaranteeSection />
       </div>
-
+      <CTABanner
+        headline="Windows & Doors That Change the House."
+        subline="Energy-smart replacements, patio doors, and entry units — measured carefully, installed cleanly."
+        primaryText="Call (254) 740-3300"
+        primaryLink="tel:+12547403300"
+        secondaryText="Free Measure"
+        secondaryLink="/contact"
+      
+        imageSrc="/pages/home/welcome/hero-main.jpg"
+       />
       <div className={styles.section}>
         <LocalServiceAreas cityName="Waco" areas={localAreas} />
       </div>
-
+      <div className={styles.section}>
+        <WhatToExpect expectations={expectations} />
+      </div>
       <div className={styles.section}>
         <FAQ cityName="Waco" faq={faq} />
       </div>
-
-      <CTABanner
-        headline="Ready for Clearer Views and Lower Energy Bills?"
-        subline="Free in-home measurement. Flat-rate quotes. Factory-certified installers. Lifetime Product Warranty Support + 10-Year Installation Warranty."
-        primaryText="Call (254) 740-3300"
-        primaryLink="tel:+12547403300"
-        secondaryText="Free Estimate"
-        secondaryLink="/contact"
-      />
-
       <div className={styles.section}>
         <BlogPreviewGrid />
       </div>
-
       <div className={styles.section}>
         <Variant4 title="Request Your Free Window & Door Estimate" cityName="Waco" slug="home" spot="home-page-form" formVariant={1} />
       </div>

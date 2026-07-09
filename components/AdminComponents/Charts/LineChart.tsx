@@ -11,6 +11,7 @@ import {
   Tooltip,
   Filler,
 } from 'chart.js';
+import { useAdminChartTheme } from './useAdminChartTheme';
 
 Chart.register(LineController, LineElement, PointElement, LinearScale, CategoryScale, Tooltip, Filler);
 
@@ -26,24 +27,34 @@ interface LineChartProps {
 export default function LineChart({
   data,
   label  = 'Leads',
-  color  = '#b1de00',
+  color,
   height = 220,
 }: LineChartProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const chartRef  = useRef<Chart | null>(null);
+  const theme     = useAdminChartTheme();
+  const lineColor = color ?? theme.accent;
 
   useEffect(() => {
     if (!canvasRef.current) return;
 
-    // Destroy previous instance
     if (chartRef.current) {
       chartRef.current.destroy();
       chartRef.current = null;
     }
 
     const labels = data.map(d => {
-      const date = new Date(d.date + 'T00:00:00');
-      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      // 24h buckets: "2026-07-09T14:00:00" (UTC) → local hour label
+      // Day buckets: "2026-07-09" → mon/day
+      const isHour = d.date.includes('T');
+      const date = isHour
+        ? new Date(d.date.endsWith('Z') ? d.date : `${d.date}Z`)
+        : new Date(`${d.date}T00:00:00Z`);
+      if (Number.isNaN(date.getTime())) return d.date;
+      if (isHour) {
+        return date.toLocaleTimeString('en-US', { hour: 'numeric' });
+      }
+      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
     });
     const values = data.map(d => d.count);
 
@@ -54,28 +65,28 @@ export default function LineChart({
         datasets: [{
           label,
           data:            values,
-          borderColor:     color,
-          backgroundColor: `${color}18`,
+          borderColor:     lineColor,
+          backgroundColor: `${lineColor}22`,
           borderWidth:     2,
           pointRadius:     3,
           pointHoverRadius: 6,
-          pointBackgroundColor: color,
+          pointBackgroundColor: lineColor,
           fill:            true,
           tension:         0.35,
         }],
       },
       options: {
-        responsive:         true,
+        responsive:          true,
         maintainAspectRatio: false,
         interaction: { mode: 'index', intersect: false },
         plugins: {
           legend: { display: false },
           tooltip: {
-            backgroundColor: '#161e16',
-            borderColor:     'rgba(255,255,255,0.1)',
+            backgroundColor: theme.tooltipBg,
+            borderColor:     theme.tooltipBorder,
             borderWidth:     1,
-            titleColor:      '#ffffff',
-            bodyColor:       'rgba(255,255,255,0.6)',
+            titleColor:      theme.tooltipTitle,
+            bodyColor:       theme.tooltipBody,
             padding:         10,
             callbacks: {
               label: ctx => ` ${ctx.parsed.y} ${label.toLowerCase()}`,
@@ -84,17 +95,20 @@ export default function LineChart({
         },
         scales: {
           x: {
-            grid:  { color: 'rgba(255,255,255,0.04)' },
+            grid:  { color: theme.grid },
             ticks: {
-              color:   'rgba(255,255,255,0.28)',
-              font:    { size: 11 },
+              color: theme.tick,
+              font:  { size: 11, family: 'DM Sans, sans-serif' },
               maxRotation: 0,
               maxTicksLimit: 8,
             },
           },
           y: {
-            grid:      { color: 'rgba(255,255,255,0.04)' },
-            ticks:     { color: 'rgba(255,255,255,0.28)', font: { size: 11 } },
+            grid:  { color: theme.grid },
+            ticks: {
+              color: theme.tick,
+              font:  { size: 11, family: 'DM Sans, sans-serif' },
+            },
             beginAtZero: true,
           },
         },
@@ -105,7 +119,7 @@ export default function LineChart({
       chartRef.current?.destroy();
       chartRef.current = null;
     };
-  }, [data, label, color]);
+  }, [data, label, lineColor, theme]);
 
   return (
     <div style={{ position: 'relative', height }}>

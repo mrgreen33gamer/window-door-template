@@ -31,3 +31,13 @@
     margin-bottom: 2rem;
   }
 }
+
+/* === UNIQUENESS IDENTITY LAYER — window-door-template === */
+.pageWrapper {
+  /* brand page rhythm */
+}
+.section {
+  padding-top: clamp(6rem, 6vw, 8rem) !important;
+  padding-bottom: clamp(6rem, 6vw, 8rem) !important;
+}
+/* end identity layer */

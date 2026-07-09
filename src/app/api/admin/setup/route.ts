@@ -13,8 +13,8 @@ import bcrypt from 'bcryptjs';
 
 const FROM_EMAIL  = process.env.FROM_EMAIL      ?? '';
 const SMTP2GO_KEY = process.env.SMTP2GO_API_KEY ?? '';
-const SITE_URL    = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.clearviewwindowsdoors.com';
-const BRAND_NAME  = process.env.NEXT_PUBLIC_BRAND_NAME ?? 'ClearView Windows & Doors';
+const SITE_URL    = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.arcticairhvac.com';
+const BRAND_NAME  = process.env.NEXT_PUBLIC_BRAND_NAME ?? 'Arctic Air HVAC';
 
 // ── Welcome email ─────────────────────────────────────────────────────────────
 function buildWelcomeEmailHtml(name: string, email: string): string {
@@ -40,7 +40,7 @@ function buildWelcomeEmailHtml(name: string, email: string): string {
 
           <!-- Accent bar -->
           <tr>
-            <td style="height:4px;background:linear-gradient(90deg,#16def9 0%,#7c3aed 100%);font-size:0;line-height:0;">&nbsp;</td>
+            <td style="height:4px;background:linear-gradient(90deg,#16def9 0%,#f97316 100%);font-size:0;line-height:0;">&nbsp;</td>
           </tr>
 
           <!-- Header -->
@@ -63,7 +63,7 @@ function buildWelcomeEmailHtml(name: string, email: string): string {
             <td style="padding:24px 40px 8px 40px;">
               <table role="presentation" cellpadding="0" cellspacing="0" border="0">
                 <tr>
-                  <td style="border-radius:10px;background:#7c3aed;">
+                  <td style="border-radius:10px;background:#f97316;">
                     <a href="${dashboardUrl}"
                        style="display:inline-block;padding:14px 28px;font-size:15px;font-weight:600;color:#0d1b2a;text-decoration:none;border-radius:10px;letter-spacing:0.01em;">
                       Open Your Dashboard →
@@ -149,7 +149,7 @@ function buildWelcomeEmailHtml(name: string, email: string): string {
                      style="background:rgba(249,115,22,0.06);border:1px solid rgba(249,115,22,0.18);border-radius:10px;">
                 <tr>
                   <td style="padding:14px 16px;font-size:13px;color:rgba(230,241,230,0.72);line-height:1.5;">
-                    <strong style="color:#7c3aed;">Security note —</strong>
+                    <strong style="color:#f97316;">Security note —</strong>
                     this email confirms a one-time admin account creation on your site. Only one admin account is permitted, so if you didn't initiate this, please rotate your database credentials immediately.
                   </td>
                 </tr>

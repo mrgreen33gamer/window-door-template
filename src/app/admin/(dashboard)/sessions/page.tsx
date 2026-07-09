@@ -1,11 +1,15 @@
-// src/app/admin/(dashboard)/sessions/page.tsx
-// FIXED: Fetches from dedicated /api/admin/sessions endpoint for accurate
-// browser breakdown, device breakdown, top pages, and page views per day.
+// Sessions — first-party page view analytics (range-aware including 24h).
 'use client';
 import { useState, useEffect, useCallback } from 'react';
 import styles from './sessions.module.scss';
 import LineChart     from '#/AdminComponents/Charts/LineChart';
 import DoughnutChart from '#/AdminComponents/Charts/DoughnutChart';
+
+const RANGES = ['24h', '7d', '30d', '90d'] as const;
+type Range = typeof RANGES[number];
+const RANGE_LABEL: Record<Range, string> = {
+  '24h': '24 hours', '7d': '7 days', '30d': '30 days', '90d': '90 days',
+};
 
 interface SessionData {
   totalPageViews:   number;
@@ -16,36 +20,39 @@ interface SessionData {
   pageViewsByDay:   { date: string; count: number }[];
 }
 
-async function fetchSessionData(): Promise<SessionData | null> {
+async function fetchSessionData(range: Range): Promise<SessionData | null> {
   try {
-    const res = await fetch('/api/admin/sessions', { cache: 'no-store' });
+    const res = await fetch(`/api/admin/sessions?range=${range}`, { cache: 'no-store' });
     if (!res.ok) return null;
     return res.json();
   } catch { return null; }
 }
 
 export default function AdminSessionsPage() {
+  const [range,       setRange]       = useState<Range>('30d');
   const [data,        setData]        = useState<SessionData | null>(null);
   const [loading,     setLoading]     = useState(true);
+  const [refreshing,  setRefreshing]  = useState(false);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
-  const load = useCallback(async () => {
-    const result = await fetchSessionData();
+  const load = useCallback(async (isManual = false) => {
+    if (isManual) setRefreshing(true);
+    const result = await fetchSessionData(range);
     if (result) { setData(result); setLastUpdated(new Date()); }
     setLoading(false);
-  }, []);
+    setRefreshing(false);
+  }, [range]);
 
   useEffect(() => { setLoading(true); load(); }, [load]);
 
-  // Real-time polling every 30s
   useEffect(() => {
-    const interval = setInterval(load, 30_000);
+    const interval = setInterval(() => load(false), 30_000);
     return () => clearInterval(interval);
   }, [load]);
 
   const deviceTotal     = data?.deviceBreakdown?.reduce((a, d) => a + d.count, 0) || 1;
-  const maxBrowserCount = Math.max(...(data?.browserBreakdown?.map(d => d.count) ?? [1]));
-  const maxPageCount    = Math.max(...(data?.topPages?.map(d => d.count) ?? [1]));
+  const maxBrowserCount = Math.max(...(data?.browserBreakdown?.map(d => d.count) ?? [1]), 1);
+  const maxPageCount    = Math.max(...(data?.topPages?.map(d => d.count) ?? [1]), 1);
 
   const avgViews = data && data.uniqueSessions > 0
     ? (data.totalPageViews / data.uniqueSessions).toFixed(1)
@@ -53,16 +60,46 @@ export default function AdminSessionsPage() {
 
   return (
     <div className={styles.page}>
-      {/* ── Header ── */}
       <div className={styles.header}>
-        <h1>Sessions</h1>
-        <p>
-          First-party page view analytics — last 30 days
-          {lastUpdated && ` · updated ${lastUpdated.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}`}
-        </p>
+        <div>
+          <h1>Traffic Sessions</h1>
+          <p>
+            First-party page view analytics — {RANGE_LABEL[range]}
+            {lastUpdated && ` · updated ${lastUpdated.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}`}
+          </p>
+        </div>
+        <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap', alignItems: 'center' }}>
+          <div className={styles.rangeSelect ?? undefined} style={{ display: 'flex', border: '1px solid var(--admin-border-2)', overflow: 'hidden' }}>
+            {RANGES.map(r => (
+              <button
+                key={r}
+                type="button"
+                onClick={() => setRange(r)}
+                className={styles.refreshBtn}
+                style={{
+                  borderRadius: 0,
+                  border: 'none',
+                  borderRight: '1px solid var(--admin-border-2)',
+                  background: r === range ? '#64748b' : 'transparent',
+                  color: r === range ? '#fff' : 'var(--admin-text-muted)',
+                }}
+              >
+                {r}
+              </button>
+            ))}
+          </div>
+          <button
+            type="button"
+            className={styles.refreshBtn}
+            onClick={() => load(true)}
+            disabled={refreshing || loading}
+            aria-label="Refresh sessions"
+          >
+            {refreshing ? '…' : '↻'}
+          </button>
+        </div>
       </div>
 
-      {/* ── Stat cards ── */}
       <div className={styles.statsRow}>
         {[
           { label: 'Total Page Views',    value: data?.totalPageViews?.toLocaleString() ?? '—' },
@@ -71,19 +108,20 @@ export default function AdminSessionsPage() {
         ].map(({ label, value }) => (
           <div key={label} className={styles.statCard}>
             <p className={styles.label}>{label}</p>
-            <p className={styles.value}>{value}</p>
+            <p className={styles.value}>{loading && !data ? '—' : value}</p>
           </div>
         ))}
       </div>
 
-      {/* ── Page views per day ── */}
       <div className={styles.card}>
-        <p className={styles.cardTitle}>Page Views Per Day (30d)</p>
+        <p className={styles.cardTitle}>
+          {range === '24h' ? 'Page Views Per Hour' : 'Page Views Per Day'} — {RANGE_LABEL[range]}
+        </p>
         {data?.pageViewsByDay?.length ? (
           <LineChart
             data={data.pageViewsByDay}
             label="Page views"
-            color="#286a99"
+            color="#0284c7"
             height={220}
           />
         ) : (
@@ -93,7 +131,6 @@ export default function AdminSessionsPage() {
         )}
       </div>
 
-      {/* ── Device + Browser ── */}
       <div className={styles.grid}>
         <div className={styles.card}>
           <p className={styles.cardTitle}>Device Breakdown</p>
@@ -107,7 +144,7 @@ export default function AdminSessionsPage() {
                 height={180}
                 showLegend={true}
               />
-              <div className={styles.barList} style={{ marginTop: '1rem' }}>
+              <div className={`${styles.barList} ${styles.mt}`}>
                 {data.deviceBreakdown.map(item => (
                   <div key={item.device} className={styles.barRow}>
                     <div className={styles.barMeta}>
@@ -143,11 +180,8 @@ export default function AdminSessionsPage() {
                   </div>
                   <div className={styles.barTrack}>
                     <div
-                      className={styles.barFill}
-                      style={{
-                        width:      `${Math.round((item.count / maxBrowserCount) * 100)}%`,
-                        background: '#286a99',
-                      }}
+                      className={`${styles.barFill} ${styles.barFillCool}`}
+                      style={{ width: `${Math.round((item.count / maxBrowserCount) * 100)}%` }}
                     />
                   </div>
                 </div>
@@ -158,8 +192,7 @@ export default function AdminSessionsPage() {
           )}
         </div>
 
-        {/* ── Top pages ── */}
-        <div className={styles.card} style={{ gridColumn: '1 / -1' }}>
+        <div className={`${styles.card} ${styles.fullWidth}`}>
           <p className={styles.cardTitle}>Top Pages by Views</p>
           {data?.topPages?.length ? (
             <div className={styles.barList}>
@@ -175,11 +208,8 @@ export default function AdminSessionsPage() {
                     </div>
                     <div className={styles.barTrack}>
                       <div
-                        className={styles.barFill}
-                        style={{
-                          width:      `${Math.round((item.count / maxPageCount) * 100)}%`,
-                          background: 'rgba(222, 126, 0, 0.65)',
-                        }}
+                        className={`${styles.barFill} ${styles.barFillSoft}`}
+                        style={{ width: `${Math.round((item.count / maxPageCount) * 100)}%` }}
                       />
                     </div>
                   </div>

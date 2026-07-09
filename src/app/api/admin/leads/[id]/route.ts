@@ -1,8 +1,9 @@
 // src/app/api/admin/leads/[id]/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { MongoDB } from '&/mongodb';
-import { requireAdminSession } from '&/adminAuth';
+import { requireAdminSession, sessionIsDemo } from '&/adminAuth';
 import { ObjectId } from 'mongodb';
+import { getDemoLeadDetail } from '&/demoAdminData';
 
 // GET — single lead detail with joined journey session
 export async function GET(
@@ -12,9 +13,13 @@ export async function GET(
   const session = await requireAdminSession();
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-  const { id } = await params;   // ← REQUIRED in Next.js 16
+  const { id } = await params;
 
   try {
+    if (sessionIsDemo(session) || String(id).startsWith('demo-')) {
+      return NextResponse.json(getDemoLeadDetail(id));
+    }
+
     if (!ObjectId.isValid(id)) {
       return NextResponse.json({ error: 'Invalid lead ID.' }, { status: 400 });
     }
@@ -23,7 +28,6 @@ export async function GET(
     const lead = await db.collection('Leads').findOne({ _id: new ObjectId(id) });
     if (!lead) return NextResponse.json({ error: 'Lead not found.' }, { status: 404 });
 
-    // Join journey session if sessionId exists
     let journeySession = null;
     if (lead.sessionId) {
       journeySession = await db.collection('JourneySessions').findOne(
@@ -47,9 +51,20 @@ export async function PATCH(
   const session = await requireAdminSession();
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-  const { id } = await params;   // ← REQUIRED in Next.js 16
+  const { id } = await params;
 
   try {
+    // Demo is read-only for mutations (pretend success so UI works)
+    if (sessionIsDemo(session) || String(id).startsWith('demo-')) {
+      const body = await req.json().catch(() => ({}));
+      return NextResponse.json({
+        ok: true,
+        demo: true,
+        message: 'Demo mode — changes are not saved.',
+        applied: body,
+      });
+    }
+
     if (!ObjectId.isValid(id)) {
       return NextResponse.json({ error: 'Invalid lead ID.' }, { status: 400 });
     }

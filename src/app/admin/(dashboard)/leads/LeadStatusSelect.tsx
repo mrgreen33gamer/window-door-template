@@ -1,30 +1,25 @@
-// src/app/admin/(dashboard)/leads/LeadStatusSelect.tsx
-// FINAL FIX:
-//  - Loading spinner while saving (replaces broken "Saving…" text)
-//  - Success flash (green check) on save
-//  - Error toast on failure
-//  - "Converted" → opens inline deal-value input panel
-//  - Pill shows correct color immediately (optimistic UI)
+// Status select for lead detail header — optimistic UI + deal value on convert.
 'use client';
 import { useState, useRef, useEffect } from 'react';
+import styles from './LeadStatusSelect.module.scss';
 
 const STATUSES = ['new', 'contacted', 'qualified', 'converted', 'lost'] as const;
 type Status = typeof STATUSES[number];
 
 const STATUS_COLORS: Record<Status, string> = {
-  new:       '#7c3aed',
+  new:       '#64748b',
   contacted: '#378add',
-  qualified: '#27ef27',
-  converted: '#5dcaa5',
-  lost:      'rgba(255,255,255,0.38)',
+  qualified: '#d97706',
+  converted: '#0d9488',
+  lost:      '#64748b',
 };
 
 const STATUS_BG: Record<Status, string> = {
-  new:       'rgba(222, 133, 0, 0.1)',
+  new:       'rgba(100, 116, 139,0.10)',
   contacted: 'rgba(55,138,221,0.12)',
-  qualified: 'rgba(72, 239, 39, 0.1)',
-  converted: 'rgba(93,202,165,0.12)',
-  lost:      'rgba(255,255,255,0.05)',
+  qualified: 'rgba(217,119,6,0.12)',
+  converted: 'rgba(13,148,136,0.12)',
+  lost:      'rgba(100,116,139,0.12)',
 };
 
 interface Props {
@@ -44,7 +39,6 @@ export default function LeadStatusSelect({
 }: Props) {
   const [status,    setStatus]    = useState<Status>((initialStatus as Status) ?? 'new');
   const [saveState, setSaveState] = useState<SaveState>('idle');
-  // Converted value panel
   const [showValue, setShowValue] = useState((initialStatus as Status) === 'converted');
   const [dealValue, setDealValue] = useState<string>(initialValue != null ? String(initialValue) : '');
   const [valSaving, setValSaving] = useState(false);
@@ -97,101 +91,34 @@ export default function LeadStatusSelect({
   const bg    = STATUS_BG[status];
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', minWidth: 0 }}>
-      {/* Status pill + save indicator row */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-        {/* Custom select wrapper */}
-        <div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center' }}>
+    <div className={styles.wrap}>
+      <div className={styles.row}>
+        <div className={styles.selectWrap}>
           <select
             value={status}
             onChange={handleStatusChange}
             disabled={saveState === 'saving'}
-            style={{
-              padding:          '0.38rem 2rem 0.38rem 0.75rem',
-              background:       bg,
-              border:           `1px solid ${color}55`,
-              borderRadius:     '999px',
-              color:            color,
-              fontFamily:       'var(--font-poppins)',
-              fontSize:         '0.78rem',
-              fontWeight:       600,
-              cursor:           saveState === 'saving' ? 'not-allowed' : 'pointer',
-              appearance:       'none',
-              WebkitAppearance: 'none',
-              outline:          'none',
-              transition:       'all 0.2s ease',
-              opacity:          saveState === 'saving' ? 0.6 : 1,
-              minWidth:         '100px',
-            }}
+            className={styles.select}
+            style={{ background: bg, borderColor: `${color}55`, color }}
+            aria-label="Lead status"
           >
             {STATUSES.map(s => (
-              <option key={s} value={s} style={{ background: '#111811', color: '#fff' }}>
+              <option key={s} value={s}>
                 {s.charAt(0).toUpperCase() + s.slice(1)}
               </option>
             ))}
           </select>
-          {/* Chevron */}
-          <span style={{
-            position:      'absolute',
-            right:         '0.55rem',
-            pointerEvents: 'none',
-            color:         color,
-            fontSize:      '0.6rem',
-            lineHeight:    1,
-          }}>▾</span>
+          <span className={styles.chevron} style={{ color }}>▾</span>
         </div>
 
-        {/* Save indicator */}
-        {saveState === 'saving' && (
-          <span style={{
-            display:      'inline-block',
-            width:        '14px',
-            height:       '14px',
-            border:       '2px solid rgba(255,255,255,0.15)',
-            borderTopColor: '#7c3aed',
-            borderRadius: '50%',
-            animation:    'spin 0.65s linear infinite',
-            flexShrink:   0,
-          }} />
-        )}
-        {saveState === 'saved' && (
-          <span style={{
-            color:      '#5dcaa5',
-            fontSize:   '0.95rem',
-            lineHeight: 1,
-            animation:  'fadeIn 0.2s ease',
-          }}>✓</span>
-        )}
-        {saveState === 'error' && (
-          <span style={{
-            color:      '#f87171',
-            fontSize:   '0.72rem',
-            fontFamily: 'var(--font-poppins)',
-            animation:  'fadeIn 0.2s ease',
-          }}>Failed — retry</span>
-        )}
+        {saveState === 'saving' && <span className={styles.spinner} aria-label="Saving" />}
+        {saveState === 'saved' && <span className={styles.ok} aria-label="Saved">✓</span>}
+        {saveState === 'error' && <span className={styles.err}>Failed — retry</span>}
       </div>
 
-      {/* Deal value panel — shown when status is "converted" */}
       {showValue && (
-        <div style={{
-          display:       'flex',
-          alignItems:    'center',
-          gap:           '0.4rem',
-          padding:       '0.4rem 0.65rem',
-          background:    'rgba(93,202,165,0.08)',
-          border:        '1px solid rgba(93,202,165,0.25)',
-          borderRadius:  '8px',
-          animation:     'fadeIn 0.25s ease',
-        }}>
-          <span style={{
-            fontFamily:  'var(--font-poppins)',
-            fontSize:    '0.68rem',
-            color:       'rgba(255,255,255,0.45)',
-            whiteSpace:  'nowrap',
-            fontWeight:  600,
-            letterSpacing: '0.05em',
-          }}>DEAL $</span>
+        <div className={styles.dealPanel}>
+          <span className={styles.dealLabel}>DEAL $</span>
           <input
             type="number"
             placeholder="0"
@@ -199,42 +126,13 @@ export default function LeadStatusSelect({
             onChange={e => setDealValue(e.target.value)}
             onBlur={handleValueBlur}
             disabled={valSaving}
-            style={{
-              width:        '80px',
-              background:   'transparent',
-              border:       'none',
-              borderBottom: '1px solid rgba(93,202,165,0.35)',
-              color:        '#5dcaa5',
-              fontFamily:   'var(--font-poppins)',
-              fontSize:     '0.88rem',
-              fontWeight:   700,
-              outline:      'none',
-              padding:      '0.1rem 0.2rem',
-            }}
+            className={styles.dealInput}
+            aria-label="Confirmed deal value"
           />
-          {valSaving && (
-            <span style={{
-              display:      'inline-block',
-              width:        '10px',
-              height:       '10px',
-              border:       '1.5px solid rgba(93,202,165,0.2)',
-              borderTopColor: '#5dcaa5',
-              borderRadius: '50%',
-              animation:    'spin 0.65s linear infinite',
-              flexShrink:   0,
-            }} />
-          )}
-          {valSaved && !valSaving && (
-            <span style={{ color: '#5dcaa5', fontSize: '0.8rem' }}>✓</span>
-          )}
+          {valSaving && <span className={styles.miniSpinner} />}
+          {valSaved && !valSaving && <span className={styles.ok}>✓</span>}
         </div>
       )}
-
-      {/* Keyframe injector — only rendered once per page via CSS-in-JS workaround */}
-      <style>{`
-        @keyframes spin    { to { transform: rotate(360deg); } }
-        @keyframes fadeIn  { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: scale(1); } }
-      `}</style>
     </div>
   );
 }

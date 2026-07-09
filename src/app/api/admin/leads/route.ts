@@ -1,10 +1,10 @@
 // src/app/api/admin/leads/route.ts
-// FIX10: Fixed MongoServerError code 28811 —
-//   $unwind option was `preserveNullAndEmpty` (invalid).
-//   Correct field name is `preserveNullAndEmptyArrays`.
+// List + chart aggregations respect ?range= (including 24h).
 import { NextRequest, NextResponse } from 'next/server';
 import { MongoDB } from '&/mongodb';
-import { requireAdminSession } from '&/adminAuth';
+import { requireAdminSession, sessionIsDemo } from '&/adminAuth';
+import { fillSeries, getRangeDate, seriesDateFormat, type SeriesPoint } from '&/adminRange';
+import { getDemoLeadsList } from '&/demoAdminData';
 
 const TX_COORDS: Record<string, [number, number]> = {
   'Waco': [-97.1467, 31.5493], 'Hewitt': [-97.1958, 31.4604],
@@ -34,11 +34,23 @@ export async function GET(req: NextRequest) {
     const search  = searchParams.get('search')  ?? '';
     const sort    = searchParams.get('sort')    ?? 'submittedAt';
     const dir     = searchParams.get('dir')     === 'asc' ? 1 : -1;
+    const range   = searchParams.get('range')   ?? '30d';
 
-    const db     = await MongoDB.getDb();
+    const sinceDate = getRangeDate(range);
+    if (!sinceDate) {
+      return NextResponse.json({ error: 'Invalid range. Use 24h, 7d, 14d, 30d, 49d, or 90d.' }, { status: 400 });
+    }
+
+    if (sessionIsDemo(session)) {
+      return NextResponse.json(getDemoLeadsList(range, page, limit, status, search));
+    }
+
+    const db          = await MongoDB.getDb();
+    const dateFormat  = seriesDateFormat(range);
+    const rangeFilter = { submittedAt: { $gte: sinceDate } };
+
+    // Table list filters (search/status) — independent of chart window
     const filter: Record<string, any> = {};
-    // ✅ NO isDevTest filter — all leads shown, dev entries get a DEV badge
-
     if (status)  filter.status   = status;
     if (service) filter.services = { $elemMatch: { $regex: service, $options: 'i' } };
     if (search) {
@@ -53,9 +65,6 @@ export async function GET(req: NextRequest) {
 
     const allowedSortFields = ['submittedAt', 'name', 'status', 'ipCity', 'journeyLength'];
     const sortField = allowedSortFields.includes(sort) ? sort : 'submittedAt';
-
-    const since30 = new Date();
-    since30.setDate(since30.getDate() - 30);
 
     const [
       leads,
@@ -73,22 +82,21 @@ export async function GET(req: NextRequest) {
         .toArray(),
 
       db.collection('Leads').countDocuments(filter),
-
       db.collection('Leads').countDocuments({ ...filter, isDevTest: true }),
 
-      // Leads per day — last 30d, no search/status filter for full picture
+      // Charts always use the selected range (not search/status) for a true picture
       db.collection('Leads').aggregate([
-        { $match: { submittedAt: { $gte: since30 } } },
+        { $match: rangeFilter },
         { $group: {
-          _id:   { $dateToString: { format: '%Y-%m-%d', date: '$submittedAt' } },
+          _id:   { $dateToString: { format: dateFormat, date: '$submittedAt' } },
           count: { $sum: 1 },
         }},
         { $sort: { _id: 1 } },
         { $project: { date: '$_id', count: 1, _id: 0 } },
       ]).toArray(),
 
-      // Leads by service — ✅ FIXED: preserveNullAndEmptyArrays (was preserveNullAndEmpty)
       db.collection('Leads').aggregate([
+        { $match: rangeFilter },
         { $unwind: { path: '$services', preserveNullAndEmptyArrays: false } },
         { $group: { _id: '$services', count: { $sum: 1 } } },
         { $sort: { count: -1 } },
@@ -96,8 +104,8 @@ export async function GET(req: NextRequest) {
         { $project: { label: '$_id', count: 1, _id: 0 } },
       ]).toArray(),
 
-      // Leads by city
       db.collection('Leads').aggregate([
+        { $match: { ...rangeFilter, ipCity: { $nin: ['Unknown', null, ''] } } },
         { $group: { _id: '$ipCity', count: { $sum: 1 } } },
         { $sort: { count: -1 } },
         { $limit: 20 },
@@ -105,7 +113,8 @@ export async function GET(req: NextRequest) {
       ]).toArray(),
     ]);
 
-    // Enrich coords, exclude Unknown/null from map
+    const leadsPerDay = fillSeries(range, sinceDate, leadsPerDayRaw as SeriesPoint[]);
+
     const leadsByCity = leadsByCityRaw
       .filter(d => d.city && d.city !== 'Unknown')
       .map(d => {
@@ -114,12 +123,14 @@ export async function GET(req: NextRequest) {
       });
 
     return NextResponse.json({
+      range,
+      since: sinceDate.toISOString(),
       leads,
       total,
       totalDev,
       page,
       pages:          Math.ceil(total / limit),
-      leadsPerDay:    leadsPerDayRaw,
+      leadsPerDay,
       leadsByService: leadsByServiceRaw,
       leadsByCity,
     });
