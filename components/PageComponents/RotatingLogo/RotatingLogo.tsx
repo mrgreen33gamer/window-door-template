@@ -26,7 +26,7 @@ const RotatingLogo: React.FC<RotatingLogoProps> = ({ size = 90, duration = 10 })
           height={innerSize}
           style={{ objectFit: 'contain' }}
           src="/logos/parts/inner.png?v=1"
-          alt="Scott Applications – Center Logo"
+          alt="ClearView Windows & Doors – Center Logo"
         />
       </section>
       <motion.section
@@ -42,7 +42,7 @@ const RotatingLogo: React.FC<RotatingLogoProps> = ({ size = 90, duration = 10 })
           height={size}
           style={{ objectFit: 'contain' }}
           src="/logos/parts/outsideLogo.png?v=3"
-          alt="Scott Applications – Outer Logo"
+          alt="ClearView Windows & Doors – Outer Logo"
         />
       </motion.section>
     </div>

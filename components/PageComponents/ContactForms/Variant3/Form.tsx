@@ -77,7 +77,7 @@ export default function Variant3({ title, cityName, slug, spot, formVariant }: V
               <polyline points="8 6 12 2 16 6"/><polyline points="8 18 12 22 16 18"/>
               <polyline points="6 8 2 12 6 16"/><polyline points="18 8 22 12 18 16"/>
             </svg>
-            Arctic Air HVAC
+            ClearView Windows & Doors
           </span>
           <span className={styles.railDivider} aria-hidden="true" />
           <span className={styles.railLabel}>{cityName}, TX · Free Estimate</span>

@@ -21,43 +21,43 @@ interface TechStackProps {
 
 const DEFAULT_GROUPS: BrandGroup[] = [
   {
-    label: 'Equipment Brands We Service',
+    label: 'Window & Door Brands We Install',
     items: [
-      { name: 'Carrier',     type: 'brand', icon: '❄️' },
-      { name: 'Trane',       type: 'brand', icon: '❄️' },
-      { name: 'Lennox',      type: 'brand', icon: '❄️' },
-      { name: 'Rheem',       type: 'brand', icon: '❄️' },
-      { name: 'Goodman',     type: 'brand', icon: '❄️' },
-      { name: 'York',        type: 'brand', icon: '❄️' },
-      { name: 'Daikin',      type: 'brand', icon: '❄️' },
-      { name: 'American Standard', type: 'brand', icon: '❄️' },
+      { name: 'Pella',       type: 'brand', icon: '⚡' },
+      { name: 'Andersen',        type: 'brand', icon: '⚡' },
+      { name: 'Marvin',          type: 'brand', icon: '⚡' },
+      { name: 'Milgard',             type: 'brand', icon: '⚡' },
+      { name: 'Therma-Tru',        type: 'brand', icon: '⚡' },
+      { name: 'ProVia',         type: 'brand', icon: '⚡' },
+      { name: 'Simonton',        type: 'brand', icon: '⚡' },
+      { name: 'Ply Gem', type: 'brand', icon: '⚡' },
     ],
   },
   {
     label: 'Certifications & Licenses',
     items: [
-      { name: 'NATE Certified',      type: 'cert', icon: '✓' },
-      { name: 'TDLR Licensed',       type: 'cert', icon: '✓' },
-      { name: 'EPA 608 Certified',   type: 'cert', icon: '✓' },
-      { name: 'Fully Insured',       type: 'cert', icon: '✓' },
+      { name: 'Factory-Certified',        type: 'cert', icon: '✓' },
+      { name: 'Lead Installer',   type: 'cert', icon: '✓' },
+      { name: 'Bonded & Insured',     type: 'cert', icon: '✓' },
+      { name: '10-Year Installation Warranty',      type: 'cert', icon: '✓' },
     ],
   },
   {
-    label: 'System Types',
+    label: 'Service Types',
     items: [
-      { name: 'Central AC',          type: 'tool', icon: '🌡️' },
-      { name: 'Heat Pumps',          type: 'tool', icon: '🌡️' },
-      { name: 'Mini-Splits',         type: 'tool', icon: '🌡️' },
-      { name: 'Gas Furnaces',        type: 'tool', icon: '🌡️' },
-      { name: 'Duct Systems',        type: 'tool', icon: '🌡️' },
-      { name: 'Air Handlers',        type: 'tool', icon: '🌡️' },
+      { name: 'Window Replacement',       type: 'tool', icon: '🔌' },
+      { name: 'Entry Doors',    type: 'tool', icon: '🔌' },
+      { name: 'Patio Doors',      type: 'tool', icon: '🔌' },
+      { name: 'Storm Windows',          type: 'tool', icon: '🔌' },
+      { name: 'Energy Upgrades',           type: 'tool', icon: '🔌' },
+      { name: 'Window Repair',      type: 'tool', icon: '🔌' },
     ],
   },
 ];
 
 const TechStack: React.FC<TechStackProps> = ({
-  title    = 'All Brands, All Systems',
-  subtitle = 'We service every major brand and system type — no brand-specific limitations, no excuses.',
+  title    = 'Factory-Certified Work, Premium Products',
+  subtitle = 'We install leading window and door brands — factory-certified crews, no shortcuts on flashing or materials.',
   groups   = DEFAULT_GROUPS,
 }) => {
   return (

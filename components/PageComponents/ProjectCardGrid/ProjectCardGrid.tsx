@@ -98,13 +98,13 @@ const cardVariants = {
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 /**
  * Convert a filename like "hot-rocks-logo-design.jpg"
- * → "Hot Rocks Logo Design — Scott Applications Graphic Design Portfolio"
+ * → "Hot Rocks Logo Design — ClearView Windows & Doors Graphic Design Portfolio"
  */
 function fileToAlt(filename: string): string {
   const stem = filename.replace(/\.[^.]+$/, '');           // strip extension
   const words = stem.replace(/[-_]/g, ' ')                 // dashes → spaces
     .replace(/\b\w/g, (c) => c.toUpperCase());             // title case
-  return `${words} — Scott Applications Graphic Design Portfolio`;
+  return `${words} — ClearView Windows & Doors Graphic Design Portfolio`;
 }
 
 // ─── Image Carousel ───────────────────────────────────────────────────────────

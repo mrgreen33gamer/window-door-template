@@ -19,7 +19,7 @@ interface WhyChooseUsProps {
 export default function WhyChooseUs({
   cityName,
   features,
-  title = 'Why Central Texas Chooses Arctic Air',
+  title = 'Why Central Texas Chooses ClearView',
 }: WhyChooseUsProps) {
   return (
     <section className={styles.section} aria-label="Why choose us">
@@ -32,10 +32,10 @@ export default function WhyChooseUs({
           viewport={{ once: true }}
           transition={{ duration: 0.55 }}
         >
-          <span className={styles.eyebrow}>The Arctic Air Difference</span>
+          <span className={styles.eyebrow}>The ClearView Difference</span>
           <h2 className={styles.title}>{title}</h2>
           <p className={styles.subtitle}>
-            There's no shortage of HVAC companies in {cityName}. Here's why thousands of homeowners call us first.
+            There's no shortage of installers in {cityName}. Here's why thousands of homeowners call us first.
           </p>
         </motion.div>
 

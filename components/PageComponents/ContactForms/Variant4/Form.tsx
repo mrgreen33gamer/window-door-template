@@ -22,16 +22,16 @@ interface Variant4Props {
 }
 
 const SERVICES = [
-  { icon: faFan,             label: 'AC Repair',        sub: 'System not cooling, strange noises' },
-  { icon: faFire,            label: 'Heating / Furnace', sub: 'Heat not working, furnace issues' },
-  { icon: faWrench,          label: 'New Installation',  sub: 'Replace or add a new system' },
-  { icon: faFilter,          label: 'Duct Cleaning',     sub: 'Improve airflow & air quality' },
-  { icon: faThermometerHalf, label: 'Maintenance',       sub: 'Tune-up, inspection, seasonal' },
-  { icon: faWind,            label: 'Air Quality',       sub: 'Filters, purifiers, humidity' },
-  { icon: faBolt,            label: 'Emergency',         sub: 'System down, urgent repair needed' },
+  { icon: faFan,             label: 'Window Replacement',        sub: 'System not cooling, strange noises' },
+  { icon: faFire,            label: 'Entry Doors', sub: 'Heat not working, furnace issues' },
+  { icon: faWrench,          label: 'Patio Doors',  sub: 'Replace or add a new system' },
+  { icon: faFilter,          label: 'Storm Windows',     sub: 'Improve airflow & air quality' },
+  { icon: faThermometerHalf, label: 'Window Repair',       sub: 'Tune-up, inspection, seasonal' },
+  { icon: faWind,            label: 'Energy Upgrades',       sub: 'Filters, purifiers, humidity' },
+  { icon: faBolt,            label: 'Free Estimate',         sub: 'System down, urgent repair needed' },
 ];
 
-const BUDGET_LABELS = ['Under $500', '$500–$1,500', '$1,500–$5,000', '$5,000–$10,000', '$10,000+'];
+const BUDMilgardT_LABELS = ['Under $500', '$500–$1,500', '$1,500–$5,000', '$5,000–$10,000', '$10,000+'];
 
 const slideVariants = {
   enter:  (dir: number) => ({ x: dir > 0 ? 50 : -50, opacity: 0 }),
@@ -77,7 +77,7 @@ export default function Variant4({ title, cityName, slug, spot, formVariant }: V
       const res = await fetch('/api/submitContact', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          ...formData, serviceType: selectedService, budget: BUDGET_LABELS[budget],
+          ...formData, serviceType: selectedService, budget: BUDMilgardT_LABELS[budget],
           cityName, slug, spot, formVariant, recaptchaToken: token, ...journeyContext,
         }),
       });
@@ -143,11 +143,11 @@ export default function Variant4({ title, cityName, slug, spot, formVariant }: V
                   </div>
                   <h3 className={styles.successTitle}>You're All Set!</h3>
                   <p className={styles.successText}>
-                    A licensed Arctic Air tech will reach out about your <strong>{selectedService}</strong> service.
+                    A ClearView specialist will reach out about your <strong>{selectedService}</strong> service.
                   </p>
                   <div className={styles.successSummary}>
                     <div className={styles.summaryRow}><span>Service</span><span>{selectedService}</span></div>
-                    <div className={styles.summaryRow}><span>Budget</span><span>{BUDGET_LABELS[budget]}</span></div>
+                    <div className={styles.summaryRow}><span>Budget</span><span>{BUDMilgardT_LABELS[budget]}</span></div>
                     <div className={styles.summaryRow}><span>Location</span><span>{cityName}, TX</span></div>
                   </div>
                 </motion.div>
@@ -183,7 +183,7 @@ export default function Variant4({ title, cityName, slug, spot, formVariant }: V
                   <div className={styles.budgetBlock}>
                     <div className={styles.budgetHeader}>
                       <span className={styles.budgetLabel}>Estimated Budget</span>
-                      <span className={styles.budgetValue}>{BUDGET_LABELS[budget]}</span>
+                      <span className={styles.budgetValue}>{BUDMilgardT_LABELS[budget]}</span>
                     </div>
                     <input type="range" min={0} max={4} step={1} value={budget}
                       onChange={e => setBudget(Number(e.target.value))}
@@ -216,7 +216,7 @@ export default function Variant4({ title, cityName, slug, spot, formVariant }: V
                     </button>
                     <div className={styles.selectionBadges}>
                       <span className={styles.selBadge}>{selectedService}</span>
-                      <span className={styles.selBadge}>{BUDGET_LABELS[budget]}</span>
+                      <span className={styles.selBadge}>{BUDMilgardT_LABELS[budget]}</span>
                     </div>
                   </div>
 

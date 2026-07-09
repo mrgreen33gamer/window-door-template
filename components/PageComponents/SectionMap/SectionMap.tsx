@@ -97,7 +97,7 @@ export default function SectionMap() {
       hqEl.appendChild(hqDot);
       new mapboxgl.Marker({ element: hqEl, anchor: 'center' })
         .setLngLat([-97.1315, 31.5548])
-        .setPopup(new mapboxgl.Popup().setHTML('<strong>Scott Applications HQ</strong><br>212 Dallas St, Waco, Texas 76704'))
+        .setPopup(new mapboxgl.Popup().setHTML('<strong>ClearView Windows & Doors HQ</strong><br>501 Lake Air Dr, Waco, TX 76710'))
         .addTo(currentMap);
 
       // ── CLIENT MARKERS ────────────────────────────
@@ -222,7 +222,7 @@ export default function SectionMap() {
       </div>
 
       <div className={styles.mapLegend}>
-        <div><span className={styles.hqDot} /> Scott Applications HQ – Waco</div>
+        <div><span className={styles.hqDot} /> ClearView Windows & Doors HQ – Waco</div>
         <div><span className={styles.clientDot} /> Clients &amp; Towns Serviced</div>
       </div>
 

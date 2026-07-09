@@ -14,7 +14,7 @@ interface FAQProps {
   title?:   string;
 }
 
-export default function FAQ({ cityName, faq, title = 'HVAC Service FAQs' }: FAQProps) {
+export default function FAQ({ cityName, faq, title = 'Window & Door FAQs' }: FAQProps) {
   const [open, setOpen] = useState<number | null>(null);
 
   return (

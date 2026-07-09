@@ -36,10 +36,10 @@ export default function IndustryPainPoints({
         <div className={styles.header}>
           <span className={styles.eyebrow}>Sound familiar?</span>
           <h2 className={styles.headline}>
-            The digital problems most <em>{industry}</em> businesses are stuck with
+            The window and door challenges most <em>{industry}</em> businesses are stuck with
           </h2>
           <p className={styles.subline}>
-            These aren&apos;t abstract problems — they&apos;re costing real jobs, real leads, and real revenue every week.
+            These aren&apos;t abstract problems — they&apos;re costing real vacancy days, callbacks, and budget overruns every month.
           </p>
         </div>
 

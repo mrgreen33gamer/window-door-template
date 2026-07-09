@@ -39,7 +39,7 @@ const LocalServiceAreas: React.FC<LocalServiceAreasProps> = ({
           <span className={styles.eyebrow}>Service Coverage</span>
           <h2 className={styles.title}>{title}</h2>
           <p className={styles.subtitle}>
-            From {cityName} to every surrounding community — we're your local HVAC team.
+            From {cityName} to every surrounding community — we're your local electrical team.
           </p>
         </motion.div>
 

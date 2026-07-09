@@ -22,16 +22,9 @@ import styles from './styles.module.scss';
 // Each entry maps to an existing /industries/* route.
 // Add / remove entries here as new industry pages are created.
 const INDUSTRIES = [
-  { slug: 'automotive',    label: 'Automotive',    icon: faCar },
-  { slug: 'aviation',      label: 'Aviation',      icon: faPlane },
-  { slug: 'construction',  label: 'Construction',  icon: faHardHat },
-  { slug: 'electrical',    label: 'Electrical',    icon: faBolt },
-  { slug: 'finance',       label: 'Finance',       icon: faLandmark },
-  { slug: 'hvac',          label: 'HVAC',          icon: faFan },
-  { slug: 'manufacturing', label: 'Manufacturing', icon: faIndustry },
-  { slug: 'oil-gas',       label: 'Oil & Gas',     icon: faOilWell },
-  { slug: 'plumbing',      label: 'Plumbing',      icon: faWrench },
-  { slug: 'roofing',       label: 'Roofing',       icon: faHouse },
+  { slug: 'homebuilders',            label: 'Homebuilders',            icon: faHardHat },
+  { slug: 'property-management',     label: 'Property Management',     icon: faHouse },
+  { slug: 'commercial-storefronts',  label: 'Commercial Storefronts',  icon: faIndustry },
 ];
 
 interface SectionIndustriesServedProps {
@@ -50,7 +43,7 @@ interface SectionIndustriesServedProps {
 
 export default function SectionIndustriesServed({
   title = 'Industries We Serve Across Texas',
-  subtitle = 'Specialised digital solutions — built for how your industry actually works.',
+  subtitle = 'Window and door programs — built for how your industry actually works.',
   disableLinks = false,
 }: SectionIndustriesServedProps) {
   return (

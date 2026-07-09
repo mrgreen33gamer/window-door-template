@@ -78,11 +78,11 @@ const ServicesPage: React.FC<SectionProps> = ({ direction, variants, handleDragE
         <Link href="/services/graphic-design">Graphic Design Services in Central Texas</Link>
         <Link href="/services/software-engineering">Custom Software Development Waco TX</Link>
         <Link href="/services/marketing-solutions">Digital Marketing Services Waco TX</Link>
-        <Link href="/services">All Services — Scott Applications</Link>
+        <Link href="/services">All Services — ClearView Windows & Doors</Link>
       </nav>
 
       <span id={styles.backgroundImage}>
-        <Image quality={100} fill style={{ objectFit: 'cover' }} sizes="100vw" src='/pages/home/services/background-image.png?v=3' alt="Background Image for Services Page - Scott Applications - Background" />
+        <Image quality={100} fill style={{ objectFit: 'cover' }} sizes="100vw" src='/pages/home/services/background-image.png?v=3' alt="Background Image for Services Page - ClearView Windows & Doors - Background" />
       </span>
       <div className={styles.wheelContainer} style={{ width: `${containerSizeVmin}vmin`, height: `${containerSizeVmin}vmin` }}>
         <svg className={styles.linesSvg} viewBox="0 0 100 100">
@@ -215,7 +215,7 @@ const CircleCard: React.FC<{
           sizes="(max-width: 768px) 100vw, 300px"
           src={imgSrc}
           quality={100}
-          alt={`${imgAlt} - Scott Applications LLC - Waco TX`}
+          alt={`${imgAlt} - ClearView Windows & Doors - Waco TX`}
         />
       </motion.div>
     </motion.div>
@@ -265,7 +265,7 @@ const GridCard: React.FC<{
             sizes="(max-width: 768px) 100vw, 300px"
             src={imgSrc}
             quality={100}
-            alt={`${imgAlt} - Scott Applications LLC - Waco TX`}
+            alt={`${imgAlt} - ClearView Windows & Doors - Waco TX`}
           />
         </motion.div>
       </div>

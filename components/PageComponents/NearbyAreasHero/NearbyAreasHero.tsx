@@ -26,9 +26,9 @@ export default function NearbyAreasHero({
   ctaText  = 'Schedule Service Today',
   ctaLink  = '/contact',
 }: NearbyAreasHeroProps) {
-  const displayHeadline = headline ?? `HVAC Service in ${cityName}, TX`;
+  const displayHeadline = headline ?? `Electrical Service in ${cityName}, TX`;
   const displayDesc     = description ??
-    `Arctic Air HVAC provides fast, reliable heating and cooling service to ${cityName} and all surrounding communities. Licensed technicians, flat-rate pricing, 1-year warranty on every job.`;
+    `ClearView Windows & Doors provides fast, reliable window and door service to ${cityName} and all surrounding communities. Licensed technicians, flat-rate pricing, 2-year warranty on every job.`;
 
   return (
     <section className={styles.section}>
@@ -77,11 +77,11 @@ export default function NearbyAreasHero({
               <polyline points="9 18 15 12 9 6"/>
             </svg>
           </Link>
-          <a href="tel:+12549001234" className={styles.phoneBtn}>
+          <a href="tel:+12547403300" className={styles.phoneBtn}>
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
               <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.17 12a19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 3.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
             </svg>
-            (254) 900-1234
+            (254) 740-3300
           </a>
         </motion.div>
 

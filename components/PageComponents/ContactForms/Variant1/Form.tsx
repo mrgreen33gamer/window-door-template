@@ -38,21 +38,21 @@ interface Variant1Props {
 }
 
 const SERVICES = [
-  { icon: faFan,             label: 'AC Repair' },
-  { icon: faFire,            label: 'Heating / Furnace' },
-  { icon: faWrench,          label: 'New Installation' },
-  { icon: faFilter,          label: 'Duct Cleaning' },
-  { icon: faThermometerHalf, label: 'Maintenance' },
-  { icon: faWind,            label: 'Air Quality' },
-  { icon: faBolt,            label: 'Emergency' },
+  { icon: faFan,             label: 'Window Replacement' },
+  { icon: faFire,            label: 'Entry Doors' },
+  { icon: faWrench,          label: 'Patio Doors' },
+  { icon: faFilter,          label: 'Storm Windows' },
+  { icon: faThermometerHalf, label: 'Window Repair' },
+  { icon: faWind,            label: 'Energy Upgrades' },
+  { icon: faBolt,            label: 'Free Estimate' },
 ];
 
 // Compact trust chips (replaces standalone .trustStrip block)
 const TRUST_CHIPS = [
   { icon: faClock,        text: 'Same-day available' },
   { icon: faTag,          text: 'Flat-rate pricing' },
-  { icon: faShieldHalved, text: 'NATE · TDLR' },
-  { icon: faStar,         text: '4.9★ · 300+ reviews' },
+  { icon: faShieldHalved, text: 'Factory-Certified · Insured' },
+  { icon: faStar,         text: '4.9★ · 650+ reviews' },
 ];
 
 export default function Variant1({ title, cityName, slug, spot, formVariant }: Variant1Props) {
@@ -133,7 +133,7 @@ export default function Variant1({ title, cityName, slug, spot, formVariant }: V
                 </div>
                 <h3 className={styles.successTitle}>Request Received!</h3>
                 <p className={styles.successText}>
-                  A licensed Arctic Air technician will reach out shortly. Keep an eye on your inbox and phone.
+                  A ClearView specialistnician will reach out shortly. Keep an eye on your inbox and phone.
                 </p>
                 <div className={styles.successBadges}>
                   <span>✓ Flat-rate quote</span>
@@ -206,9 +206,9 @@ export default function Variant1({ title, cityName, slug, spot, formVariant }: V
                     <div className={styles.altContact}>
                       <FontAwesomeIcon icon={faPhone} />
                       <span>Need help now?{' '}
-                        <a href="tel:+12549001234"
-                          onClick={() => trackEvent({ eventType: 'phone_click', elementLabel: 'Call (254) 900-1234', section: 'ContactForm-V1' })}>
-                          Call (254) 900-1234
+                        <a href="tel:+12547403300"
+                          onClick={() => trackEvent({ eventType: 'phone_click', elementLabel: 'Call (254) 740-3300', section: 'ContactForm-V1' })}>
+                          Call (254) 740-3300
                         </a>
                       </span>
                     </div>

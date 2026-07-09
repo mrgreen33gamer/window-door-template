@@ -26,7 +26,7 @@ export default function BlogHero({
   category,
   date,
   readTime,
-  authorName = 'Scott Applications',
+  authorName = 'ClearView Windows & Doors',
 }: BlogHeroProps) {
   return (
     <motion.header

@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import styles from './styles.module.scss';
 
-// ── Snow canvas ───────────────────────────────────────────────────────────────
+// ── Electric-spark canvas ─────────────────────────────────────────────────────
 function ParticleCanvas() {
   const ref = useRef<HTMLCanvasElement>(null);
   useEffect(() => {
@@ -24,10 +24,10 @@ function ParticleCanvas() {
       pts.forEach(p => {
         ctx.save(); ctx.globalAlpha = p.o;
         if (p.flake) {
-          ctx.strokeStyle = '#16def9'; ctx.lineWidth = 0.6;
+          ctx.strokeStyle = '#7c3aed'; ctx.lineWidth = 0.6;
           ctx.translate(p.x, p.y);
           for (let i = 0; i < 6; i++) { ctx.rotate(Math.PI / 3); ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(0, p.r * 3.2); ctx.stroke(); }
-        } else { ctx.fillStyle = '#16def9'; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill(); }
+        } else { ctx.fillStyle = '#7c3aed'; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill(); }
         ctx.restore();
         p.x += p.vx; p.y += p.vy;
         if (p.y > canvas.height + 10) { p.y = -10; p.x = Math.random() * canvas.width; }
@@ -42,13 +42,12 @@ function ParticleCanvas() {
   return <canvas ref={ref} className={styles.particleCanvas} aria-hidden="true" />;
 }
 
-// ── Thermometer ───────────────────────────────────────────────────────────────
+// ── Power meter ───────────────────────────────────────────────────────────────
 function TempMeter() {
   const [fill, setFill] = useState(0);
-  useEffect(() => { const t = setTimeout(() => setFill(72), 750); return () => clearTimeout(t); }, []);
+  useEffect(() => { const t = setTimeout(() => setFill(88), 750); return () => clearTimeout(t); }, []);
   return (
     <div className={styles.thermo} aria-hidden="true">
-      {/* tube + bulb stacked in normal flow → reliable centering */}
       <div className={styles.thermoColumn}>
         <div className={styles.thermoTube}>
           <motion.div
@@ -60,17 +59,16 @@ function TempMeter() {
         </div>
         <div className={styles.thermoBulb} />
       </div>
-      {/* labels aligned to tube height */}
       <div className={styles.thermoLabels}>
-        <span className={styles.thermoTop}>110°F</span>
+        <span className={styles.thermoTop}>Low-E</span>
         <span className={styles.thermoMid}>Waco, TX</span>
-        <span className={styles.thermoBot}>32°F</span>
+        <span className={styles.thermoBot}>Single-Pane</span>
       </div>
     </div>
   );
 }
 
-const CHIPS = ['Same-Day Service', 'No Contracts', 'NATE Certified', '15+ Yrs Local', '1-Yr Warranty'];
+const CHIPS = ['Free Measurements', 'No Contracts', 'Factory-Certified', '14+ Yrs Local', '10-Yr Install Warranty'];
 
 export default function WelcomePage() {
   return (
@@ -80,37 +78,36 @@ export default function WelcomePage() {
 
       <div className={styles.layout}>
 
-        {/* LEFT ── text */}
         <div className={styles.content}>
           <motion.div className={styles.badge}
             initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}>
             <span className={styles.badgeDot} />
-            Waco&apos;s Most Trusted HVAC — Since 2010
+            Waco&apos;s Most Trusted Window &amp; Door Company — Since 2012
           </motion.div>
 
           <motion.h1 className={styles.headline}
             initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}>
-            Stay Cool.<br />Stay Warm.<br />
-            <span className={styles.accentLine}>Arctic Air.</span>
+            Clearer Views.<br />Lower Bills.<br />
+            <span className={styles.accentLine}>ClearView.</span>
           </motion.h1>
 
           <motion.p className={styles.sub}
             initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55, delay: 0.22 }}>
-            Flat-rate pricing. Same-day service. 1-year warranty on every repair.
-            Serving Waco and Central Texas with licensed, NATE-certified technicians.
+            Flat-rate pricing. Free in-home measurements. Lifetime Product Warranty Support + 10-Year Installation Warranty.
+            Serving Waco and Central Texas with factory-certified installers.
           </motion.p>
 
           <motion.div className={styles.ctaRow}
             initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.34 }}>
-            <a href="tel:+12549001234" className={styles.ctaPrimary}>
+            <a href="tel:+12547403300" className={styles.ctaPrimary}>
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                 <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.17 12a19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 3.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
               </svg>
-              Call (254) 900-1234
+              Call (254) 740-3300
             </a>
             <Link href="/contact" className={styles.ctaSecondary}>
               Free Estimate
@@ -134,36 +131,27 @@ export default function WelcomePage() {
           </motion.div>
         </div>
 
-        {/* RIGHT ── visual widget */}
         <motion.div
           className={styles.visual}
           initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.7, delay: 0.28, ease: 'easeOut' }}
           aria-hidden="true"
         >
-          {/* bg snowflake */}
           <motion.div className={styles.bgFlake}
             animate={{ rotate: 360 }}
             transition={{ duration: 65, repeat: Infinity, ease: 'linear' }}>
             <svg width="420" height="420" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="0.3" strokeLinecap="round">
-              <line x1="12" y1="2" x2="12" y2="22"/>
-              <line x1="2" y1="12" x2="22" y2="12"/>
-              <polyline points="8 6 12 2 16 6"/>
-              <polyline points="8 18 12 22 16 18"/>
-              <polyline points="6 8 2 12 6 16"/>
-              <polyline points="18 8 22 12 18 16"/>
+              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
             </svg>
           </motion.div>
 
-          {/* ── stat card: systems serviced — upper left ── */}
           <motion.div className={`${styles.statCard} ${styles.sc1}`}
             initial={{ opacity: 0, y: -10, scale: 0.9 }} animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ delay: 1.05, type: 'spring', stiffness: 240, damping: 18 }}>
-            <span className={styles.scNum}>2,400+</span>
-            <span className={styles.scLbl}>Systems Serviced</span>
+            <span className={styles.scNum}>3,500+</span>
+            <span className={styles.scLbl}>Installs Completed</span>
           </motion.div>
 
-          {/* ── stat card: rating — upper right ── */}
           <motion.div className={`${styles.statCard} ${styles.sc2}`}
             initial={{ opacity: 0, y: -10, scale: 0.9 }} animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ delay: 1.2, type: 'spring', stiffness: 240, damping: 18 }}>
@@ -171,18 +159,15 @@ export default function WelcomePage() {
             <span className={styles.scLbl}>Google Rating</span>
           </motion.div>
 
-          {/* ── thermometer — dead center ── */}
           <TempMeter />
 
-          {/* ── stat card: warranty — lower left ── */}
           <motion.div className={`${styles.statCard} ${styles.sc3}`}
             initial={{ opacity: 0, y: 10, scale: 0.9 }} animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ delay: 1.35, type: 'spring', stiffness: 240, damping: 18 }}>
-            <span className={styles.scNum}>1-Year</span>
-            <span className={styles.scLbl}>Warranty Included</span>
+            <span className={styles.scNum}>10-Year</span>
+            <span className={styles.scLbl}>Install Warranty</span>
           </motion.div>
 
-          {/* ── stat card: same-day — lower right, orange ── */}
           <motion.div className={`${styles.statCard} ${styles.sc4} ${styles.scOrange}`}
             initial={{ opacity: 0, y: 10, scale: 0.9 }} animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ delay: 1.5, type: 'spring', stiffness: 240, damping: 18 }}>

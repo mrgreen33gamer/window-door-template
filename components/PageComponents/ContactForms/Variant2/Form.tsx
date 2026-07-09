@@ -22,13 +22,13 @@ interface Variant2Props {
 }
 
 const SERVICES = [
-  { icon: faFan,             label: 'AC Repair' },
-  { icon: faFire,            label: 'Heating / Furnace' },
-  { icon: faWrench,          label: 'New Installation' },
-  { icon: faFilter,          label: 'Duct Cleaning' },
-  { icon: faThermometerHalf, label: 'Maintenance' },
-  { icon: faWind,            label: 'Air Quality' },
-  { icon: faBolt,            label: 'Emergency' },
+  { icon: faFan,             label: 'Window Replacement' },
+  { icon: faFire,            label: 'Entry Doors' },
+  { icon: faWrench,          label: 'Patio Doors' },
+  { icon: faFilter,          label: 'Storm Windows' },
+  { icon: faThermometerHalf, label: 'Window Repair' },
+  { icon: faWind,            label: 'Energy Upgrades' },
+  { icon: faBolt,            label: 'Free Estimate' },
 ];
 
 export default function Variant2({ title, cityName, slug, spot, formVariant }: Variant2Props) {
@@ -95,7 +95,7 @@ export default function Variant2({ title, cityName, slug, spot, formVariant }: V
               <p className={styles.quoteText}>
                 "Flat price. Show up on time. Fix it right. That's all anyone ever wants — and that's exactly what we do."
               </p>
-              <span className={styles.quoteAttrib}>— Arctic Air HVAC, Waco TX</span>
+              <span className={styles.quoteAttrib}>— ClearView Windows & Doors, Waco TX</span>
 
               <div className={styles.panelStats}>
                 {[
@@ -111,7 +111,7 @@ export default function Variant2({ title, cityName, slug, spot, formVariant }: V
               </div>
 
               <div className={styles.panelBadges}>
-                {['Same-Day Available', '1-Year Warranty', 'No Contracts', 'NATE Certified'].map(b => (
+                {['Same-Day Available', '10-Year Install Warranty', 'No Contracts', 'Factory-Certified'].map(b => (
                   <span key={b} className={styles.panelBadge}>
                     <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>
                     {b}
