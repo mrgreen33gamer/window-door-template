@@ -1,0 +1,258 @@
+/* src/app/globals.css */
+/*
+  FONT LOADING (next/font/google in layout.tsx):
+    - Barlow_Condensed → --font-barlow-condensed → $titleFont  (h1, hero display)
+    - Outfit           → --font-outfit           → $headerFont (h2-h6, nav, buttons, labels)
+    - Inter            → --font-inter            → $textFont   (body, p, form text, small)
+
+  HOW TO UPDATE layout.tsx:
+  ─────────────────────────
+  import { Barlow_Condensed, Inter, Outfit } from 'next/font/google';
+
+  const barlowCondensed = Barlow_Condensed({
+    subsets: ['latin'], weight: ['400','500','600','700'],
+    variable: '--font-barlow-condensed', display: 'swap',
+  });
+  const outfit = Outfit({
+    subsets: ['latin'], weight: ['400','500','600','700','800'],
+    variable: '--font-outfit', display: 'swap',
+  });
+  const inter = Inter({
+    subsets: ['latin'], variable: '--font-inter', display: 'swap',
+  });
+
+  // In your <html> tag:
+  // <html lang="en" className={`${barlowCondensed.variable} ${outfit.variable} ${inter.variable}`}>
+*/
+
+/* ── CSS VARIABLE WIRING ──────────────────────────────────────────────────── */
+:root {
+  --font-barlow-condensed: 'Barlow Condensed', sans-serif;
+  --font-outfit:           'Outfit', sans-serif;
+  --font-inter:            'Inter', sans-serif;
+
+  /* Legacy aliases — existing components referencing these still resolve */
+  --font-poppins:     'Outfit', sans-serif;     /* was Inter, now Outfit (closest match) */
+  --font-electrolize: 'Barlow Condensed', sans-serif;
+  --font-bebas:       'Barlow Condensed', sans-serif;
+
+  /* ── Brand bg (mirrors $obsidian in globalVariables.scss) ─────────────────
+     This is the color the iPhone notch, home indicator, and overscroll
+     bounce areas all show. Matches the dark surfaces used across the app
+     (Header, Footer, Hero) so the chrome is seamless with the content. */
+  --brand-bg: #0d1b2a;
+
+  /* ── Safe-area aliases ────────────────────────────────────────────────────
+     Defined as variables so component-level SCSS can reference them
+     (e.g. `padding-top: var(--safe-top)`) without re-typing the env() each
+     time. They resolve to 0 on devices without notches/insets, so they're
+     always safe to apply. */
+  --safe-top:    env(safe-area-inset-top,    0px);
+  --safe-right:  env(safe-area-inset-right,  0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left:   env(safe-area-inset-left,   0px);
+}
+
+/* ── SYSTEMATIC FONT ASSIGNMENT ──────────────────────────────────────────── */
+/*
+  Rule: assign at the element level so every component inherits correctly
+  without needing to declare font-family in every SCSS file individually.
+*/
+
+/* Base — body copy gets Inter */
+html, body {
+  font-family: var(--font-inter), 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Display headings — h1 gets Barlow Condensed */
+h1 {
+  font-family: var(--font-barlow-condensed), 'Barlow Condensed', sans-serif;
+}
+
+/* Section/component headings — h2–h6 get Outfit */
+h2, h3, h4, h5, h6 {
+  font-family: var(--font-outfit), 'Outfit', sans-serif;
+}
+
+/* Navigation — Outfit (matches button/UI font) */
+nav, nav a {
+  font-family: var(--font-outfit), 'Outfit', sans-serif;
+}
+
+/* Buttons — Outfit for UI consistency */
+button, [type="submit"], [type="button"], [role="button"] {
+  font-family: var(--font-outfit), 'Outfit', sans-serif;
+}
+
+/* Form text — Inter for readability */
+input, textarea, select, label {
+  font-family: var(--font-inter), 'Inter', sans-serif;
+}
+
+/* ── RESET & BASE STYLES ──────────────────────────────────────────────────── */
+*, *::before, *::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+/* ── HTML / BODY: FULL-VIEWPORT, SAFE-AREA-AWARE, BRAND-COLORED ──────────────
+   The fix for the "white bars on top and bottom of iPhone" issue.
+
+   What was wrong:
+     - background-color: white  → that white was the color you saw painting
+                                   behind the notch and home indicator on iOS
+                                   (and behind overscroll bounce on every device).
+     - No min-height fallback   → iOS Safari URL bar collapse/expand could
+                                   leave a gap at the bottom when scrolled.
+     - No safe-area handling    → bottom of the page (footer last row) was
+                                   getting tucked under the home indicator,
+                                   so users couldn't see/tap it.
+
+   What's fixed:
+     - Brand obsidian bg paints behind notch + home indicator + overscroll
+       (works in tandem with viewportFit:'cover' set in layout.tsx).
+     - Body uses 100dvh (dynamic viewport — accounts for collapsing URL bar)
+       with 100vh as a fallback for older browsers.
+     - <header> and <footer> get safe-area padding via element selectors
+       below — their bg paints behind the chrome, content sits inside the
+       safe area.
+     - Body itself gets safe-area side padding for landscape iPhone use
+       so content never tucks under the rounded corner / camera bump. */
+html, body {
+  background-color: var(--brand-bg);
+  overflow: hidden;
+  touch-action: pan-y;
+}
+
+html {
+  /* Dynamic viewport heights respect collapsing iOS URL bar so there's never
+     a sliver of body bg peeking through where chrome used to be. */
+  min-height: 100vh;            /* legacy fallback */
+  min-height: 100dvh;           /* modern dynamic viewport */
+  /* Stop iOS bouncing the address bar bg color into the wrong tone on
+     elastic overscroll. Keeps the brand color stable. */
+  background-color: var(--brand-bg);
+}
+
+body {
+  overflow-y: auto !important;
+
+  /* Body owns the scroll (Header.tsx reads document.body.scrollTop), so
+     constrain its height to the dynamic viewport and let it scroll inside.
+     100dvh shrinks/grows with the iOS URL bar so the bottom of the page
+     is always reachable regardless of bar state. */
+  height: 100vh;                /* legacy fallback */
+  height: 100dvh;               /* modern dynamic viewport */
+  min-height: -webkit-fill-available; /* iOS Safari extra fallback */
+
+  /* Side safe-area padding catches the rounded corner / camera bump in
+     landscape orientation. Top/bottom are handled by <header> / <footer>
+     so their bg can paint behind the chrome without leaving a strip. */
+  padding-left:  var(--safe-left);
+  padding-right: var(--safe-right);
+
+  /* iOS overscroll bounce will reveal the html bg behind body — both are
+     set to brand bg so the bounce stays brand-colored, not white/grey. */
+  background-color: var(--brand-bg);
+
+  /* Prevent the entire page from rubber-banding when modals/drawers scroll.
+     Internals can still bounce; the page itself doesn't drag. */
+  overscroll-behavior-y: none;
+}
+
+/* ── SAFE-AREA INSETS FOR HEADER & FOOTER ────────────────────────────────────
+   These selectors target the semantic HTML elements (which Header.tsx and
+   Footer.tsx both use as their root). The element's own background color
+   paints behind the notch / home indicator while the padding pushes the
+   inner content into the safe zone where it's actually tappable.
+
+   This means we DON'T need to touch Header/Footer SCSS to make this work —
+   it just slots in via element selectors. If a particular Header or Footer
+   component has a background that isn't the brand obsidian, that bg will
+   simply paint behind the chrome instead — still better than white. */
+body > header,
+body header[role="banner"] {
+  padding-top: var(--safe-top);
+}
+
+body > footer,
+body footer[role="contentinfo"] {
+  /* This is the fix for "I can't see everything at the bottom of the page".
+     The home indicator on Face-ID iPhones overlaps the bottom 34pt of the
+     screen — without this padding, the last row of the footer was being
+     hidden under it. */
+  padding-bottom: var(--safe-bottom);
+}
+
+/* ── FALLBACK FOR PAGES WITHOUT A FOOTER (e.g. /admin) ───────────────────────
+   ConditionalShell hides Header + Footer on /admin routes. Those pages
+   need their own safe-area floor so their last-element doesn't tuck under
+   the home indicator. We add the inset to the body itself only when the
+   `data-no-shell` flag is set on <html>; if you want this active on admin
+   pages, set <html data-no-shell> in admin/layout.tsx. Until then, it's
+   a no-op that won't affect anything else. */
+html[data-no-shell] body {
+  padding-bottom: var(--safe-bottom);
+}
+
+:focus {
+  background-color: transparent;
+  border: none;
+}
+
+input:focus, textarea:focus {
+  border-radius: 0;
+  border: none;
+}
+
+/* ── iOS form input zoom prevention ──────────────────────────────────────────
+   Safari zooms the viewport when an input has font-size < 16px. That zoom
+   is sticky and can leave the page misaligned with the safe-area calculations
+   after the user dismisses the keyboard. Forcing min 16px on all focusable
+   form elements eliminates the auto-zoom entirely. */
+input, textarea, select {
+  font-size: 16px;
+}
+
+/* Mapbox control hide */
+.mapboxgl-control-container {
+  display: none;
+}
+
+/* Toast — pull above the home indicator so toasts aren't half-hidden. */
+.Toastify__toast {
+  pointer-events: auto;
+}
+
+.Toastify__toast-container {
+  /* Lifts toasts above the bottom safe area. Fallbacks ensure no jump on
+     pre-iOS-11 / non-iOS devices. */
+  padding-bottom: var(--safe-bottom);
+}
+
+@media (max-width: 700px) {
+  .Toastify__toast-container {
+    bottom: 10px;
+    /* Account for home indicator on top of the existing 10px offset. */
+    bottom: calc(10px + var(--safe-bottom));
+    left: auto;
+    width: auto;
+    margin: 0;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+  }
+
+  .Toastify__toast.Toastify__toast {
+    max-width: 300px;
+    width: 100%;
+    align-self: center;
+    bottom: 10px;
+  }
+}

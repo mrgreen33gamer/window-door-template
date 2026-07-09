@@ -1,0 +1,165 @@
+// PageComponents/SectionServices/styles.module.scss
+@use '../../../src/app/globalVariables.scss' as *;
+
+// NO background — parent controls canvas
+.section {
+  padding: clamp(5rem, 8vw, 8rem) 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3.5rem;
+  width: 100%;
+}
+
+// ── HEADER ───────────────────────────────────────
+.headerWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+  text-align: center;
+  max-width: 760px;
+}
+
+.eyebrow {
+  font-family: $textFont;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: $grey;
+}
+
+.sectionTitle {
+  font-family: $titleFont;
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  color: $obsidian;
+  text-align: center;
+  margin: 0;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    width: 56px;
+    height: 3px;
+    background: $green;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 2px;
+  }
+}
+
+// ── GRID ─────────────────────────────────────────
+.servicesGrid {
+  width: 100%;
+  max-width: 1360px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.75rem;
+}
+
+// ── CARD ─────────────────────────────────────────
+.serviceCard {
+  background: $white;
+  border-radius: 20px;
+  padding: 2.25rem 2rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e4e4e0;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  text-decoration: none;
+  color: inherit;
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+    border-color: rgba($green, 0.4);
+  }
+
+  h3 {
+    font-family: $headerFont;
+    font-size: clamp(1.15rem, 2.5vw, 1.35rem);
+    font-weight: 700;
+    color: $obsidian;
+    margin: 0 0 0.85rem;
+    line-height: 1.3;
+    letter-spacing: 0.02em;
+  }
+
+  p {
+    font-family: $textFont;
+    font-size: 1rem;
+    line-height: 1.75;
+    color: $darkgrey;
+    margin: 0;
+    flex-grow: 1;
+  }
+}
+
+// ── ICON ─────────────────────────────────────────
+.iconWrapper {
+  width: 64px;
+  height: 64px;
+  background: rgba($obsidian, 0.08);
+  border: 1px solid rgba($obsidian, 0.18);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  transition: background 0.3s ease;
+
+  .serviceCard:hover & {
+    background: rgba($green, 0.14);
+  }
+}
+
+.serviceIcon {
+  font-size: 1.9rem;
+  color: $obsidian;
+}
+
+// ── LEARN MORE ────────────────────────────────────
+.learnMore {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: $textFont;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: $obsidian;
+  margin-top: 1.5rem;
+  letter-spacing: 0.04em;
+  transition: gap 0.2s ease, color 0.2s ease;
+
+  .serviceCard:hover & {
+    gap: 10px;
+    color: $darkgreen;
+  }
+}
+
+.arrow {
+  font-size: 1rem;
+  transition: transform 0.2s ease;
+
+  .serviceCard:hover & {
+    transform: translateX(3px);
+  }
+}
+
+// ── RESPONSIVE ───────────────────────────────────
+@media (max-width: 768px) {
+  .servicesGrid { gap: 1.25rem; }
+  .serviceCard { padding: 2rem 1.75rem; }
+}
+
+@media (max-width: 480px) {
+  .serviceCard { padding: 1.75rem 1.5rem; }
+  .servicesGrid { grid-template-columns: 1fr; }
+}

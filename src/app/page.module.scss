@@ -1,0 +1,33 @@
+// src/app/page.module.scss
+@use './globalVariables.scss' as *;
+@use 'sass:color';
+
+.pageWrapper {
+  background: $white;
+  min-height: 100vh;
+}
+
+// Standard section vertical rhythm
+.section {
+  margin-bottom: 5rem;
+}
+
+// Dark navy band sections (ImpactMetrics, GuaranteeSection get these)
+.sectionDark {
+  margin-bottom: 0;
+  background: $obsidian;
+}
+
+// Tighter spacing for mid-page separators
+.sectionTight {
+  margin-bottom: 3rem;
+}
+
+@media (max-width: 768px) {
+  .section {
+    margin-bottom: 3.5rem;
+  }
+  .sectionTight {
+    margin-bottom: 2rem;
+  }
+}

@@ -1,0 +1,198 @@
+@use '../../../src/app/globalVariables.scss' as *;
+
+// CaseStudyGrid keeps its dark $obsidian background intentionally —
+// it's a high-impact showcase section. We replace $blue with $green.
+
+.caseSection {
+  padding: clamp(5rem, 8vw, 8rem) 1.5rem;
+  background: $obsidian;
+  position: relative;
+  overflow: hidden;
+
+  // Ambient glow — $green tint instead of $blue
+  &::before {
+    content: '';
+    position: absolute;
+    top: -120px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 900px;
+    height: 500px;
+    background: radial-gradient(ellipse at center, rgba($green, 0.07) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 1300px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+}
+
+// ── HEADER ────────────────────────────────────
+.headerRow {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 640px;
+}
+
+.labelRow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.label {
+  font-family: $textFont;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: $green;
+  white-space: nowrap;
+}
+
+.labelLine {
+  flex: 1;
+  max-width: 80px;
+  height: 1px;
+  background: rgba($green, 0.35);
+}
+
+.title {
+  font-family: $titleFont;
+  font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+  color: $white;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.subtitle {
+  font-family: $textFont;
+  font-size: 1.05rem;
+  color: rgba($white, 0.55);
+  margin: 0;
+  line-height: 1.6;
+}
+
+// ── GRID ──────────────────────────────────────
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 2rem;
+}
+
+// ── CARD ──────────────────────────────────────
+.card {
+  background: rgba($white, 0.04);
+  border: 1px solid rgba($white, 0.08);
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.3s ease-in-out, transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+
+  &:hover {
+    border-color: rgba($green, 0.4);
+    transform: translateY(-6px);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+  }
+}
+
+// ── IMAGE ─────────────────────────────────────
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+.imageOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 40%, rgba($obsidian, 0.55) 100%);
+  z-index: 1;
+}
+
+// Result pill — $green
+.result {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 2;
+  background: $green;
+  color: $obsidian;
+  font-family: $textFont;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 0.35rem 0.9rem;
+  border-radius: 9999px;
+}
+
+// ── CONTENT ───────────────────────────────────
+.content {
+  padding: 1.75rem 2rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  flex: 1;
+}
+
+.meta {
+  font-family: $textFont;
+  font-size: 0.82rem;
+  color: rgba($white, 0.4);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.cardTitle {
+  font-family: $headerFont;
+  font-size: 1.25rem;
+  color: $white;
+  margin: 0;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.cardDescription {
+  font-family: $textFont;
+  font-size: 0.9rem;
+  color: rgba($white, 0.6);
+  line-height: 1.7;
+  margin: 0;
+  flex: 1;
+}
+
+.cardLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: $textFont;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: $green;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  margin-top: 0.5rem;
+  transition: gap 0.3s ease-in-out;
+
+  &:hover {
+    gap: 0.65rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

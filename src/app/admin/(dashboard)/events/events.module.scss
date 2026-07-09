@@ -1,0 +1,252 @@
+// src/app/admin/(dashboard)/events/events.module.scss
+// FIX8: Added .sectionBadge for the new Component column in top elements table.
+@use '../../styles/admin' as *;
+@use 'sass:color';
+
+.page {
+  display:        flex;
+  flex-direction: column;
+  gap:            1.5rem;
+  max-width:      1400px;
+}
+
+// ── HEADER ───────────────────────────────────────────────────────────────────
+.header {
+  display:         flex;
+  align-items:     flex-start;
+  justify-content: space-between;
+  gap:             1rem;
+  flex-wrap:       wrap;
+
+  h1 {
+    font-family:    $font-title;
+    font-size:      clamp(1.6rem, 3vw, 2.2rem);
+    color:          $text-primary;
+    margin:         0;
+    letter-spacing: 0.04em;
+  }
+
+  p {
+    font-family: $font-sans;
+    font-size:   0.78rem;
+    color:       $text-muted;
+    margin:      0.2rem 0 0;
+  }
+}
+
+.rangeSelect {
+  display:   flex;
+  gap:       0.35rem;
+  flex-wrap: wrap;
+}
+
+.rangeBtn {
+  padding:       0.4rem 0.875rem;
+  background:    transparent;
+  border:        1px solid $border2;
+  border-radius: 999px;
+  color:         $text-muted;
+  font-family:   $font-sans;
+  font-size:     0.8rem;
+  font-weight:   500;
+  cursor:        pointer;
+  white-space:   nowrap;
+  transition:    all 0.15s ease;
+
+  &:hover  { color: $text-primary; border-color: rgba($orange, 0.4); }
+  &.active { background: rgba($orange, 0.1); border-color: rgba($orange, 0.5); color: $orange; font-weight: 600; }
+}
+
+// ── STAT ROW ─────────────────────────────────────────────────────────────────
+.statsRow {
+  display:               grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap:                   0.75rem;
+
+  @media (max-width: 900px) { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 420px) { grid-template-columns: 1fr; }
+}
+
+.statCard {
+  @include card;
+  padding: 1rem 1.25rem;
+}
+
+.label {
+  font-family:    $font-sans;
+  font-size:      0.7rem;
+  font-weight:    600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color:          $text-muted;
+  margin:         0 0 0.4rem;
+}
+
+.value {
+  font-family:    $font-title;
+  font-size:      clamp(1.4rem, 2.5vw, 1.9rem);
+  color:          $text-primary;
+  margin:         0;
+  letter-spacing: 0.02em;
+}
+
+// ── CARDS ─────────────────────────────────────────────────────────────────────
+.card {
+  @include card;
+}
+
+.cardTitle {
+  @include section-title;
+  margin-bottom: 0.875rem;
+}
+
+.empty {
+  font-family: $font-sans;
+  font-size:   0.85rem;
+  color:       $text-muted;
+  padding:     0.75rem 0;
+}
+
+// ── TWO-COLUMN GRID ──────────────────────────────────────────────────────────
+.grid {
+  display:               grid;
+  grid-template-columns: 1fr 1fr;
+  gap:                   0.75rem;
+
+  @media (max-width: 768px) { grid-template-columns: 1fr; }
+}
+
+// ── TABLE ─────────────────────────────────────────────────────────────────────
+.tableWrapper {
+  overflow-x: auto;
+  width:      100%;
+}
+
+.elementsTable {
+  width:           100%;
+  border-collapse: collapse;
+  font-family:     $font-sans;
+  font-size:       0.82rem;
+
+  th {
+    text-align:     left;
+    padding:        0.6rem 0.875rem;
+    color:          $text-muted;
+    font-size:      0.68rem;
+    font-weight:    600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-bottom:  1px solid $border;
+    white-space:    nowrap;
+  }
+
+  td {
+    padding:        0.65rem 0.875rem;
+    border-bottom:  1px solid rgba(255,255,255,0.04);
+    color:          $text-secondary;
+    vertical-align: middle;
+  }
+
+  tr:last-child td { border-bottom: none; }
+  tr:hover td      { background: rgba(255,255,255,0.02); }
+}
+
+.labelCell {
+  color:       $text-primary;
+  font-weight: 500;
+  max-width:   200px;
+  overflow:    hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// ── COMPONENT / SECTION BADGE ────────────────────────────────────────────────
+.sectionBadge {
+  display:        inline-block;
+  font-family:    $font-sans;
+  font-size:      0.68rem;
+  font-weight:    600;
+  letter-spacing: 0.04em;
+  color:          rgba($orange, 0.85);
+  background:     rgba($orange, 0.08);
+  border:         1px solid rgba($orange, 0.2);
+  border-radius:  999px;
+  padding:        0.2rem 0.6rem;
+  white-space:    nowrap;
+}
+
+.pageCell {
+  font-size:     0.75rem;
+  color:         $text-muted;
+  max-width:     220px;
+  overflow:      hidden;
+  text-overflow: ellipsis;
+  white-space:   nowrap;
+}
+
+.countCell {
+  text-align:  right;
+  font-weight: 700;
+  color:       $orange;
+  white-space: nowrap;
+}
+
+.hideOnMobile {
+  @media (max-width: 640px) { display: none; }
+}
+
+// ── BAR LIST ─────────────────────────────────────────────────────────────────
+.barList {
+  display:        flex;
+  flex-direction: column;
+  gap:            0.65rem;
+}
+
+.barRow { display: flex; flex-direction: column; gap: 0.25rem; }
+
+.barMeta {
+  display:         flex;
+  justify-content: space-between;
+  align-items:     center;
+  gap:             0.5rem;
+}
+
+.barLabel {
+  font-family:   $font-sans;
+  font-size:     0.78rem;
+  color:         $text-secondary;
+  overflow:      hidden;
+  text-overflow: ellipsis;
+  white-space:   nowrap;
+  flex:          1;
+}
+
+.barCount {
+  font-family: $font-sans;
+  font-size:   0.76rem;
+  font-weight: 700;
+  color:       $text-muted;
+  flex-shrink: 0;
+}
+
+.barTrack {
+  height:        5px;
+  background:    rgba(255,255,255,0.06);
+  border-radius: 3px;
+  overflow:      hidden;
+}
+
+.barFill {
+  height:        100%;
+  border-radius: 3px;
+  transition:    width 0.5s ease;
+  min-width:     4px;
+}
+
+// ── MOBILE ───────────────────────────────────────────────────────────────────
+@media (max-width: 640px) {
+  .page    { gap: 1rem; }
+  .card    { padding: 1rem; }
+  .value   { font-size: 1.4rem; }
+  .statCard { padding: 0.875rem 1rem; }
+}

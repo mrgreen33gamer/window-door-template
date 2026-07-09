@@ -1,0 +1,175 @@
+// PageComponents/BeforeAfter/styles.module.scss
+@use '../../../src/app/globalVariables.scss' as *;
+
+// NO background — parent controls canvas
+.section {
+  padding: clamp(5rem, 8vw, 8rem) 1.5rem;
+}
+
+.container {
+  max-width: 1280px; margin: 0 auto;
+  display: flex; flex-direction: column; gap: 4rem;
+}
+
+// ── HEADER ───────────────────────────────────────
+.header {
+  display: flex; flex-direction: column;
+  align-items: flex-start; gap: 0.75rem;
+  max-width: 640px;
+}
+
+.eyebrow {
+  font-family: $textFont; font-size: 0.78rem; font-weight: 700;
+  letter-spacing: 0.22em; text-transform: uppercase; color: $green;
+}
+
+.title {
+  font-family: $titleFont;
+  font-size: clamp(2.4rem, 5vw, 3.8rem);
+  margin: 0; letter-spacing: -0.02em; line-height: 1.08;
+  color: $obsidian;
+}
+
+.subtitle {
+  font-family: $textFont; font-size: 1.02rem;
+  color: $darkgrey; line-height: 1.65; margin: 0;
+}
+
+// ── GRID ─────────────────────────────────────────
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 2rem;
+}
+
+// ── CARD ─────────────────────────────────────────
+.card {
+  display: flex; flex-direction: column; gap: 1rem;
+  background: $white;
+  border: 1px solid #e4e4e0;
+  border-radius: 20px; overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    border-color: rgba($green, 0.4);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.1);
+  }
+}
+
+.cardMeta {
+  display: flex; align-items: center;
+  justify-content: space-between; gap: 1rem;
+  padding: 1.25rem 1.5rem 0;
+}
+
+.clientName {
+  font-family: $headerFont; font-size: 1.05rem;
+  font-weight: 700; color: $obsidian;
+  letter-spacing: 0.04em;
+}
+
+.resultBadge {
+  font-family: $textFont; font-size: 0.76rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: $green; background: rgba($green, 0.1);
+  border: 1px solid rgba($green, 0.22);
+  border-radius: 9999px; padding: 0.28rem 0.85rem;
+  white-space: nowrap;
+}
+
+// ── SLIDER WRAP ───────────────────────────────────
+.sliderWrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  cursor: col-resize;
+  user-select: none;
+  border-radius: 0 0 18px 18px;
+}
+
+.dragging { cursor: grabbing; }
+
+// ── AFTER LAYER (base, full width) ────────────────
+.afterLayer {
+  position: absolute; inset: 0;
+}
+
+// ── BEFORE LAYER (clipped, left side) ────────────
+.beforeLayer {
+  position: absolute; inset: 0;
+  overflow: hidden;
+  // right edge clips the before image
+  right: auto;
+  // width driven by inline style
+}
+
+// ── LABELS ───────────────────────────────────────
+.labelBefore,
+.labelAfter {
+  position: absolute; bottom: 1rem;
+  font-family: $textFont; font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 0.3rem 0.8rem; border-radius: 9999px;
+  backdrop-filter: blur(6px);
+  z-index: 3;
+}
+
+.labelBefore {
+  left: 1rem;
+  background: rgba($obsidian, 0.75); color: $white;
+}
+
+.labelAfter {
+  right: 1rem;
+  background: rgba($green, 0.85); color: $obsidian;
+}
+
+// ── HANDLE ───────────────────────────────────────
+.handle {
+  position: absolute; top: 0; bottom: 0;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 0;
+  cursor: col-resize;
+  touch-action: none;
+
+  &:focus-visible {
+    outline: 2px solid $green;
+    outline-offset: 2px;
+  }
+}
+
+.handleBar {
+  width: 2px; flex: 1;
+  background: rgba($white, 0.85);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 0 8px rgba(0,0,0,0.3);
+}
+
+.handlePill {
+  flex-shrink: 0;
+  width: 40px; height: 40px;
+  background: $white;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+  font-size: 0.9rem; color: $green;
+  transition: transform 0.2s ease, background 0.2s ease;
+  border: 2px solid rgba($green, 0.3);
+
+  .handle:hover &,
+  .dragging & { transform: scale(1.12); background: $green; color: $obsidian; }
+}
+
+// ── RESPONSIVE ───────────────────────────────────
+@media (max-width: 860px) {
+  .grid { grid-template-columns: 1fr; }
+  .header { max-width: 100%; }
+}
+@media (max-width: 480px) {
+  .sliderWrap { aspect-ratio: 4 / 3; }
+  .handlePill { width: 34px; height: 34px; font-size: 0.8rem; }
+}

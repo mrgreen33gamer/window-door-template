@@ -1,0 +1,30 @@
+// PageComponents/ImpactMetrics/styles.module.scss
+@use '../../../src/app/globalVariables.scss' as *;
+
+.section { padding: clamp(5rem, 8vw, 8rem) 1.5rem; background: $obsidian; position: relative; overflow: hidden; &::before { content: ''; position: absolute; top: -200px; left: 50%; transform: translateX(-50%); width: 1000px; height: 500px; background: radial-gradient(ellipse, rgba($orange, 0.07) 0%, transparent 65%); pointer-events: none; } }
+
+.container { position: relative; z-index: 1; max-width: 1280px; margin: 0 auto; display: flex; flex-direction: column; gap: 4rem; }
+
+.header { display: flex; flex-direction: column; align-items: center; gap: 0.75rem; text-align: center; }
+
+.eyebrow { font-family: $textFont; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: $orange; }
+
+.title { font-family: $titleFont; font-size: clamp(2.2rem, 5vw, 3.4rem); font-weight: 700; text-transform: uppercase; color: $white; margin: 0; letter-spacing: 0.04em; line-height: 1.1; }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+
+.card { background: rgba($white, 0.03); border: 1px solid rgba($white, 0.07); border-radius: 20px; padding: clamp(2rem, 4vw, 2.75rem) 1.75rem; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 1rem; transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s; &:hover { border-color: rgba($orange, 0.35); transform: translateY(-6px); box-shadow: 0 24px 50px rgba(0,0,0,0.5); } }
+
+.cardCity { border-color: rgba($orange, 0.2); background: rgba($orange, 0.04); }
+
+.iconWrap { width: 64px; height: 64px; background: rgba($orange, 0.1); border: 1px solid rgba($orange, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: $orange; font-size: 1.6rem; transition: background 0.3s; .card:hover & { background: rgba($orange, 0.18); } }
+
+.valueRow { display: flex; align-items: flex-start; gap: 0.15rem; line-height: 1; }
+
+.value { font-family: $titleFont; font-size: clamp(3rem, 6vw, 4rem); font-weight: 700; color: $white; line-height: 1; }
+
+.suffix { font-family: $titleFont; font-size: clamp(1.6rem, 3vw, 2rem); font-weight: 700; color: $orange; padding-top: 0.25rem; }
+
+.label { font-family: $textFont; font-size: 0.82rem; color: rgba($white, 0.5); letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.4; margin: 0; }
+
+@media (max-width: 640px) { .grid { gap: 1.25rem; } .card { padding: 2rem 1.5rem; } }

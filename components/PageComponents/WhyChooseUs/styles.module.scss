@@ -1,0 +1,17 @@
+// PageComponents/WhyChooseUs/styles.module.scss
+@use '../../../src/app/globalVariables.scss' as *;
+
+.section { padding: clamp(5rem, 8vw, 8rem) 1.5rem; background: $white; }
+.container { max-width: 1280px; margin: 0 auto; display: flex; flex-direction: column; gap: 4rem; }
+.header { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.85rem; }
+.eyebrow { font-family: $textFont; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: $orange; }
+.title { font-family: $titleFont; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; text-transform: uppercase; color: $obsidian; margin: 0; letter-spacing: 0.04em; line-height: 1.1; }
+.subtitle { font-family: $textFont; font-size: 1rem; color: $darkgrey; line-height: 1.7; margin: 0; max-width: 560px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem; }
+.card { background: $white; border: 1px solid $lightgrey; border-radius: 16px; padding: 1.75rem 1.5rem; display: flex; flex-direction: column; gap: 0.85rem; box-shadow: 0 2px 8px rgba(0,0,0,0.04); transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s; &:hover { border-color: rgba($orange, 0.4); box-shadow: 0 8px 24px rgba($orange, 0.1); transform: translateY(-4px); .iconWrap { background: rgba($orange, 0.16); } } }
+.iconRow { display: flex; align-items: center; justify-content: space-between; }
+.iconWrap { width: 48px; height: 48px; background: rgba($orange, 0.08); border: 1px solid rgba($orange, 0.18); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: $orange; font-size: 1.1rem; transition: background 0.25s; }
+.iconSvg { font-size: 1.1rem; }
+.check { width: 24px; height: 24px; background: rgba($orange, 0.12); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: $orange; }
+.cardTitle { font-family: $headerFont; font-size: 1.05rem; font-weight: 700; color: $obsidian; margin: 0; }
+.cardDesc { font-family: $textFont; font-size: 0.92rem; color: $darkgrey; line-height: 1.72; margin: 0; }

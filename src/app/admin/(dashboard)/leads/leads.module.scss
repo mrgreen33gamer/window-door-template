@@ -1,0 +1,145 @@
+// src/app/admin/(dashboard)/leads/leads.module.scss
+// FINAL FIX: Full responsive — hides table columns gracefully on tablet/mobile.
+@use '../../styles/admin' as *;
+@use 'sass:color';
+
+.page { display: flex; flex-direction: column; gap: 1.5rem; max-width: 1400px; }
+
+// ── HEADER ───────────────────────────────────────────────────────────────────
+.header {
+  display:         flex;
+  align-items:     flex-start;
+  justify-content: space-between;
+  gap:             1rem;
+  flex-wrap:       wrap;
+
+  h1 {
+    font-family:    $font-title;
+    font-size:      clamp(1.6rem, 3vw, 2.2rem);
+    color:          $text-primary;
+    margin:         0;
+    letter-spacing: 0.04em;
+  }
+
+  p {
+    font-family: $font-sans;
+    font-size:   0.78rem;
+    color:       $text-muted;
+    margin:      0.2rem 0 0;
+  }
+}
+
+// ── STAT CHIPS ───────────────────────────────────────────────────────────────
+.statsRow  { display: flex; gap: 0.75rem; flex-shrink: 0; flex-wrap: wrap; }
+.statChip  {
+  display: flex; flex-direction: column; align-items: center;
+  background: rgba($orange,0.08); border: 1px solid rgba($orange,0.2);
+  border-radius: $radius-md; padding: 0.5rem 1.25rem; min-width: 68px;
+}
+.chipVal   { font-family: $font-title; font-size: 1.6rem; color: $orange; letter-spacing: 0.04em; line-height: 1; }
+.chipLabel { font-family: $font-sans; font-size: 0.65rem; color: $text-muted; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 2px; }
+
+// ── CHARTS ───────────────────────────────────────────────────────────────────
+.chartRow {
+  display:               grid;
+  grid-template-columns: 2fr 1fr;
+  gap:                   0.75rem;
+
+  @media (max-width: 900px) { grid-template-columns: 1fr; }
+}
+
+.chartCard  { @include card; }
+.chartTitle { @include section-title; margin-bottom: 0.75rem; }
+
+// ── MAP ───────────────────────────────────────────────────────────────────────
+.mapCard   { @include card; }
+.cardTitle { @include section-title; margin-bottom: 0.5rem; }
+
+// ── FILTERS ──────────────────────────────────────────────────────────────────
+.filters    { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; }
+.searchForm { display: flex; gap: 0.5rem; flex: 1; min-width: 200px; }
+
+.searchInput {
+  flex: 1; padding: 0.6rem 0.875rem; background: rgba(255,255,255,0.04);
+  border: 1px solid $border2; border-radius: $radius-md;
+  font-family: $font-sans; font-size: 0.85rem; color: $text-primary;
+  &::placeholder { color: $text-muted; }
+  &:focus { outline: none; border-color: rgba($orange,0.5); }
+}
+
+.searchBtn {
+  padding: 0.6rem 1rem; background: rgba($orange,0.1); border: 1px solid rgba($orange,0.25);
+  border-radius: $radius-md; color: $orange; font-family: $font-sans; font-size: 0.82rem;
+  font-weight: 600; cursor: pointer; white-space: nowrap;
+  &:hover { background: rgba($orange,0.18); }
+}
+
+.clearBtn {
+  padding: 0.6rem 0.875rem; background: transparent; border: 1px solid $border2;
+  border-radius: $radius-md; color: $text-muted; font-family: $font-sans; font-size: 0.82rem; cursor: pointer;
+  &:hover { border-color: rgba(226,75,74,0.4); color: #f09595; }
+}
+
+.statusFilters { display: flex; gap: 0.4rem; flex-wrap: wrap; flex-shrink: 0; }
+.statusBtn {
+  padding: 0.45rem 0.875rem; background: transparent; border: 1px solid $border2;
+  border-radius: 999px; color: $text-muted; font-family: $font-sans; font-size: 0.78rem;
+  font-weight: 500; cursor: pointer; white-space: nowrap;
+  &:hover { color: $text-secondary; }
+  &.statusActive { background: rgba(255,255,255,0.05); }
+}
+
+// ── TABLE ─────────────────────────────────────────────────────────────────────
+.tableCard    { @include card; padding: 0; overflow: hidden; }
+.tableWrapper { overflow-x: auto; width: 100%; }
+
+.table {
+  width: 100%; border-collapse: collapse; font-family: $font-sans; font-size: 0.82rem;
+
+  th {
+    text-align: left; padding: 0.75rem 1rem; color: $text-muted;
+    font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; border-bottom: 1px solid $border; white-space: nowrap;
+  }
+
+  td { padding: 0.7rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.04); color: $text-secondary; vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+}
+
+.nameCell  { color: $text-primary; font-weight: 500; text-decoration: none; transition: color 0.15s; &:hover { color: $orange; } display: block; }
+.emailCell { font-size: 0.78rem; color: $text-muted; }
+.dateCell  { white-space: nowrap; font-size: 0.78rem; }
+
+// ── RESPONSIVE TABLE COLUMNS ─────────────────────────────────────────────────
+// Tablet: hide service + date columns
+.hideOnTablet {
+  @media (max-width: 900px) { display: none !important; }
+}
+// Mobile: hide email + location too
+.hideOnMobile {
+  @media (max-width: 600px) { display: none !important; }
+}
+
+// ── EMPTY / PAGINATION ────────────────────────────────────────────────────────
+.emptyState { padding: 3rem 2rem; text-align: center; }
+.emptyTitle { font-family: $font-sans; font-size: 0.95rem; color: $text-secondary; margin: 0 0 0.4rem; }
+.emptyBody  { font-family: $font-sans; font-size: 0.82rem; color: $text-muted; margin: 0; }
+.empty      { font-family: $font-sans; font-size: 0.85rem; color: $text-muted; padding: 0.75rem 0; }
+
+.pagination { display: flex; align-items: center; justify-content: center; gap: 1rem; padding: 1rem 1.5rem; border-top: 1px solid $border; flex-wrap: wrap; }
+.pageBtn {
+  padding: 0.5rem 1rem; background: rgba(255,255,255,0.04); border: 1px solid $border2;
+  border-radius: $radius-md; color: $text-secondary; font-family: $font-sans; font-size: 0.82rem; cursor: pointer;
+  &:hover:not(:disabled) { border-color: rgba($orange,0.3); color: $orange; }
+  &:disabled { opacity: 0.35; cursor: not-allowed; }
+}
+.pageInfo { font-family: $font-sans; font-size: 0.8rem; color: $text-muted; }
+
+// ── MOBILE ───────────────────────────────────────────────────────────────────
+@media (max-width: 640px) {
+  .page     { gap: 1rem; }
+  .chartCard,
+  .mapCard  { padding: 1rem; }
+  .chartTitle { font-size: 0.72rem; }
+}

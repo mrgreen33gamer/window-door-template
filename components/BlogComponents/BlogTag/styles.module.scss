@@ -1,0 +1,29 @@
+@use '../../../src/app/globalVariables.scss' as *;
+
+.tag {
+  display: inline-block;
+  font-family: $textFont;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.75rem;
+  border-radius: 4px;
+  line-height: 1;
+}
+
+.green {
+  background: $green;
+  color: $obsidian;
+}
+
+.grey {
+  background: $lightgrey;
+  color: $blackflat;
+}
+
+.outline {
+  background: transparent;
+  color: $darkgrey;
+  border: 1px solid $lightgrey;
+}

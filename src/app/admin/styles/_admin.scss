@@ -1,0 +1,131 @@
+// src/app/admin/styles/_admin.scss
+// ─────────────────────────────────────────────────────────────────────────────
+// Admin design tokens — extends the main site brand into a dark dashboard theme.
+// Import this in every admin SCSS module with: @use '../styles/admin' as *;
+// (adjust path depth as needed)
+// ─────────────────────────────────────────────────────────────────────────────
+@use 'sass:color';
+
+// ── Brand tokens (mirrors globalVariables.scss) ───────────────────────────
+$orange:      #f97316;
+$lightorange: #fb923c;
+$darkorange:  #643d26;
+$obsidian:   #130e0a;
+$blue:       #286a99;
+$white:      #ffffff;
+
+// ── Admin dark surface palette ────────────────────────────────────────────
+$bg:         #0f0c0a;   // page background
+$surface:    #181411;   // card / panel background
+$surface2:   #1e1a16;   // elevated surface (hover, active)
+$border:     rgba(255, 255, 255, 0.07);
+$border2:    rgba(255, 255, 255, 0.13);
+
+// ── Text ──────────────────────────────────────────────────────────────────
+$text-primary:   #ffffff;
+$text-secondary: rgba(255, 255, 255, 0.55);
+$text-muted:     rgba(255, 255, 255, 0.28);
+$text-accent:    $orange;
+
+// ── Status colours ────────────────────────────────────────────────────────
+$status-new:       $orange;
+$status-contacted: #378add;
+$status-qualified: #ef9f27;
+$status-converted: #5dcaa5;
+$status-lost:      rgba(255, 255, 255, 0.28);
+$status-danger:    #e24b4a;
+
+// ── Spacing ───────────────────────────────────────────────────────────────
+$gap-sm:  0.5rem;
+$gap-md:  1rem;
+$gap-lg:  1.5rem;
+$gap-xl:  2rem;
+
+// ── Typography ────────────────────────────────────────────────────────────
+$font-sans: var(--font-poppins), 'Poppins', sans-serif;
+$font-head: var(--font-electrolize), 'Electrolize', sans-serif;
+$font-title: var(--font-bebas), 'Bebas Neue', sans-serif;
+
+// ── Radii ─────────────────────────────────────────────────────────────────
+$radius-sm:  6px;
+$radius-md:  10px;
+$radius-lg:  14px;
+$radius-xl:  18px;
+
+// ── Mixins ────────────────────────────────────────────────────────────────
+@mixin card {
+  background:    $surface;
+  border:        1px solid $border;
+  border-radius: $radius-lg;
+  padding:       1.25rem 1.5rem;
+}
+
+@mixin section-title {
+  font-family:    $font-head;
+  font-size:      0.7rem;
+  font-weight:    400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color:          $text-muted;
+  margin:         0 0 1rem;
+}
+
+@mixin stat-value {
+  font-family: $font-title;
+  font-size:   2.2rem;
+  color:       $text-primary;
+  line-height: 1;
+  margin:      0;
+  letter-spacing: 0.02em;
+}
+
+@mixin stat-label {
+  font-family: $font-sans;
+  font-size:   0.72rem;
+  color:       $text-muted;
+  margin:      0.3rem 0 0;
+  letter-spacing: 0.03em;
+}
+
+@mixin green-pill($bg-opacity: 0.1) {
+  background:    rgba($orange, $bg-opacity);
+  border:        1px solid rgba($orange, 0.25);
+  border-radius: 20px;
+  color:         $orange;
+  font-size:     0.72rem;
+  font-weight:   500;
+  padding:       0.25rem 0.75rem;
+}
+
+@mixin table-base {
+  width:           100%;
+  border-collapse: collapse;
+  font-family:     $font-sans;
+  font-size:       0.83rem;
+
+  th {
+    color:          $text-muted;
+    font-size:      0.68rem;
+    font-weight:    500;
+    letter-spacing: 0.08em;
+    text-align:     left;
+    text-transform: uppercase;
+    padding:        0 0 0.75rem;
+    border-bottom:  1px solid $border;
+  }
+
+  td {
+    padding:       0.7rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    color:         $text-secondary;
+    vertical-align: middle;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  tr:hover td {
+    background: rgba(255, 255, 255, 0.02);
+  }
+}

@@ -1,0 +1,136 @@
+@use '../../../src/app/globalVariables.scss' as *;
+
+.section {
+  padding: clamp(5rem, 8vw, 8rem) 1.5rem;
+  background: $white;
+}
+
+.container {
+  max-width: 1300px; margin: 0 auto;
+  display: flex; flex-direction: column; gap: 3rem;
+}
+
+// ── INTRO ─────────────────────────────────────────────────────────────────────
+.intro {
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center; gap: 0.85rem;
+}
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  font-family: $textFont; font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.11em; text-transform: uppercase;
+  color: $orange; border: 1px solid rgba($orange, 0.25);
+  background: rgba($orange, 0.07); border-radius: 9999px;
+  padding: 0.3rem 0.85rem;
+}
+
+.eyebrowDot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: $orange; box-shadow: 0 0 6px rgba($orange, 0.6);
+}
+
+.heading {
+  font-family: $titleFont;
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.03em; line-height: 1.1;
+  color: $obsidian; margin: 0;
+}
+
+.subheading {
+  font-family: $textFont; font-size: 0.95rem; line-height: 1.72;
+  color: rgba($obsidian, 0.5); margin: 0; max-width: 540px;
+}
+
+// ── GRID ──────────────────────────────────────────────────────────────────────
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+
+  @media (max-width: 900px)  { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 500px)  { grid-template-columns: 1fr; }
+}
+
+// ── CARD ──────────────────────────────────────────────────────────────────────
+.card {
+  position: relative;
+  background: $white;
+  border: 1px solid rgba($obsidian, 0.09);
+  border-radius: 14px;
+  padding: 1.75rem;
+  display: flex; flex-direction: column; gap: 1rem;
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, $orange, $lightorange);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+
+  &:hover {
+    border-color: rgba($orange, 0.25);
+    box-shadow: 0 8px 32px rgba($orange, 0.1);
+    transform: translateY(-3px);
+
+    &::before { transform: scaleX(1); }
+  }
+}
+
+.cardTag {
+  position: absolute; top: 1rem; right: 1rem;
+  font-family: $textFont; font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: $orange; background: rgba($orange, 0.1);
+  border: 1px solid rgba($orange, 0.2); border-radius: 9999px;
+  padding: 0.2rem 0.6rem;
+}
+
+.cardIcon {
+  width: 48px; height: 48px;
+  background: rgba($orange, 0.09); border: 1px solid rgba($orange, 0.16);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  color: $orange; font-size: 1.1rem;
+  transition: background 0.2s;
+  .card:hover & { background: rgba($orange, 0.16); }
+}
+
+.cardBody { display: flex; flex-direction: column; gap: 0.4rem; flex: 1; }
+
+.cardTitle {
+  font-family: $headerFont; font-size: 1rem; font-weight: 700;
+  color: $obsidian; margin: 0;
+}
+
+.cardText {
+  font-family: $textFont; font-size: 0.85rem; line-height: 1.68;
+  color: rgba($obsidian, 0.52); margin: 0;
+}
+
+.cardLink {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-family: $headerFont; font-size: 0.8rem; font-weight: 700;
+  color: $orange; text-decoration: none;
+  margin-top: auto;
+  transition: gap 0.2s;
+  &:hover { gap: 0.55rem; }
+}
+
+// ── CTA ROW ───────────────────────────────────────────────────────────────────
+.cta { display: flex; justify-content: center; }
+
+.ctaBtn {
+  display: inline-flex; align-items: center;
+  font-family: $headerFont; font-size: 0.88rem; font-weight: 700;
+  color: $obsidian; text-decoration: none;
+  padding: 0.85rem 2rem;
+  border: 2px solid $obsidian; border-radius: 8px;
+  transition: background 0.22s, color 0.22s;
+
+  &:hover { background: $obsidian; color: $white; }
+}

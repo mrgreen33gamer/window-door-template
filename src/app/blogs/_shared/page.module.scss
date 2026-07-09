@@ -1,0 +1,8 @@
+// Shared blog post page wrapper styles
+// Each blog post page.tsx wraps content directly in BlogHero + BlogBody — no pageWrapper needed.
+// This file is kept minimal intentionally. Layout is owned by the components.
+
+.pageWrapper {
+  min-height: 100vh;
+  background: transparent;
+}

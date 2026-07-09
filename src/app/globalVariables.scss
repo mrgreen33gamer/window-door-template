@@ -1,0 +1,44 @@
+// src/app/globalVariables.scss
+// ─────────────────────────────────────────────────────────────────────────────
+// Arctic Air HVAC — Brand Tokens
+//
+// THREE DISTINCT FONTS:
+//   $titleFont  → Barlow Condensed  — bold condensed display (hero h1, section titles)
+//   $headerFont → Outfit            — clean geometric sans   (nav, card titles, labels, CTAs)
+//   $textFont   → Inter             — refined humanist sans  (body copy, form text, paragraphs)
+//
+// Usage guide:
+//   h1, .hero headline              → $titleFont  (uppercase, tight tracking)
+//   h2, h3, nav links, btn text     → $headerFont (medium weight, normal case)
+//   p, label, input, small text     → $textFont   (regular/medium weight)
+// ─────────────────────────────────────────────────────────────────────────────
+
+$titleFont:  var(--font-barlow-condensed), 'Barlow Condensed', sans-serif;
+$headerFont: var(--font-outfit),           'Outfit',           sans-serif;
+$textFont:   var(--font-inter),            'Inter',            sans-serif;
+
+// ── Core Palette ─────────────────────────────────────────────────────────────
+$black:      #000000;
+$obsidian:   #0d1b2a;
+$blackflat:  #1a2a3a;
+$white:      #FFFFFF;
+$offwhite:   #f8fafc;
+
+// Greys (navy-tinted)
+$darkgrey:   #7a9bb5;
+$grey:       #4a6a85;
+$lightgrey:  #c8d8e8;
+
+// Brand Accent
+$orange:     #f97316;
+$lightorange:#fb923c;
+$darkorange: #c2410c;
+
+// Legacy aliases
+$green:      $orange;
+$lightgreen: $lightorange;
+$darkgreen:  $darkorange;
+$blue:       #1e6fa8;
+
+// Error
+$danger-red: #ef4444;

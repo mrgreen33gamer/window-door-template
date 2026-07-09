@@ -1,0 +1,253 @@
+// src/app/admin/(dashboard)/page.module.scss
+// FINAL FIX: Full responsive — desktop, tablet (≤1100px), mobile (≤640px)
+@use '../styles/admin' as *;
+@use 'sass:color';
+
+.page {
+  display:        flex;
+  flex-direction: column;
+  gap:            1.5rem;
+  max-width:      1400px;
+}
+
+// ── HEADER ───────────────────────────────────────────────────────────────────
+.header {
+  display:         flex;
+  align-items:     flex-start;
+  justify-content: space-between;
+  gap:             1rem;
+  flex-wrap:       wrap;
+}
+
+.titleBlock {
+  h1 {
+    font-family:    $font-title;
+    font-size:      clamp(1.6rem, 3vw, 2.2rem);
+    color:          $text-primary;
+    margin:         0;
+    letter-spacing: 0.04em;
+  }
+  p {
+    font-family: $font-sans;
+    font-size:   0.78rem;
+    color:       $text-muted;
+    margin:      0.2rem 0 0;
+  }
+}
+
+.rangeSelect {
+  display:   flex;
+  gap:       0.35rem;
+  flex-wrap: wrap;
+}
+
+.rangeBtn {
+  padding:       0.4rem 0.875rem;
+  background:    transparent;
+  border:        1px solid $border2;
+  border-radius: 999px;
+  color:         $text-muted;
+  font-family:   $font-sans;
+  font-size:     0.8rem;
+  font-weight:   500;
+  cursor:        pointer;
+  white-space:   nowrap;
+  transition:    all 0.15s ease;
+
+  &:hover  { color: $text-primary; border-color: rgba($orange, 0.4); }
+  &.active { background: rgba($orange, 0.1); border-color: rgba($orange, 0.5); color: $orange; font-weight: 600; }
+}
+
+// ── STAT CARDS ───────────────────────────────────────────────────────────────
+.statsGrid {
+  display:               grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:                   0.75rem;
+
+  @media (max-width: 1100px) { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 768px)  { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 420px)  { grid-template-columns: 1fr; }
+}
+
+.statCard {
+  @include card;
+  padding: 1rem 1.25rem;
+}
+
+.statLabel {
+  font-family:    $font-sans;
+  font-size:      0.7rem;
+  font-weight:    600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color:          $text-muted;
+  margin:         0 0 0.4rem;
+}
+
+.statValue {
+  font-family:     $font-title;
+  font-size:       clamp(1.4rem, 2.5vw, 1.9rem);
+  color:           $text-primary;
+  margin:          0;
+  letter-spacing:  0.02em;
+  overflow:        hidden;
+  text-overflow:   ellipsis;
+  white-space:     nowrap;
+}
+
+// ── CHART ROWS ───────────────────────────────────────────────────────────────
+.chartRow {
+  display:               grid;
+  grid-template-columns: 2fr 1fr;
+  gap:                   0.75rem;
+
+  @media (max-width: 1100px) { grid-template-columns: 1fr 1fr; }
+  @media (max-width: 768px)  { grid-template-columns: 1fr; }
+}
+
+.chartRowEqual {
+  display:               grid;
+  grid-template-columns: 1fr 1fr;
+  gap:                   0.75rem;
+
+  @media (max-width: 768px) { grid-template-columns: 1fr; }
+}
+
+.chartCard {
+  @include card;
+}
+
+.chartTitle {
+  @include section-title;
+  margin-bottom: 0.875rem;
+}
+
+.empty {
+  font-family: $font-sans;
+  font-size:   0.85rem;
+  color:       $text-muted;
+  padding:     0.75rem 0;
+}
+
+// ── FUNNEL ───────────────────────────────────────────────────────────────────
+.funnelCard {
+  @include card;
+}
+
+.funnel {
+  display:         flex;
+  align-items:     flex-end;
+  justify-content: center;
+  gap:             1rem;
+  padding:         1rem 0 0.5rem;
+  min-height:      140px;
+
+  @media (max-width: 480px) { gap: 0.5rem; }
+}
+
+.funnelBar {
+  display:        flex;
+  flex-direction: column;
+  align-items:    center;
+  gap:            0.4rem;
+  flex:           1;
+}
+
+.funnelCount {
+  font-family: $font-sans;
+  font-size:   0.78rem;
+  color:       $text-secondary;
+  font-weight: 600;
+}
+
+.funnelFill {
+  width:         100%;
+  max-width:     56px;
+  background:    rgba($orange, 0.25);
+  border-radius: 4px 4px 0 0;
+  transition:    height 0.5s ease;
+  min-height:    6px;
+
+  &.last {
+    background: $orange;
+    box-shadow: 0 0 12px rgba($orange, 0.3);
+  }
+}
+
+.funnelLabel {
+  font-family:    $font-sans;
+  font-size:      0.7rem;
+  color:          $text-muted;
+  text-align:     center;
+  letter-spacing: 0.04em;
+  white-space:    nowrap;
+}
+
+// ── MAP ──────────────────────────────────────────────────────────────────────
+.mapCard {
+  @include card;
+
+  @media (max-width: 640px) {
+    // Shrink map height on mobile
+    canvas, div[style*="height: 340px"] { min-height: 240px !important; }
+  }
+}
+
+// ── JOURNEY PATHS ────────────────────────────────────────────────────────────
+.journeyCard {
+  @include card;
+}
+
+.journeyList {
+  display:        flex;
+  flex-direction: column;
+  gap:            0.5rem;
+}
+
+.journeyItem {
+  display:         flex;
+  align-items:     flex-start;
+  justify-content: space-between;
+  gap:             1rem;
+  padding:         0.6rem 0.75rem;
+  background:      rgba(255,255,255,0.02);
+  border:          1px solid $border;
+  border-radius:   $radius-sm;
+  transition:      background 0.15s ease;
+
+  &:hover { background: rgba(255,255,255,0.04); }
+}
+
+.journeyPath {
+  font-family:   $font-sans;
+  font-size:     0.8rem;
+  color:         $text-secondary;
+  overflow:      hidden;
+  text-overflow: ellipsis;
+  white-space:   nowrap;
+  flex:          1;
+}
+
+.journeyCount {
+  font-family:  $font-sans;
+  font-size:    0.78rem;
+  font-weight:  700;
+  color:        $orange;
+  flex-shrink:  0;
+  background:   rgba($orange, 0.08);
+  border:       1px solid rgba($orange, 0.2);
+  border-radius: $radius-sm;
+  padding:      2px 7px;
+}
+
+// ── MOBILE LAYOUT ────────────────────────────────────────────────────────────
+@media (max-width: 640px) {
+  .page         { gap: 1rem; }
+  .statCard     { padding: 0.875rem 1rem; }
+  .statValue    { font-size: 1.4rem; }
+  .chartCard,
+  .funnelCard,
+  .mapCard,
+  .journeyCard  { padding: 1rem; }
+  .chartTitle   { font-size: 0.72rem; }
+}

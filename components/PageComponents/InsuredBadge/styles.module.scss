@@ -1,0 +1,313 @@
+// components/PageComponents/InsuredBadge/styles.module.scss
+@use '../../../src/app/globalVariables.scss' as *;
+
+.section {
+  padding: clamp(4rem, 7vw, 7rem) clamp(1.5rem, 5vw, 3rem);
+  background: $obsidian;
+  position: relative;
+  overflow: hidden;
+
+  // Background texture
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 15% 50%, rgba($green, 0.07), transparent 50%),
+      radial-gradient(ellipse at 85% 20%, rgba($green, 0.05), transparent 45%);
+    pointer-events: none;
+  }
+
+  // Top border accent
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba($green, 0.5), rgba($green, 0.4), transparent);
+  }
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+// ── HEADER ─────────────────────────────────────────────────────────────────────
+.header {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2.5rem;
+  align-items: center;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 1.5rem;
+  }
+}
+
+.shieldWrapper {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  flex-shrink: 0;
+
+  @media (max-width: 768px) {
+    margin: 0 auto;
+  }
+}
+
+.shieldOuter {
+  position: absolute;
+  inset: 0;
+  background: rgba($green, 0.08);
+  border: 1px solid rgba($green, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shieldInner {
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(135deg, rgba($green, 0.2), rgba($green, 0.15));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shieldIcon {
+  color: $green;
+  font-size: 1.75rem;
+}
+
+.shieldRing1 {
+  position: absolute;
+  inset: -12px;
+  border: 1px solid rgba($green, 0.1);
+  border-radius: 50%;
+  animation: ringPulse 3s ease-in-out infinite;
+}
+
+.shieldRing2 {
+  position: absolute;
+  inset: -24px;
+  border: 1px solid rgba($green, 0.05);
+  border-radius: 50%;
+  animation: ringPulse 3s ease-in-out infinite 0.5s;
+}
+
+@keyframes ringPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(1.04); }
+}
+
+.headerText {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: $textFont;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $green;
+
+  svg { font-size: 0.85rem; }
+
+  @media (max-width: 768px) {
+    justify-content: center;
+  }
+}
+
+.title {
+  font-family: $titleFont;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  color: $white;
+  line-height: 1.1;
+  letter-spacing: 0.03em;
+}
+
+.subtitle {
+  font-family: $textFont;
+  font-size: clamp(0.97rem, 1.7vw, 1.1rem);
+  color: rgba($white, 0.55);
+  line-height: 1.7;
+  max-width: 600px;
+
+  @media (max-width: 768px) {
+    margin: 0 auto;
+  }
+}
+
+// ── COVERAGE GRID ─────────────────────────────────────────────────────────────
+.coverageGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.coverageCard {
+  background: rgba($white, 0.04);
+  border: 1px solid rgba($white, 0.08);
+  border-radius: 16px;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: background 0.3s, border-color 0.3s;
+
+  &:hover {
+    background: rgba($white, 0.07);
+    border-color: rgba($green, 0.25);
+  }
+}
+
+.coverageIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba($green, 0.1);
+  border: 1px solid rgba($green, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $green;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.coverageInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.coverageTitle {
+  font-family: $textFont;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: $white;
+}
+
+.coverageDetail {
+  font-family: $textFont;
+  font-size: 0.82rem;
+  color: rgba($white, 0.45);
+}
+
+.coverageCheck {
+  color: $green;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+// ── BOTTOM STRIP ──────────────────────────────────────────────────────────────
+.bottomStrip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 1.5rem 2rem;
+  background: rgba($white, 0.03);
+  border: 1px solid rgba($white, 0.07);
+  border-radius: 18px;
+  flex-wrap: wrap;
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.25rem 1.5rem;
+  }
+}
+
+.policyInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.policyLabel {
+  font-family: $textFont;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba($white, 0.3);
+}
+
+.policyNum {
+  font-family: $headerFont;
+  font-size: 0.9rem;
+  color: rgba($white, 0.75);
+  letter-spacing: 0.04em;
+}
+
+.ctaBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: $green;
+  color: $obsidian;
+  font-family: $textFont;
+  font-size: 0.97rem;
+  font-weight: 700;
+  padding: 0.85rem 1.75rem;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  box-shadow: 0 6px 20px rgba($green, 0.2);
+
+  svg { font-size: 0.85rem; transition: transform 0.25s ease; }
+
+  &:hover {
+    background: $lightgreen;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba($green, 0.3);
+    svg { transform: translateX(4px); }
+  }
+}
+
+// ── INLINE VARIANT ────────────────────────────────────────────────────────────
+.inlineBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: $textFont;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.55);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 100px;
+  padding: 0.4rem 1rem;
+}
+
+.inlineIcon {
+  color: $green;
+  font-size: 0.85rem;
+}
+
+.inlineText {}

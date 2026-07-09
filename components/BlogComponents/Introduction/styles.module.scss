@@ -1,0 +1,73 @@
+@use '../../../src/app/globalVariables.scss' as *;
+
+.introSection {
+  margin-bottom: 4rem;
+  padding: 2rem;
+  background: transparent;
+  border-left: 3px solid $green;
+  border-radius: 0 8px 8px 0;
+
+  h2 {
+    font-family: $headerFont;
+    font-size: 2.2rem;
+    letter-spacing: 0.01em;
+    line-height: 1.3;
+    margin-bottom: 1.25rem;
+    color: $obsidian;
+    font-weight: 600;
+  }
+
+  p {
+    font-family: $textFont;
+    font-size: 1.05rem;
+    letter-spacing: 0.01em;
+    line-height: 1.85;
+    margin-bottom: 1.75rem;
+    color: $darkgrey;
+  }
+
+  .benefitsList {
+    list-style: none;
+    padding: 0;
+
+    li {
+      display: flex;
+      align-items: center;
+      gap: 1.1rem;
+      margin-bottom: 1rem;
+      padding: 0.85rem 1rem;
+      border-radius: 8px;
+      transition: background 0.3s ease-in-out;
+      font-family: $textFont;
+      font-size: 1rem;
+      line-height: 1.65;
+      color: $darkgrey;
+
+      &:hover {
+        background: rgba($lightgrey, 0.4);
+      }
+
+      .icon {
+        color: $green;
+        font-size: 1.6rem;
+        flex-shrink: 0;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .introSection {
+    padding: 1.25rem;
+
+    h2 { font-size: 1.75rem; }
+    p { font-size: 1rem; }
+
+    .benefitsList li {
+      font-size: 0.95rem;
+      gap: 0.9rem;
+
+      .icon { font-size: 1.4rem; }
+    }
+  }
+}

@@ -1,0 +1,24 @@
+// PageComponents/StyledDivider/styles.module.scss
+@use '../../../src/app/globalVariables.scss' as *;
+
+.wrapper {
+  width: 100%;
+  height: 52px;
+  min-height: 52px;
+  background: rgba($obsidian, 0.95);
+  position: relative;
+  overflow: hidden;
+  border-top: 2px solid rgba($orange, 0.45);
+  border-bottom: 2px solid rgba($orange, 0.45);
+
+  @media (max-width: 768px) {
+    height: 44px;
+    min-height: 44px;
+  }
+}
+
+.flake {
+  position: absolute;
+  color: $orange;
+  z-index: 1;
+}

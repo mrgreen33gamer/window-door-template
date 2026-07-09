@@ -1,0 +1,344 @@
+@use '../globalVariables.scss' as *;
+
+// ── PAGE ──────────────────────────────────────────────────────────────────────
+.page {
+  background: $white;
+  min-height: 100vh;
+}
+
+// ── HERO ──────────────────────────────────────────────────────────────────────
+.hero {
+  position: relative;
+  background: $obsidian;
+  overflow: hidden;
+  padding-bottom: clamp(3rem, 6vh, 5rem);
+}
+
+.heroBg {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    repeating-linear-gradient(-55deg, transparent, transparent 22px, rgba($white, 0.012) 22px, rgba($white, 0.012) 23px),
+    radial-gradient(ellipse 60% 50% at 70% 40%, rgba($orange, 0.07) 0%, transparent 65%);
+}
+
+.heroInner {
+  position: relative; z-index: 1;
+  max-width: 1280px; margin: 0 auto;
+  padding: clamp(5.5rem, 11vh, 8rem) clamp(1.5rem, 6vw, 4rem) 0;
+  display: flex; flex-direction: column; gap: 3rem;
+}
+
+.heroContent {
+  max-width: 680px;
+  display: flex; flex-direction: column; gap: 1.5rem;
+}
+
+.heroBadge {
+  display: inline-flex; align-items: center; gap: 0.55rem;
+  font-family: $textFont; font-size: 0.73rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba($orange, 0.9);
+  border: 1px solid rgba($orange, 0.28); background: rgba($orange, 0.07);
+  border-radius: 9999px; padding: 0.35rem 0.95rem; width: fit-content;
+}
+
+.badgeDot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: $orange; box-shadow: 0 0 8px rgba($orange, 0.8);
+  animation: pulse 2.4s ease-in-out infinite; flex-shrink: 0;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.4; transform: scale(0.75); }
+}
+
+.heroTitle {
+  font-family: $titleFont;
+  font-size: clamp(3rem, 6.5vw, 5.5rem);
+  font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.02em; line-height: 1.0;
+  color: $white; margin: 0;
+  display: flex; flex-direction: column; gap: 0.1em;
+}
+
+.heroAccent { color: $orange; }
+
+.heroSub {
+  font-family: $textFont; font-size: clamp(0.95rem, 1.4vw, 1.08rem);
+  color: rgba($white, 0.58); line-height: 1.76; margin: 0; max-width: 520px;
+}
+
+.heroActions {
+  display: flex; align-items: center; gap: 0.9rem; flex-wrap: wrap;
+}
+
+.heroCTAPrimary {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.9rem 1.85rem;
+  background: $orange; color: $obsidian;
+  font-family: $headerFont; font-size: 0.97rem; font-weight: 800;
+  border-radius: 8px; text-decoration: none;
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  box-shadow: 0 6px 24px rgba($orange, 0.38);
+  transition: background 0.25s, transform 0.25s;
+  white-space: nowrap;
+
+  &:hover { background: $lightorange; transform: translateY(-2px); }
+}
+
+.heroCTASecondary {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  padding: 0.85rem 1.5rem;
+  border: 1px solid rgba($white, 0.18); background: rgba($white, 0.04);
+  color: rgba($white, 0.75); font-family: $headerFont; font-size: 0.93rem; font-weight: 600;
+  border-radius: 8px; text-decoration: none;
+  transition: background 0.25s, border-color 0.25s, color 0.25s;
+
+  &:hover { background: rgba($white, 0.09); border-color: rgba($white, 0.35); color: $white; }
+}
+
+// ── TRUST STRIP ───────────────────────────────────────────────────────────────
+.trustStrip {
+  display: flex; flex-wrap: wrap; gap: 0;
+  background: rgba($white, 0.04);
+  border: 1px solid rgba($white, 0.08); border-radius: 12px; overflow: hidden;
+}
+
+.trustStat {
+  flex: 1; min-width: 140px;
+  display: flex; flex-direction: column; gap: 0.25rem;
+  padding: 1.25rem 1.5rem;
+  border-right: 1px solid rgba($white, 0.07);
+
+  &:last-child { border-right: none; }
+}
+
+.trustVal {
+  font-family: $titleFont; font-size: 1.6rem; font-weight: 700;
+  color: $orange; line-height: 1;
+}
+
+.trustLbl {
+  font-family: $textFont; font-size: 0.78rem; font-weight: 500;
+  color: rgba($white, 0.4);
+}
+
+// ── AREAS SECTION ─────────────────────────────────────────────────────────────
+.areasSection {
+  padding: clamp(5rem, 8vw, 8rem) 1.5rem;
+  background: $white;
+}
+
+.areasSectionInner {
+  max-width: 1280px; margin: 0 auto;
+  display: flex; flex-direction: column; gap: 3.5rem;
+}
+
+// ── SECTION HEADER ────────────────────────────────────────────────────────────
+.sectionHeader {
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center; gap: 0.75rem;
+}
+
+.sectionEyebrow {
+  font-family: $textFont; font-size: 0.78rem; font-weight: 700;
+  letter-spacing: 0.22em; text-transform: uppercase; color: $orange;
+}
+
+.sectionTitle {
+  font-family: $titleFont;
+  font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+  font-weight: 700; text-transform: uppercase;
+  color: $obsidian; margin: 0; letter-spacing: 0.04em; line-height: 1.08;
+}
+
+.sectionSub {
+  font-family: $textFont; font-size: 1rem; color: $darkgrey;
+  line-height: 1.7; margin: 0; max-width: 560px;
+}
+
+// ── AREAS GRID ────────────────────────────────────────────────────────────────
+.areasGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+
+// ── AREA CARD ─────────────────────────────────────────────────────────────────
+.areaCard {
+  background: $white;
+  border: 1px solid $lightgrey;
+  border-radius: 16px;
+  padding: 1.5rem 1.5rem 1.25rem;
+  display: flex; flex-direction: column; gap: 0.75rem;
+  position: relative; overflow: hidden;
+  transition: border-color 0.3s, background 0.3s, transform 0.3s, box-shadow 0.3s;
+
+  &:hover {
+    border-color: rgba($orange, 0.25);
+    background: rgba($orange, 0.02);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba($orange, 0.1);
+  }
+}
+
+.areaCardHub {
+  border-color: rgba($orange, 0.35) !important;
+  background: rgba($orange, 0.05) !important;
+
+  &::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, $orange, $lightorange);
+  }
+}
+
+.areaCardPrimary {
+  border-color: rgba($orange, 0.2);
+
+  &::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, rgba($orange, 0.5), transparent);
+  }
+}
+
+// ── BADGE ─────────────────────────────────────────────────────────────────────
+.areaBadge {
+  display: inline-flex; align-items: center;
+  font-size: 0.64rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 0.22rem 0.65rem; border-radius: 4px; width: fit-content;
+}
+
+.areaBadgeHub {
+  background: $orange; color: $obsidian;
+}
+
+.areaBadgeNearby {
+  background: rgba($orange, 0.1); color: $orange;
+  border: 1px solid rgba($orange, 0.25);
+}
+
+// ── PIN ───────────────────────────────────────────────────────────────────────
+.areaPin { color: $orange; display: flex; }
+
+// ── TOP ROW ───────────────────────────────────────────────────────────────────
+.areaTopRow {
+  display: flex; align-items: baseline;
+  justify-content: space-between; gap: 0.5rem; flex-wrap: wrap;
+}
+
+.areaCity {
+  font-family: $titleFont;
+  font-size: 1.5rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.04em;
+  color: $obsidian; margin: 0;
+}
+
+.areaCounty {
+  font-family: $textFont; font-size: 0.72rem; font-weight: 600;
+  color: $darkgrey; white-space: nowrap;
+}
+
+// ── DESC ──────────────────────────────────────────────────────────────────────
+.areaDesc {
+  font-family: $textFont; font-size: 0.86rem; line-height: 1.65;
+  color: $darkgrey; margin: 0; flex: 1;
+}
+
+// ── HIGHLIGHTS ────────────────────────────────────────────────────────────────
+.areaHighlights {
+  list-style: none; padding: 0; margin: 0;
+  display: flex; flex-direction: column; gap: 0.35rem;
+
+  li {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-family: $textFont; font-size: 0.79rem; font-weight: 600;
+    color: rgba($obsidian, 0.6);
+
+    svg { color: $orange; flex-shrink: 0; }
+  }
+}
+
+// ── FOOTER ────────────────────────────────────────────────────────────────────
+.areaFooter {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba($obsidian, 0.07);
+  margin-top: auto;
+}
+
+.areaCallBtn {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.55rem 1rem;
+  background: $orange; color: $obsidian;
+  font-family: $headerFont; font-size: 0.8rem; font-weight: 800;
+  border-radius: 6px; text-decoration: none;
+  transition: background 0.2s, transform 0.2s;
+  white-space: nowrap;
+
+  &:hover { background: $lightorange; transform: translateY(-1px); }
+}
+
+.areaEstimateBtn {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-family: $textFont; font-size: 0.8rem; font-weight: 700;
+  color: $orange; text-decoration: none;
+  transition: gap 0.2s;
+
+  &:hover { gap: 0.55rem; }
+}
+
+// ── UNLISTED SECTION ──────────────────────────────────────────────────────────
+.unlisted {
+  background: rgba($orange, 0.04);
+  border-top: 1px solid rgba($orange, 0.12);
+  border-bottom: 1px solid rgba($orange, 0.12);
+  padding: 2.5rem 1.5rem;
+}
+
+.unlistedInner {
+  max-width: 860px; margin: 0 auto;
+  display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
+  justify-content: center; text-align: center;
+
+  @media (min-width: 680px) { text-align: left; justify-content: flex-start; }
+}
+
+.unlistedIcon {
+  width: 56px; height: 56px; border-radius: 12px; flex-shrink: 0;
+  background: rgba($orange, 0.1); border: 1px solid rgba($orange, 0.2);
+  display: flex; align-items: center; justify-content: center;
+  color: $orange;
+}
+
+.unlistedText {
+  flex: 1; min-width: 200px;
+
+  h3 {
+    font-family: $headerFont; font-size: 1.1rem; font-weight: 700;
+    color: $obsidian; margin: 0 0 0.35rem;
+  }
+
+  p {
+    font-family: $textFont; font-size: 0.9rem; line-height: 1.65;
+    color: $darkgrey; margin: 0;
+  }
+}
+
+.unlistedCTA {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.85rem 1.75rem;
+  background: $orange; color: $obsidian;
+  font-family: $headerFont; font-size: 0.92rem; font-weight: 800;
+  border-radius: 8px; text-decoration: none; white-space: nowrap;
+  clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 7px, 100% 100%, 7px 100%, 0 calc(100% - 7px));
+  box-shadow: 0 5px 20px rgba($orange, 0.32);
+  transition: background 0.22s, transform 0.22s;
+
+  &:hover { background: $lightorange; transform: translateY(-2px); }
+}

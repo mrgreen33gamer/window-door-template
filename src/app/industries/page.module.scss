@@ -1,0 +1,19 @@
+// src/app/industries/page.module.scss
+@use 'sass:color';
+@use '../globalVariables.scss' as *;
+
+.pageWrapper {
+  min-height: 100vh;
+  background: transparent;
+  padding-bottom: 4rem;
+}
+
+.section {
+  margin-bottom: 5rem;
+}
+
+@media (max-width: 768px) {
+  .section {
+    margin-bottom: 3rem;
+  }
+}

@@ -1,0 +1,39 @@
+// src/app/admin/(dashboard)/layout.module.scss
+// FINAL FIX: Full responsive — sidebar on desktop, top-bar + content offset on tablet/mobile.
+@use '../styles/admin' as *;
+
+.shell {
+  display:    flex;
+  min-height: 100vh;
+  background: $bg;
+
+  &::before {
+    content:  '';
+    position: fixed;
+    inset:    0;
+    background:
+      radial-gradient(ellipse 70% 40% at -10% 0%, rgba($orange, 0.04), transparent 55%),
+      radial-gradient(ellipse 60% 50% at 110% 100%, rgba($blue, 0.03), transparent 55%);
+    pointer-events: none;
+    z-index: 0;
+  }
+}
+
+.main {
+  flex:       1;
+  padding:    2rem 2.5rem;
+  overflow-y: auto;
+  position:   relative;
+  z-index:    1;
+  min-width:  0; // prevent flex overflow
+
+  // Tablet: reduce side padding, add top offset for mobile top bar
+  @media (max-width: 900px) {
+    padding:    calc(56px + 1.25rem) 1.25rem 1.25rem;
+  }
+
+  // Mobile: tight padding
+  @media (max-width: 480px) {
+    padding: calc(56px + 1rem) 1rem 1rem;
+  }
+}

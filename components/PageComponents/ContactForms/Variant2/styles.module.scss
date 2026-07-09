@@ -1,0 +1,250 @@
+@use '../../../../src/app/globalVariables.scss' as *;
+
+// ── ROOT ──────────────────────────────────────────────────────────────────────
+.root {
+  width: 100%;
+  position: relative;
+  padding: clamp(5rem, 8vw, 7rem) 1.5rem;
+  background: $obsidian;
+  overflow: hidden;
+}
+
+.bgGrid {
+  position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background-image: repeating-linear-gradient(
+    -55deg, transparent, transparent 22px,
+    rgba($white, 0.012) 22px, rgba($white, 0.012) 23px
+  );
+}
+
+// ── CONTAINER ─────────────────────────────────────────────────────────────────
+.container {
+  position: relative; z-index: 1;
+  max-width: 1100px; margin: 0 auto;
+}
+
+// ── CARD ──────────────────────────────────────────────────────────────────────
+.card {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  border-radius: 18px; overflow: hidden;
+  box-shadow: 0 28px 90px rgba(0,0,0,0.5);
+  border: 1px solid rgba($white, 0.07);
+
+  @media (max-width: 860px) { grid-template-columns: 1fr; }
+}
+
+// ── LEFT PANEL ────────────────────────────────────────────────────────────────
+.leftPanel {
+  background: linear-gradient(160deg, rgba($orange, 0.18) 0%, rgba($obsidian, 0.95) 60%);
+  border-right: 1px solid rgba($orange, 0.15);
+  padding: 2.5rem 2rem;
+  display: flex; align-items: center;
+
+  @media (max-width: 860px) {
+    border-right: none; border-bottom: 1px solid rgba($orange, 0.15);
+    padding: 2rem;
+  }
+}
+
+.panelInner { display: flex; flex-direction: column; gap: 1.5rem; }
+
+.quoteIcon { color: $orange; opacity: 0.7; }
+
+.quoteText {
+  font-family: $textFont; font-size: 1rem; line-height: 1.7;
+  color: rgba($white, 0.82); font-style: italic; margin: 0;
+}
+
+.quoteAttrib {
+  font-family: $textFont; font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase; color: rgba($orange, 0.7);
+}
+
+.panelStats {
+  display: flex; gap: 1rem; flex-wrap: wrap;
+  padding-top: 1rem;
+  border-top: 1px solid rgba($white, 0.08);
+}
+
+.statBlock { display: flex; flex-direction: column; gap: 2px; }
+
+.statVal {
+  font-family: $titleFont; font-size: 1.4rem; font-weight: 700;
+  color: $orange; line-height: 1;
+}
+
+.statLbl {
+  font-family: $textFont; font-size: 0.68rem; font-weight: 600;
+  color: rgba($white, 0.38); text-transform: uppercase; letter-spacing: 0.06em;
+}
+
+.panelBadges { display: flex; flex-direction: column; gap: 0.55rem; }
+
+.panelBadge {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-family: $textFont; font-size: 0.8rem; font-weight: 600;
+  color: rgba($white, 0.65);
+  svg { color: $orange; flex-shrink: 0; }
+}
+
+// ── FORM SIDE ─────────────────────────────────────────────────────────────────
+.formSide {
+  background: $white;
+  padding: clamp(2rem, 4vw, 2.75rem);
+  display: flex; flex-direction: column;
+}
+
+// ── FORM HEAD ─────────────────────────────────────────────────────────────────
+.formHead {
+  margin-bottom: 1.75rem;
+  display: flex; flex-direction: column; gap: 0.4rem;
+}
+
+.eyebrow {
+  font-family: $textFont; font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase; color: $orange;
+}
+
+.formTitle {
+  font-family: $titleFont;
+  font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+  font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.03em; color: $obsidian; margin: 0; line-height: 1.1;
+}
+
+// ── SERVICE SECTION ───────────────────────────────────────────────────────────
+.serviceSection { margin-bottom: 1.25rem; }
+
+.serviceHeading {
+  font-family: $textFont; font-size: 0.78rem; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase; color: rgba($obsidian, 0.45);
+  margin: 0 0 0.75rem;
+  span { font-weight: 400; text-transform: none; letter-spacing: 0; opacity: 0.7; }
+}
+
+.chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+.chip {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.45rem 0.85rem;
+  border: 1.5px solid rgba($obsidian, 0.12);
+  border-radius: 100px; background: rgba($obsidian, 0.02);
+  font-family: $textFont; font-size: 0.8rem; font-weight: 600;
+  color: rgba($obsidian, 0.6); cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+
+  &:hover { border-color: rgba($orange, 0.4); background: rgba($orange, 0.05); color: $orange; }
+}
+
+.chipActive {
+  border-color: $orange !important;
+  background: rgba($orange, 0.09) !important;
+  color: $orange !important;
+}
+
+.chipIcon { font-size: 0.8rem; }
+
+// ── URGENCY ───────────────────────────────────────────────────────────────────
+.urgencyRow { margin-bottom: 1.5rem; }
+
+.urgencyBtn {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.6rem 1rem;
+  border: 1.5px solid rgba($obsidian, 0.1); border-radius: 8px;
+  background: none; cursor: pointer;
+  font-family: $textFont; font-size: 0.82rem; font-weight: 600;
+  color: rgba($obsidian, 0.5);
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+
+  &:hover { border-color: rgba($orange, 0.35); color: rgba($obsidian, 0.75); }
+}
+
+.urgencyActive {
+  border-color: rgba(239,68,68,0.4) !important;
+  background: rgba(239,68,68,0.05) !important;
+  color: #c0392b !important;
+}
+
+.urgencyDot {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  background: rgba($obsidian, 0.2);
+  .urgencyActive & { background: #ef4444; box-shadow: 0 0 8px rgba(239,68,68,0.6); }
+}
+
+// ── FORM ──────────────────────────────────────────────────────────────────────
+.form { display: flex; flex-direction: column; gap: 1rem; }
+
+.row {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+  @media (max-width: 480px) { grid-template-columns: 1fr; }
+}
+
+.field { display: flex; flex-direction: column; gap: 0.35rem; }
+
+.label {
+  font-family: $textFont; font-size: 0.73rem; font-weight: 700;
+  letter-spacing: 0.05em; text-transform: uppercase; color: rgba($obsidian, 0.5);
+}
+
+.input {
+  font-family: $textFont; font-size: 0.9rem; color: $obsidian;
+  background: rgba($obsidian, 0.04); border: 1.5px solid rgba($obsidian, 0.12);
+  border-radius: 8px; padding: 0.75rem 0.95rem; width: 100%;
+  outline: none; appearance: none;
+  transition: border-color 0.2s, background 0.2s;
+
+  &:focus { border-color: $orange; background: $white; box-shadow: 0 0 0 3px rgba($orange, 0.1); }
+  &::placeholder { color: rgba($obsidian, 0.3); }
+}
+
+.textarea { resize: vertical; min-height: 90px; }
+
+// ── SUBMIT ────────────────────────────────────────────────────────────────────
+.submitBtn {
+  display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+  width: 100%; padding: 1rem;
+  background: $orange; color: $obsidian;
+  font-family: $headerFont; font-size: 1rem; font-weight: 800;
+  border: none; border-radius: 8px; cursor: pointer;
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  box-shadow: 0 6px 24px rgba($orange, 0.38);
+  transition: background 0.22s, transform 0.22s;
+
+  &:hover:not(:disabled) { background: $lightorange; transform: translateY(-2px); }
+  &:disabled { opacity: 0.65; cursor: not-allowed; }
+}
+
+// ── ERROR ─────────────────────────────────────────────────────────────────────
+.errorMsg {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.75rem 1rem; border-radius: 8px;
+  background: rgba(red, 0.07); border: 1px solid rgba(red, 0.15);
+  font-family: $textFont; font-size: 0.83rem; color: #c0392b;
+  svg { flex-shrink: 0; }
+}
+
+// ── SUCCESS ───────────────────────────────────────────────────────────────────
+.successState {
+  flex: 1; display: flex; flex-direction: column; align-items: center;
+  justify-content: center; gap: 1.25rem; text-align: center; padding: 2rem;
+}
+
+.successRing {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: rgba($orange, 0.1); border: 2px solid rgba($orange, 0.3);
+  display: flex; align-items: center; justify-content: center;
+}
+
+.successIcon { color: $orange; font-size: 2.2rem; }
+
+.successTitle {
+  font-family: $titleFont; font-size: 2rem; font-weight: 700;
+  text-transform: uppercase; color: $obsidian; margin: 0;
+}
+
+.successText {
+  font-family: $textFont; font-size: 0.9rem; line-height: 1.72;
+  color: rgba($obsidian, 0.55); margin: 0; max-width: 340px;
+  strong { color: $obsidian; }
+}

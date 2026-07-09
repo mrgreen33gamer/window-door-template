@@ -1,0 +1,62 @@
+@use '../../../src/app/globalVariables.scss' as *;
+
+.section {
+  max-width: 860px;
+  margin: 0 auto 3.5rem;
+  padding: 0 2rem;
+}
+
+.heading {
+  font-family: $headerFont;
+  font-size: 1.5rem;
+  color: $obsidian;
+  font-weight: 600;
+  margin: 0 0 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid $lightgrey;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid $lightgrey;
+  text-decoration: none;
+  color: $blackflat;
+  font-family: $textFont;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: color 0.3s ease-in-out;
+
+  &:hover {
+    color: $obsidian;
+
+    .arrow {
+      transform: translateX(4px);
+      color: $green;
+    }
+  }
+}
+
+.arrow {
+  font-size: 0.75rem;
+  color: $grey;
+  transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 0 1.25rem;
+  }
+}

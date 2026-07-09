@@ -1,0 +1,33 @@
+// PageComponents/FAQ/styles.module.scss
+@use '../../../src/app/globalVariables.scss' as *;
+
+.section { padding: clamp(5rem, 8vw, 8rem) 1.5rem; background: $white; }
+
+.container { max-width: 860px; margin: 0 auto; display: flex; flex-direction: column; gap: 3.5rem; }
+
+.header { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.75rem; }
+
+.eyebrow { font-family: $textFont; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: $orange; }
+
+.title { font-family: $titleFont; font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; text-transform: uppercase; color: $obsidian; margin: 0; letter-spacing: 0.04em; line-height: 1.1; }
+
+.subtitle { font-family: $textFont; font-size: 1rem; color: $darkgrey; margin: 0; line-height: 1.7; }
+
+.list { display: flex; flex-direction: column; gap: 0.65rem; }
+
+.item {
+  border: 1px solid $lightgrey;
+  border-radius: 12px; overflow: hidden; background: $white;
+  transition: border-color 0.25s, box-shadow 0.25s;
+  &.itemOpen { border-color: rgba($orange, 0.4); box-shadow: 0 4px 16px rgba($orange, 0.08); }
+}
+
+.trigger { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.2rem 1.4rem; background: none; border: none; cursor: pointer; text-align: left; }
+
+.question { font-family: $textFont; font-size: 1rem; font-weight: 600; color: $obsidian; line-height: 1.5; flex: 1; }
+
+.icon { color: $darkgrey; flex-shrink: 0; transition: transform 0.28s ease, color 0.2s ease; &.iconOpen { transform: rotate(180deg); color: $orange; } }
+
+.answer { overflow: hidden; }
+
+.answerText { padding: 0 1.4rem 1.4rem; font-family: $textFont; font-size: 0.96rem; color: $darkgrey; line-height: 1.78; margin: 0; }

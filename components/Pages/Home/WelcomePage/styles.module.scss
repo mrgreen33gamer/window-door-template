@@ -1,0 +1,410 @@
+@use '../../../../src/app/globalVariables.scss' as *;
+
+// ─────────────────────────────────────────────────────────────────────────────
+// HERO SHELL
+// min-height = viewport minus the compact nav (56px) so the section fills but
+// doesn't lock the user in — content starts from the top via padding, NOT
+// align-items:center which causes the giant empty-space-above problem.
+// ─────────────────────────────────────────────────────────────────────────────
+.hero {
+  position: relative;
+  height: 100svh;
+  background: $obsidian;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(
+      -55deg, transparent, transparent 22px,
+      rgba($white, 0.012) 22px, rgba($white, 0.012) 23px
+    );
+    pointer-events: none; z-index: 0;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PARTICLE CANVAS
+// ─────────────────────────────────────────────────────────────────────────────
+.particleCanvas {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  z-index: 1; pointer-events: none;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SHARD — diagonal orange tint on right side
+// ─────────────────────────────────────────────────────────────────────────────
+.shard {
+  position: absolute; top: 0; right: 0;
+  width: 44%; height: 100%;
+  background: linear-gradient(135deg, transparent 0%, rgba($orange, 0.025) 40%, rgba($orange, 0.05) 100%);
+  clip-path: polygon(26% 0%, 100% 0%, 100% 100%, 0% 100%);
+  pointer-events: none; z-index: 1;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// LAYOUT — two-column grid
+// Top padding: generous — header is ~68px, we add ~5rem+ on top of that so
+// the hero badge/headline doesn't feel glued to the nav bar.
+// ─────────────────────────────────────────────────────────────────────────────
+.layout {
+  position: relative; z-index: 2;
+  max-width: 1380px; margin: 0 auto;
+  // 6rem minimum → scales with viewport height → 9rem max
+  // This gives clear air between the sticky header and the badge line
+  padding: clamp(6rem, 11vh, 9rem) clamp(1.5rem, 5vw, 5rem) clamp(5rem, 9vh, 7rem);
+  display: grid;
+  grid-template-columns: minmax(0, 560px) 1fr;
+  gap: clamp(2rem, 4vw, 5rem);
+  align-items: center;
+
+  @media (max-width: 960px) {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 3.5rem;
+    padding: clamp(5rem, 9vh, 7rem) 1.5rem clamp(4rem, 7vh, 6rem);
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// LEFT — text content
+// ─────────────────────────────────────────────────────────────────────────────
+.content {
+  display: flex; flex-direction: column; gap: 1.5rem;
+  @media (max-width: 960px) { align-items: center; }
+}
+
+.badge {
+  display: inline-flex; align-items: center; gap: 0.55rem;
+  font-family: $textFont; font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba($orange, 0.9);
+  border: 1px solid rgba($orange, 0.28); background: rgba($orange, 0.07);
+  border-radius: 9999px; padding: 0.35rem 0.95rem; width: fit-content;
+}
+
+.badgeDot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: $orange; box-shadow: 0 0 8px rgba($orange, 0.8);
+  animation: pulse 2.4s ease-in-out infinite; flex-shrink: 0;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.4; transform: scale(0.72); }
+}
+
+.headline {
+  font-family: $titleFont;
+  font-size: clamp(2.9rem, 5.5vw, 5.4rem);
+  font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.02em; line-height: 1.0;
+  color: $white; margin: 0;
+}
+
+.accentLine {
+  color: $orange; display: block; position: relative;
+  &::after {
+    content: ''; position: absolute; left: 0; bottom: -4px;
+    width: 48%; height: 3px;
+    background: linear-gradient(90deg, $orange, transparent); border-radius: 2px;
+    @media (max-width: 960px) { left: 50%; transform: translateX(-50%); }
+  }
+}
+
+.sub {
+  font-family: $textFont; font-size: clamp(0.92rem, 1.3vw, 1.05rem);
+  color: rgba($white, 0.57); line-height: 1.78; margin: 0; max-width: 430px;
+  @media (max-width: 960px) { max-width: 500px; }
+}
+
+.ctaRow {
+  display: flex; align-items: center; gap: 0.85rem; flex-wrap: wrap;
+  @media (max-width: 960px) { justify-content: center; }
+}
+
+.ctaPrimary {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.9rem 1.85rem;
+  background: $orange; color: $obsidian;
+  font-family: $headerFont; font-size: 0.96rem; font-weight: 800;
+  border-radius: 8px; text-decoration: none; white-space: nowrap;
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  box-shadow: 0 6px 24px rgba($orange, 0.38);
+  transition: background 0.22s, transform 0.22s;
+  &:hover { background: $lightorange; transform: translateY(-3px); }
+}
+
+.ctaSecondary {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  padding: 0.88rem 1.5rem;
+  border: 1px solid rgba($white, 0.18); background: rgba($white, 0.04);
+  color: rgba($white, 0.75); font-family: $headerFont; font-size: 0.92rem; font-weight: 600;
+  border-radius: 8px; text-decoration: none;
+  transition: background 0.22s, border-color 0.22s, color 0.22s;
+  &:hover { background: rgba($white, 0.09); border-color: rgba($white, 0.3); color: $white; }
+}
+
+.chips {
+  display: flex; flex-wrap: wrap; gap: 0.45rem;
+  @media (max-width: 960px) { justify-content: center; }
+}
+
+.chip {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-family: $textFont; font-size: 0.73rem; font-weight: 600;
+  color: rgba($white, 0.52); background: rgba($white, 0.05);
+  border: 1px solid rgba($white, 0.09); border-radius: 9999px; padding: 0.28rem 0.75rem;
+  svg { color: $orange; flex-shrink: 0; }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// RIGHT — visual widget
+//
+// Fixed 420×420 square. The thermometer lives in the exact center.
+// Stat cards use position:absolute anchored to the four quadrants.
+// Nothing can overflow because the container clips to this box.
+// ─────────────────────────────────────────────────────────────────────────────
+.visual {
+  position: relative;
+  // Fixed square so absolute-positioned children are predictable
+  width: 480px; height: 480px;
+  flex-shrink: 0; margin: 0 auto;
+
+  @media (max-width: 960px) { display: none; }
+
+  // On mid-range screens shrink slightly
+  @media (min-width: 961px) and (max-width: 1200px) {
+    width: 380px; height: 380px;
+  }
+}
+
+// Background snowflake — centered in the visual box
+.bgFlake {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  color: rgba($orange, 0.08); pointer-events: none;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// THERMOMETER
+//
+// Architecture change: instead of position:absolute bulb hanging off a flex
+// container (which makes centering guess-work), we stack tube + bulb in a
+// single column using normal flow. The total column is:
+//   tube: 200px  +  gap: 0  +  bulb: 40px  =  240px total
+// Labels sit to the right in a separate div, both inside a flex row.
+// The whole .thermo flex-row is then centered in .visual with
+// translate(-50%, -50%) — and NOW the visual center is correct because
+// the bulb is INSIDE the flow height, not hanging outside it.
+// ─────────────────────────────────────────────────────────────────────────────
+.thermo {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  // flex-row: [tube+bulb column]  [labels column]
+  display: flex;
+  flex-direction: row;
+  align-items: center; // vertically center the labels against the tube
+  gap: 12px;
+}
+
+// The tube+bulb live in this column — stacked vertically in normal flow
+.thermoColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.thermoTube {
+  width: 38px;
+  height: 220px;
+  background: linear-gradient(180deg, rgba($white, 0.1), rgba($white, 0.045));
+  border: 1px solid rgba($white, 0.18);
+  border-radius: 19px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow:
+    inset -4px 0 8px rgba($black, 0.4),
+    inset 3px 0 4px rgba($white, 0.12),
+    0 6px 20px rgba($black, 0.35);
+
+  // glass highlight streak down the left side
+  &::before {
+    content: '';
+    position: absolute;
+    top: 8px; bottom: 8px; left: 6px;
+    width: 7px;
+    border-radius: 4px;
+    background: linear-gradient(180deg, rgba($white, 0.4) 0%, rgba($white, 0.06) 45%, rgba($white, 0.02) 100%);
+    pointer-events: none;
+    z-index: 3;
+  }
+
+  // tick marks along the right side
+  &::after {
+    content: '';
+    position: absolute;
+    top: 16px; bottom: 16px; right: 7px;
+    width: 6px;
+    background-image: repeating-linear-gradient(
+      to bottom,
+      rgba($white, 0.3) 0px, rgba($white, 0.3) 1.5px,
+      transparent 1.5px, transparent 20px
+    );
+    pointer-events: none;
+    z-index: 3;
+  }
+}
+
+.thermoFill {
+  width: 100%;
+  background: linear-gradient(to top, $darkorange 0%, $orange 45%, $lightorange 78%, #fde68a 100%);
+  border-radius: 19px;
+  box-shadow: 0 0 20px rgba($orange, 0.55);
+  flex-shrink: 0;
+  position: relative;
+
+  // liquid surface highlight at the top of the mercury
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 9px;
+    background: linear-gradient(180deg, rgba($white, 0.6), rgba($white, 0));
+    border-radius: 19px 19px 0 0;
+  }
+}
+
+// Bulb sits directly below the tube in normal flow — no position:absolute
+.thermoBulb {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 30%, $lightorange 0%, $orange 55%, $darkorange 100%);
+  box-shadow:
+    0 0 30px rgba($orange, 0.7), 0 0 10px rgba($orange, 0.5),
+    inset -7px -7px 12px rgba($black, 0.28),
+    inset 4px 4px 9px rgba($white, 0.22);
+  flex-shrink: 0;
+  // Overlap the tube slightly so they connect visually
+  margin-top: -13px;
+  position: relative; z-index: 2;
+
+  // specular highlight — makes it read as a glossy sphere
+  &::before {
+    content: '';
+    position: absolute;
+    top: 11px; left: 13px;
+    width: 14px; height: 10px;
+    border-radius: 50%;
+    background: rgba($white, 0.55);
+    filter: blur(1.5px);
+  }
+}
+
+// Labels: top / mid / bottom aligned to the tube height
+.thermoLabels {
+  display: flex;
+  flex-direction: column;
+  height: 220px; // match tube height exactly
+  justify-content: space-between;
+  padding: 2px 0;
+}
+
+.thermoTop {
+  font-family: $textFont; font-size: 0.98rem; font-weight: 700;
+  color: $orange; white-space: nowrap; line-height: 1;
+}
+.thermoMid {
+  font-family: $textFont; font-size: 0.98rem; font-weight: 600;
+  color: rgba($white, 0.4); white-space: nowrap; line-height: 1;
+}
+.thermoBot {
+  font-family: $textFont; font-size: 0.98rem; font-weight: 700;
+  color: rgba($white, 0.48); white-space: nowrap; line-height: 1;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// STAT CARDS — shared shell
+// Each card is positioned absolutely within the 420×420 .visual box.
+// Coordinates chosen so they sit clearly in each quadrant without overlapping.
+// ─────────────────────────────────────────────────────────────────────────────
+.statCard {
+  position: absolute;
+  background: rgba($obsidian, 0.88);
+  border: 1px solid rgba($white, 0.1);
+  border-radius: 12px;
+  padding: 0.65rem 0.9rem;
+  display: flex; flex-direction: column; gap: 3px;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.45);
+  white-space: nowrap;
+  // subtle left accent strip
+  &::before {
+    content: ''; position: absolute; left: 0; top: 20%; bottom: 20%;
+    width: 2px; border-radius: 2px;
+    background: rgba($orange, 0.5);
+  }
+}
+
+.scNum {
+  font-family: $titleFont; font-size: 1.12rem; font-weight: 700;
+  color: $orange; line-height: 1;
+}
+
+.scLbl {
+  font-family: $textFont; font-size: 0.68rem; font-weight: 600;
+  color: rgba($white, 0.45);
+}
+
+// Orange accent card variant
+.scOrange {
+  border-color: rgba($orange, 0.38);
+  background: rgba($orange, 0.15);
+  &::before { background: $orange; }
+}
+
+// ── Individual card positions ──────────────────────────────────────────────
+// .visual = 420×420. Thermo center ≈ (210, 210).
+// Cards placed so they sit in the four quadrants, not on top of each other.
+
+// Upper left
+.sc1 { top: 18px; left: 12px; }
+
+// Upper right
+.sc2 { top: 18px; right: 12px; }
+
+// Lower left
+.sc3 { bottom: 38px; left: 12px; }
+
+// Lower right — orange
+.sc4 { bottom: 38px; right: 12px; }
+
+// Scale down positions for smaller visual on mid screens
+@media (min-width: 961px) and (max-width: 1200px) {
+  .sc1 { top: 14px; left: 8px; }
+  .sc2 { top: 14px; right: 8px; }
+  .sc3 { bottom: 32px; left: 8px; }
+  .sc4 { bottom: 32px; right: 8px; }
+  .thermoTube  { width: 32px; height: 185px; }
+  .thermoLabels { height: 185px; }
+  .thermoBulb  { width: 46px; height: 46px; margin-top: -11px; }
+  .thermoTop, .thermoMid, .thermoBot { font-size: 0.88rem; }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SCROLL CUE
+// ─────────────────────────────────────────────────────────────────────────────
+.scrollCue {
+  position: absolute; bottom: 1.5rem; left: 50%;
+  transform: translateX(-50%); z-index: 3;
+  color: rgba($white, 0.2);
+  @media (max-width: 960px) { display: none; }
+}

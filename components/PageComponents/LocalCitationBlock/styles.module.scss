@@ -1,0 +1,138 @@
+// Uses globalVariables.scss via direct import
+@use '../../../src/app/globalVariables.scss' as *;
+
+// PageComponents/LocalCitationBlock/styles.module.scss
+
+.section {
+  padding: clamp(5rem, 8vw, 8rem) 1.5rem;
+  background: $white;
+}
+
+.container {
+  max-width: 1100px; margin: 0 auto;
+  display: flex; flex-direction: column; gap: 3.5rem;
+}
+
+// ── HEADER ───────────────────────────────────────
+.header {
+  display: flex; flex-direction: column; gap: 0.65rem;
+}
+
+.eyebrow {
+  font-size: 0.78rem; font-weight: 700;
+  letter-spacing: 0.22em; text-transform: uppercase; color: $orange;
+}
+
+.title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  font-weight: 700; text-transform: uppercase;
+  color: $obsidian; margin: 0;
+  letter-spacing: 0.04em; line-height: 1.1;
+}
+
+.subtitle {
+  font-size: 1rem; color: $darkgrey;
+  line-height: 1.7; margin: 0;
+}
+
+// ── GRID ─────────────────────────────────────────
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+
+// ── CARD ─────────────────────────────────────────
+.card {
+  background: $white;
+  border: 1px solid $lightgrey;
+  border-radius: 18px;
+  padding: 1.75rem 1.5rem;
+  display: flex; align-items: flex-start; gap: 1.25rem;
+  transition: border-color 0.3s ease, transform 0.3s ease, background 0.3s ease;
+
+  &:hover {
+    border-color: rgba($orange, 0.22);
+    transform: translateY(-4px);
+    background: rgba(249, 115, 22, 0.04);
+
+    .cardIcon { background: rgba(249, 115, 22, 0.18); }
+  }
+}
+
+.cardIcon {
+  flex-shrink: 0; width: 50px; height: 50px;
+  background: rgba(249, 115, 22, 0.1);
+  border: 1px solid rgba(249, 115, 22, 0.2);
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  color: $orange;
+  transition: background 0.25s ease;
+}
+
+.cardBody {
+  flex: 1; display: flex; flex-direction: column; gap: 0.4rem;
+}
+
+.cardLabel {
+  font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase; color: $darkgrey;
+}
+
+.cardValue {
+  font-size: 1rem; font-weight: 600;
+  color: $obsidian; line-height: 1.5; margin: 0;
+  text-decoration: none;
+}
+
+.phoneValue, .emailValue {
+  transition: color 0.2s;
+  &:hover { color: $orange; }
+}
+
+.cardHint {
+  font-size: 0.8rem; color: $darkgrey; font-style: italic;
+}
+
+.cardLink {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-size: 0.84rem; font-weight: 700;
+  color: $orange; text-decoration: none; letter-spacing: 0.04em;
+  margin-top: 0.25rem;
+  transition: color 0.2s, gap 0.2s;
+  &:hover { color: $lightorange; gap: 0.55rem; }
+}
+
+// ── HOURS LIST ────────────────────────────────────
+.hoursList {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-direction: column; gap: 0.45rem;
+}
+
+.hoursItem {
+  display: flex; justify-content: space-between;
+  align-items: center; gap: 1rem;
+}
+
+.hoursDays {
+  font-size: 0.87rem; color: $darkgrey;
+}
+
+.hoursTime {
+  font-size: 0.87rem; font-weight: 700;
+  color: $obsidian; white-space: nowrap;
+}
+
+.closed    { color: $darkgrey; font-weight: 400; font-style: italic; }
+.emergency { color: $orange; }
+
+// ── RESPONSIVE ───────────────────────────────────
+@media (max-width: 700px) {
+  .grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+  .card     { padding: 1.5rem 1.25rem; }
+  .hoursItem { flex-direction: column; align-items: flex-start; gap: 0.1rem; }
+}

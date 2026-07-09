@@ -1,0 +1,212 @@
+// src/app/admin/(dashboard)/leads/[id]/detail.module.scss
+@use '../../../styles/admin' as *;
+@use 'sass:color';
+
+.page {
+  display:        flex;
+  flex-direction: column;
+  gap:            1.5rem;
+  max-width:      1100px;
+}
+
+.backLink {
+  display:         inline-flex;
+  align-items:     center;
+  font-family:     $font-sans;
+  font-size:       0.82rem;
+  color:           $text-muted;
+  text-decoration: none;
+  transition:      color 0.15s ease;
+
+  &:hover { color: $orange; }
+}
+
+.header {
+  display:         flex;
+  align-items:     flex-start;
+  justify-content: space-between;
+  gap:             1rem;
+  flex-wrap:       wrap;
+
+  h1 {
+    font-family:    $font-title;
+    font-size:      2.2rem;
+    color:          $text-primary;
+    margin:         0;
+    letter-spacing: 0.04em;
+  }
+
+  p {
+    font-family: $font-sans;
+    font-size:   0.82rem;
+    color:       $text-muted;
+    margin:      0.25rem 0 0;
+  }
+}
+
+.devBadge {
+  color: #ef9f27;
+  font-weight: 600;
+}
+
+.grid {
+  display:               grid;
+  grid-template-columns: 1fr 1fr;
+  gap:                   1rem;
+
+  @media (max-width: 860px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  @include card;
+}
+
+.cardTitle {
+  @include section-title;
+  margin-bottom: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.saving {
+  font-family: $font-sans;
+  font-size:   0.72rem;
+  color:       $orange;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.dl {
+  display:               grid;
+  grid-template-columns: auto 1fr;
+  gap:                   0.4rem 1rem;
+  font-family:           $font-sans;
+  font-size:             0.82rem;
+
+  dt {
+    color:       $text-muted;
+    font-weight: 600;
+    font-size:   0.73rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding-top: 2px;
+  }
+
+  dd {
+    color:    $text-secondary;
+    margin:   0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    a {
+      color:           $orange;
+      text-decoration: none;
+      &:hover { text-decoration: underline; }
+    }
+  }
+}
+
+.message {
+  margin-top: 1rem;
+  padding-top: 0.875rem;
+  border-top: 1px solid $border;
+}
+
+.messageLabel {
+  font-family:    $font-sans;
+  font-size:      0.7rem;
+  font-weight:    600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color:          $text-muted;
+  margin:         0 0 0.35rem;
+}
+
+.messageText {
+  font-family:  $font-sans;
+  font-size:    0.85rem;
+  color:        $text-secondary;
+  line-height:  1.65;
+  margin:       0;
+  white-space:  pre-wrap;
+}
+
+.journeyPath {
+  display:   flex;
+  flex-wrap: wrap;
+  gap:       4px;
+  margin-top: 0.5rem;
+}
+
+.journeyStep {
+  font-family:   $font-sans;
+  font-size:     0.75rem;
+  color:         $text-secondary;
+  background:    rgba(255,255,255,0.04);
+  border:        1px solid $border;
+  border-radius: $radius-sm;
+  padding:       2px 6px;
+}
+
+.journeyArrow {
+  color:   $text-muted;
+  padding: 0 2px;
+}
+
+.notesArea {
+  width:         100%;
+  box-sizing:    border-box;
+  padding:       0.75rem 0.875rem;
+  background:    rgba(255,255,255,0.03);
+  border:        1px solid $border2;
+  border-radius: $radius-md;
+  font-family:   $font-sans;
+  font-size:     0.85rem;
+  color:         $text-primary;
+  resize:        vertical;
+  min-height:    100px;
+  transition:    border-color 0.15s ease;
+
+  &::placeholder { color: $text-muted; }
+  &:focus { outline: none; border-color: rgba($orange, 0.4); }
+}
+
+.valueLabel {
+  font-family:    $font-sans;
+  font-size:      0.78rem;
+  font-weight:    600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color:          $text-muted;
+  white-space:    nowrap;
+}
+
+.valueInput {
+  width:         120px;
+  padding:       0.5rem 0.75rem;
+  background:    rgba(255,255,255,0.04);
+  border:        1px solid $border2;
+  border-radius: $radius-md;
+  font-family:   $font-sans;
+  font-size:     0.9rem;
+  color:         $text-primary;
+  transition:    border-color 0.15s ease;
+
+  &:focus { outline: none; border-color: rgba($orange, 0.4); }
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+}
+
+.loading,
+.notFound {
+  font-family: $font-sans;
+  font-size:   0.9rem;
+  color:       $text-muted;
+  padding:     2rem 0;
+  text-align:  center;
+}

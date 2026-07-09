@@ -1,0 +1,112 @@
+@use '../../../src/app/globalVariables.scss' as *;
+
+.section {
+  padding: clamp(5rem, 8vw, 8rem) 1.5rem;
+  background: $white;
+  overflow: hidden;
+}
+
+.container {
+  max-width: 900px; margin: 0 auto;
+  display: flex; flex-direction: column; gap: 3.5rem;
+}
+
+// ── INTRO ─────────────────────────────────────────────────────────────────────
+.introBlock {
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center; gap: 0.9rem;
+}
+
+.tag {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  font-family: $textFont; font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.11em; text-transform: uppercase;
+  color: $orange; border: 1px solid rgba($orange, 0.25);
+  background: rgba($orange, 0.07); border-radius: 9999px;
+  padding: 0.3rem 0.85rem;
+}
+
+.tagDot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: $orange; box-shadow: 0 0 6px rgba($orange, 0.6);
+}
+
+.title {
+  font-family: $titleFont;
+  font-size: clamp(1.85rem, 3.2vw, 2.65rem);
+  font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.03em; line-height: 1.1;
+  color: $obsidian; margin: 0;
+}
+
+.accent { color: $orange; }
+
+.sub {
+  font-family: $textFont; font-size: 0.95rem; line-height: 1.72;
+  color: rgba($obsidian, 0.5); margin: 0; max-width: 520px;
+}
+
+// ── STEPS ─────────────────────────────────────────────────────────────────────
+.steps {
+  position: relative;
+  display: flex; flex-direction: column; gap: 1.5rem;
+}
+
+// Vertical connector
+.connectorLine {
+  position: absolute;
+  left: 26px; top: 26px; bottom: 26px; width: 2px;
+  background: linear-gradient(to bottom, $orange, rgba($orange, 0.1));
+  border-radius: 2px;
+
+  @media (max-width: 560px) { display: none; }
+}
+
+.step {
+  display: flex; align-items: flex-start; gap: 1.5rem;
+}
+
+// ── STEP LEFT ─────────────────────────────────────────────────────────────────
+.stepLeft { flex-shrink: 0; }
+
+.iconWrap {
+  position: relative;
+  width: 54px; height: 54px;
+  background: $obsidian; border: 2px solid rgba($orange, 0.35);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  color: $orange; font-size: 1.1rem;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.14);
+}
+
+.stepNum {
+  position: absolute;
+  top: -8px; right: -8px;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: $orange; color: $obsidian;
+  font-family: $headerFont; font-size: 0.65rem; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+}
+
+// ── STEP CARD ─────────────────────────────────────────────────────────────────
+.stepCard {
+  flex: 1;
+  background: rgba($obsidian, 0.03);
+  border: 1px solid rgba($obsidian, 0.08);
+  border-radius: 10px;
+  padding: 1.25rem 1.5rem;
+  display: flex; flex-direction: column; gap: 0.4rem;
+  transition: border-color 0.2s, background 0.2s;
+
+  &:hover { border-color: rgba($orange, 0.2); background: rgba($orange, 0.02); }
+}
+
+.stepTitle {
+  font-family: $headerFont; font-size: 1rem; font-weight: 700;
+  color: $obsidian; margin: 0;
+}
+
+.stepBody {
+  font-family: $textFont; font-size: 0.87rem; line-height: 1.7;
+  color: rgba($obsidian, 0.55); margin: 0;
+}

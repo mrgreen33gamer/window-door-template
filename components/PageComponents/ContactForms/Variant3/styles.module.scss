@@ -1,0 +1,147 @@
+// components/PageComponents/ContactForms/Variant3/styles.module.scss
+@use '../../../../src/app/globalVariables.scss' as *;
+
+.root {
+  display: flex; justify-content: center; align-items: flex-start;
+  width: 100%; padding: clamp(3rem, 6vw, 5rem) 1.25rem;
+}
+
+.card {
+  width: 100%; max-width: 720px; background: $obsidian;
+  border-radius: 24px; border: 1px solid rgba($white, 0.07); overflow: hidden;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.4), 0 4px 16px rgba(0,0,0,0.2);
+  animation: v3Rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes v3Rise {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+// ── TOP RAIL ─────────────────────────────────────────────────────────────────
+.topRail {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 0.85rem 2rem;
+  background: rgba($orange, 0.08); border-bottom: 1px solid rgba($orange, 0.2);
+}
+
+.railBrand {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-family: $headerFont; font-size: 0.85rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase; color: $orange;
+}
+
+.railDivider { width: 1px; height: 1rem; background: rgba($orange, 0.25); flex-shrink: 0; }
+
+.railLabel {
+  font-family: $textFont; font-size: 0.76rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: rgba($white, 0.38);
+}
+
+// ── BODY ─────────────────────────────────────────────────────────────────────
+.body { padding: clamp(2rem, 4vw, 2.75rem); display: flex; flex-direction: column; gap: 2rem; }
+
+.header { display: flex; flex-direction: column; gap: 0.5rem; }
+
+.title {
+  font-family: $titleFont; font-size: clamp(1.8rem, 4vw, 2.4rem);
+  font-weight: 700; text-transform: uppercase; color: $white;
+  margin: 0; letter-spacing: 0.02em; line-height: 1.1;
+}
+
+.subtitle {
+  font-family: $textFont; font-size: 0.95rem;
+  color: rgba($white, 0.45); margin: 0; line-height: 1.6;
+}
+
+// ── FORM ─────────────────────────────────────────────────────────────────────
+.form { display: flex; flex-direction: column; gap: 1.25rem; }
+
+.numberedField { display: flex; align-items: flex-start; gap: 1.25rem; }
+
+.fieldNum {
+  flex-shrink: 0; font-family: $textFont; font-size: 0.7rem; font-weight: 700;
+  color: rgba($orange, 0.5); letter-spacing: 0.08em; padding-top: 0.5rem; min-width: 24px;
+}
+
+.fieldInner { flex: 1; display: flex; flex-direction: column; gap: 0.45rem; }
+
+.fieldLabel {
+  display: flex; align-items: center; gap: 0.45rem;
+  font-family: $textFont; font-size: 0.76rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase; color: rgba($white, 0.5);
+}
+
+.fieldIcon { font-size: 0.72rem; color: $orange; }
+
+.input {
+  width: 100%; box-sizing: border-box; padding: 0.82rem 1rem;
+  background: rgba($white, 0.04); border: 1px solid rgba($white, 0.1);
+  border-radius: 10px; font-family: $textFont; font-size: 0.96rem; color: $white;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+  &::placeholder { color: rgba($white, 0.25); }
+  &:focus { outline: none; border-color: $orange; background: rgba($white, 0.07); box-shadow: 0 0 0 3px rgba($orange, 0.2); }
+}
+
+.textarea { resize: vertical; min-height: 90px; line-height: 1.65; }
+
+// ── TIME GRID ────────────────────────────────────────────────────────────────
+.timeGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+
+.timeChip {
+  padding: 0.55rem 0.75rem; text-align: center;
+  background: rgba($white, 0.04); border: 1px solid rgba($white, 0.1);
+  border-radius: 8px; font-family: $textFont; font-size: 0.8rem; font-weight: 500;
+  color: rgba($white, 0.6); cursor: pointer; transition: all 0.2s;
+  &:hover { border-color: rgba($orange, 0.4); color: $white; }
+}
+
+.timeChipActive {
+  background: rgba($orange, 0.15); border-color: $orange; color: $orange; font-weight: 700;
+}
+
+// ── SUBMIT ───────────────────────────────────────────────────────────────────
+.submitBtn {
+  display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+  width: 100%; padding: 1rem 2rem; min-height: 52px;
+  background: $orange; color: $white; font-family: $textFont; font-size: 1rem; font-weight: 800;
+  letter-spacing: 0.03em; border: none; border-radius: 10px; cursor: pointer;
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
+  box-shadow: 0 6px 22px rgba($orange, 0.35);
+  &:hover:not(:disabled) { background: $lightorange; transform: translateY(-2px); box-shadow: 0 10px 30px rgba($orange, 0.45); }
+  &:disabled { opacity: 0.65; cursor: not-allowed; }
+}
+
+// ── SUCCESS ───────────────────────────────────────────────────────────────────
+.successState {
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center; gap: 1.25rem; padding: 2.5rem 0;
+}
+
+.successRing {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: rgba($orange, 0.12); border: 2px solid rgba($orange, 0.3);
+  display: flex; align-items: center; justify-content: center;
+}
+
+.successIcon { font-size: 2rem; color: $orange; }
+
+.successTitle {
+  font-family: $headerFont; font-size: 2rem; font-weight: 400;
+  color: $white; margin: 0; font-style: italic;
+}
+
+.successText {
+  font-family: $textFont; font-size: 0.97rem;
+  color: rgba($white, 0.6); line-height: 1.65; margin: 0;
+}
+
+.errorMsg {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.8rem 1rem; background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.3);
+  border-radius: 10px; font-family: $textFont; font-size: 0.92rem; color: #fca5a5;
+}
+
+@media (max-width: 480px) { .timeGrid { grid-template-columns: 1fr; } }
+@media (max-width: 420px) { .root { padding: 2rem 0.75rem; } :global(.g-recaptcha) { transform: scale(0.82); transform-origin: left center; } }

@@ -1,0 +1,933 @@
+Project Tree Structure 
+ 
+public: 
+Folder PATH listing for volume Storage Bank 1
+Volume serial number is 000000B0 0CDC:C80E
+D:\SCOTT-APPS-SCOTT-APPLICATIONS\WEB-TEMPLATES\HVAC-TEMPLATE\PUBLIC
+|   robots.txt
+|   
++---logos
+|   |   android-chrome-192x192.png
+|   |   android-chrome-512x512.png
+|   |   apple-touch-icon.png
+|   |   browserconfig.xml
+|   |   favicon-16x16.png
+|   |   favicon-32x32.png
+|   |   favicon.ico
+|   |   mstile-150x150.png
+|   |   safari-pinned-tab.svg
+|   |   scott-apps-banner.png
+|   |   site.webmanifest
+|   |   
+|   \---parts
+|           inner.png
+|           insideLogo.png
+|           Joshes Loger-03-full.png
+|           Joshes Loger-03.png
+|           outer.png
+|           outsideLogo.png
+|           scott-apps-lager.png
+|           
++---pages
+|   +---blogs
+|   |       ac-replacement.jpg
+|   |       energy-savings.jpg
+|   |       heat-pump.jpg
+|   |       hvac-filter.jpg
+|   |       maintenance-plan.jpg
+|   |       seer-rating.jpg
+|   |       smart-thermostat.jpg
+|   |       
+|   +---home
+|   |   +---featured-client
+|   |   |       confetti.png
+|   |   |       prasek-logo.png
+|   |   |       
+|   |   +---highlighted-project
+|   |   |       waco-exchange-logo.png
+|   |   |       
+|   |   +---recent-client
+|   |   |       confetti.png
+|   |   |       pfp-logo-1.png
+|   |   |       
+|   |   +---references
+|   |   |   \---clientProfiles
+|   |   |       +---benningtonhhc
+|   |   |       |   |   pfp.png
+|   |   |       |   |   
+|   |   |       |   \---carousel
+|   |   |       |           image-1.png
+|   |   |       |           image-2.png
+|   |   |       |           image-3.png
+|   |   |       |           image-4.png
+|   |   |       |           
+|   |   |       +---cen-texlandscaping
+|   |   |       |   |   pfp.png
+|   |   |       |   |   
+|   |   |       |   \---carousel
+|   |   |       |           image-1.png
+|   |   |       |           image-2.png
+|   |   |       |           image-3.png
+|   |   |       |           image-4.png
+|   |   |       |           
+|   |   |       +---cen-texutilities
+|   |   |       |   |   pfp.png
+|   |   |       |   |   
+|   |   |       |   \---carousel
+|   |   |       |           image-1.png
+|   |   |       |           image-2.png
+|   |   |       |           image-3.png
+|   |   |       |           image-4.png
+|   |   |       |           
+|   |   |       +---dragonfly
+|   |   |       |   |   pfp.png
+|   |   |       |   |   
+|   |   |       |   \---carousel
+|   |   |       |           image-1.png
+|   |   |       |           image-2.png
+|   |   |       |           
+|   |   |       +---everythingblocks
+|   |   |       |   |   pfp.png
+|   |   |       |   |   
+|   |   |       |   \---carousel
+|   |   |       |           image-1.png
+|   |   |       |           image-2.png
+|   |   |       |           image-3.png
+|   |   |       |           image-4.png
+|   |   |       |           image-5.png
+|   |   |       |           
+|   |   |       +---f5portablesolutions
+|   |   |       |   |   pfp.png
+|   |   |       |   |   
+|   |   |       |   \---carousel
+|   |   |       |           image-1.png
+|   |   |       |           image-2.png
+|   |   |       |           image-3.png
+|   |   |       |           
+|   |   |       +---gallery11waco
+|   |   |       |   |   pfp.png
+|   |   |       |   |   
+|   |   |       |   \---carousel
+|   |   |       |           image-1.png
+|   |   |       |           image-2.png
+|   |   |       |           image-3.png
+|   |   |       |           image-4.png
+|   |   |       |           image-5.png
+|   |   |       |           image-6.png
+|   |   |       |           image-7.PNG
+|   |   |       |           
+|   |   |       +---gracianofamilychiro
+|   |   |       |   |   pfp.png
+|   |   |       |   |   
+|   |   |       |   \---carousel
+|   |   |       |           image-1.png
+|   |   |       |           image-2.png
+|   |   |       |           image-3.png
+|   |   |       |           
+|   |   |       +---gtsdigs
+|   |   |       |   |   pfp.png
+|   |   |       |   |   
+|   |   |       |   \---carousel
+|   |   |       |           image-1.png
+|   |   |       |           image-2.png
+|   |   |       |           image-3.png
+|   |   |       |           image-4.png
+|   |   |       |           image-5.png
+|   |   |       |           image-6.png
+|   |   |       |           image-7.png
+|   |   |       |           
+|   |   |       +---hotrocksasphalt
+|   |   |       |   |   pfp.png
+|   |   |       |   |   
+|   |   |       |   \---carousel
+|   |   |       |           image-1.png
+|   |   |       |           image-2.png
+|   |   |       |           image-3.png
+|   |   |       |           image-4.png
+|   |   |       |           image-5.png
+|   |   |       |           image-6.png
+|   |   |       |           image-7.png
+|   |   |       |           image-8.png
+|   |   |       |           
+|   |   |       +---nexusesports
+|   |   |       |   |   pfp.png
+|   |   |       |   |   
+|   |   |       |   \---carousel
+|   |   |       |           image-1.png
+|   |   |       |           image-2.png
+|   |   |       |           
+|   |   |       +---ogitreeservice
+|   |   |       |   |   logo.webp
+|   |   |       |   |   
+|   |   |       |   \---carousel
+|   |   |       |           cover.png
+|   |   |       |           desktop.png
+|   |   |       |           mobile.png
+|   |   |       |           tablet.png
+|   |   |       |           
+|   |   |       +---oscarstreeservice
+|   |   |       |   |   pfp.png
+|   |   |       |   |   
+|   |   |       |   \---carousel
+|   |   |       |           image-1.png
+|   |   |       |           image-2.png
+|   |   |       |           image-3.png
+|   |   |       |           image-4.png
+|   |   |       |           image-5.png
+|   |   |       |           image-6.png
+|   |   |       |           image-7.png
+|   |   |       |           image-8.png
+|   |   |       |           
+|   |   |       +---phoenixrising
+|   |   |       |   |   pfp.png
+|   |   |       |   |   
+|   |   |       |   \---carousel
+|   |   |       |           image-1.png
+|   |   |       |           image-2.png
+|   |   |       |           
+|   |   |       +---savepointsandwich
+|   |   |       |   |   pfp.png
+|   |   |       |   |   
+|   |   |       |   \---carousel
+|   |   |       |           image-1.png
+|   |   |       |           
+|   |   |       +---scottapps
+|   |   |       |   |   pfp.png
+|   |   |       |   |   
+|   |   |       |   \---carousel
+|   |   |       |           image-1.png
+|   |   |       |           image-2.png
+|   |   |       |           image-3.png
+|   |   |       |           
+|   |   |       +---sundayscaribbeanoasis
+|   |   |       |   |   pfp.png
+|   |   |       |   |   
+|   |   |       |   \---carousel
+|   |   |       |           image-1.png
+|   |   |       |           
+|   |   |       +---texasarmourconstruction
+|   |   |       |   |   pfp.png
+|   |   |       |   |   
+|   |   |       |   \---carousel
+|   |   |       |           1.png
+|   |   |       |           2.png
+|   |   |       |           3.png
+|   |   |       |           4.png
+|   |   |       |           5.png
+|   |   |       |           New Text Document.txt
+|   |   |       |           
+|   |   |       +---wacoexchange
+|   |   |       |   |   pfp.png
+|   |   |       |   |   
+|   |   |       |   \---carousel
+|   |   |       |           image-1.png
+|   |   |       |           image-10.png
+|   |   |       |           image-11.png
+|   |   |       |           image-12.png
+|   |   |       |           image-2.png
+|   |   |       |           image-3.png
+|   |   |       |           image-4.png
+|   |   |       |           image-5.png
+|   |   |       |           image-6.png
+|   |   |       |           image-7.png
+|   |   |       |           image-8.png
+|   |   |       |           image-9.png
+|   |   |       |           
+|   |   |       \---wacohardware
+|   |   |           |   pfp.png
+|   |   |           |   
+|   |   |           \---carousel
+|   |   |                   image-1.png
+|   |   |                   image-2.png
+|   |   |                   image-3.png
+|   |   |                   
+|   |   +---scott-apps
+|   |   |       colored.png
+|   |   |       confetti.png
+|   |   |       scott-apps-icon-workspace-dark.png
+|   |   |       software-desktop.webp
+|   |   |       
+|   |   +---services
+|   |   |       3d-modeling.png
+|   |   |       background-image.png
+|   |   |       data-services.png
+|   |   |       digital-marketing-services.png
+|   |   |       graphic-services.png
+|   |   |       mobile-apps-services.png
+|   |   |       software-services.png
+|   |   |       web-design.png
+|   |   |       
+|   |   \---welcome
+|   |           background.png
+|   |           
+|   +---seo-template-resources
+|   |       about-hero.png
+|   |       client-encryption-example.PNG
+|   |       client-praseks.jpg
+|   |       contact-illustration.png
+|   |       encryption.png
+|   |       owner.jpg
+|   |       praseks-new.jpg
+|   |       
+|   \---webservices
+|       +---portfolioPageOne
+|       |       gallery11waco.PNG
+|       |       gtsdigs.PNG
+|       |       hotrocksasphalt.PNG
+|       |       nexusesports.PNG
+|       |       wacoexchange.PNG
+|       |       wacohardware.PNG
+|       |       
+|       +---portfolioPageThree
+|       |       benningtonhhc.PNG
+|       |       f5portablesolutions.PNG
+|       |       
+|       \---portfolioPageTwo
+|               cen-texlandscaping.PNG
+|               cen-texutilities.PNG
+|               oscarstreeservice.PNG
+|               phoenixrising.PNG
+|               savepointsandwich.PNG
+|               sundayscaribbeanoasis.PNG
+|               
+\---projects
+    \---gallery
+            2.png
+            23as.png
+            3.png
+            4.png
+            5.png
+            7.png
+            ertret.png
+            etru7.png
+            ewew.png
+            gythgnb.png
+            htf.png
+            iou.png
+            iytyuhn.png
+            jyfhtgb.png
+            kgh.png
+            liukj.png
+            qwe.png
+            rtet.png
+            sesrere.png
+            uikhj.png
+            umghtfn.png
+            vbnbv.png
+            werwer.png
+            zXas.png
+            
+ 
+components: 
+Folder PATH listing for volume Storage Bank 1
+Volume serial number is 0000005F 0CDC:C80E
+D:\SCOTT-APPS-SCOTT-APPLICATIONS\WEB-TEMPLATES\HVAC-TEMPLATE\COMPONENTS
++---AdminComponents
+|   +---Charts
+|   |       BarChart.tsx
+|   |       DoughnutChart.tsx
+|   |       HourHeatmap.tsx
+|   |       LineChart.tsx
+|   |       
+|   \---Map
+|           LeadMap.tsx
+|           PageViewMap.tsx
+|           
++---BlogComponents
+|   +---AdvancedSection
+|   |       AdvancedSection.tsx
+|   |       styles.module.scss
+|   |       
+|   +---AISection
+|   |       AISection.tsx
+|   |       styles.module.scss
+|   |       
+|   +---BlogBody
+|   |       BlogBody.tsx
+|   |       styles.module.scss
+|   |       
+|   +---BlogCard
+|   |       BlogCard.tsx
+|   |       styles.module.scss
+|   |       
+|   +---BlogCTA
+|   |       BlogCTA.tsx
+|   |       styles.module.scss
+|   |       
+|   +---BlogHero
+|   |       BlogHero.tsx
+|   |       styles.module.scss
+|   |       
+|   +---BlogPoll
+|   |       BlogPoll.tsx
+|   |       styles.module.scss
+|   |       
+|   +---BlogTag
+|   |       BlogTag.tsx
+|   |       styles.module.scss
+|   |       
+|   +---ContentSection
+|   |       ContentSection.tsx
+|   |       styles.module.scss
+|   |       
+|   +---CTAComponent
+|   |       CTAComponent.tsx
+|   |       styles.module.scss
+|   |       
+|   +---Hero
+|   |       Hero.tsx
+|   |       styles.module.scss
+|   |       
+|   +---Introduction
+|   |       Introduction.tsx
+|   |       styles.module.scss
+|   |       
+|   +---NewsletterSignup
+|   |       NewsletterSignup.tsx
+|   |       styles.module.scss
+|   |       
+|   +---RelatedLinks
+|   |       RelatedLinks.tsx
+|   |       styles.module.scss
+|   |       
+|   +---SectionWithTips
+|   |       SectionWithTips.tsx
+|   |       styles.module.scss
+|   |       
+|   +---StrategyGrid
+|   |       StrategyGrid.tsx
+|   |       styles.module.scss
+|   |       
+|   \---TechnicalSection
+|           styles.module.scss
+|           TechnicalSection.tsx
+|           
++---GeneralComponents
+|   +---Analytics
+|   |       Analytics.tsx
+|   |       
+|   +---Calendar
+|   |       Calendar.module.scss
+|   |       Calendar.tsx
+|   |       
+|   +---ConditionalShell
+|   |       ConditionalShell.tsx
+|   |       
+|   +---CookieBanner
+|   |       CookieBanner.tsx
+|   |       styles.module.scss
+|   |       
+|   +---Footer
+|   |       Footer.tsx
+|   |       styles.module.scss
+|   |       
+|   +---Header
+|   |       Header.tsx
+|   |       styles.module.scss
+|   |       
+|   \---JourneyTracker
+|           JourneyTrackerProvider.tsx
+|           
++---PageComponents
+|   +---AboutHero
+|   |       AboutHero.tsx
+|   |       styles.module.scss
+|   |       
+|   +---AboutStory
+|   |       AboutStory.tsx
+|   |       styles.module.scss
+|   |       
+|   +---AuthorBio
+|   |       AuthorBio.tsx
+|   |       styles.module.scss
+|   |       
+|   +---BeforeAfter
+|   |       BeforeAfter.tsx
+|   |       styles.module.scss
+|   |       
+|   +---BlogPreviewGrid
+|   |       BlogPreviewGrid.tsx
+|   |       styles.module.scss
+|   |       
+|   +---Breadcrumb
+|   |       Breadcrumb.tsx
+|   |       styles.module.scss
+|   |       
+|   +---CaseStudyGrid
+|   |       CaseStudyGrid.tsx
+|   |       styles.module.scss
+|   |       
+|   +---ContactForms
+|   |   +---RequestServiceCTA
+|   |   |       RequestServiceCTA.tsx
+|   |   |       styles.module.scss
+|   |   |       
+|   |   +---Variant1
+|   |   |       Form.tsx
+|   |   |       styles.module.scss
+|   |   |       
+|   |   +---Variant2
+|   |   |       Form.tsx
+|   |   |       styles.module.scss
+|   |   |       
+|   |   +---Variant3
+|   |   |       Form.tsx
+|   |   |       styles.module.scss
+|   |   |       
+|   |   \---Variant4
+|   |           Form.tsx
+|   |           styles.module.scss
+|   |           
+|   +---CTABanner
+|   |       CTABanner.tsx
+|   |       styles.module.scss
+|   |       
+|   +---FAQ
+|   |       FAQ.tsx
+|   |       styles.module.scss
+|   |       
+|   +---GuaranteeSection
+|   |       GuaranteeSection.tsx
+|   |       styles.module.scss
+|   |       
+|   +---HighlightedClient
+|   |       HighlightedClient.tsx
+|   |       styles.module.scss
+|   |       
+|   +---HighlightedProject
+|   |       HighlightedProject.tsx
+|   |       styles.module.scss
+|   |       
+|   +---ImpactMetrics
+|   |       ImpactMetrics.tsx
+|   |       styles.module.scss
+|   |       
+|   +---IndustryPainPoints
+|   |       IndustryPainPoints.tsx
+|   |       styles.module.scss
+|   |       
+|   +---Insights
+|   |       Insights.tsx
+|   |       styles.module.scss
+|   |       
+|   +---InsuredBadge
+|   |       InsuredBadge.tsx
+|   |       styles.module.scss
+|   |       
+|   +---LocalCitationBlock
+|   |       LocalCitationBlock.tsx
+|   |       styles.module.scss
+|   |       
+|   +---LocalServiceAreas
+|   |       LocalServiceAreas.tsx
+|   |       styles.module.scss
+|   |       
+|   +---MapLocalTips
+|   |       MapLocalTips.tsx
+|   |       styles.module.scss
+|   |       
+|   +---NearbyAreasHero
+|   |       NearbyAreasHero.tsx
+|   |       styles.module.scss
+|   |       
+|   +---PricingTable
+|   |       PricingTable.tsx
+|   |       styles.module.scss
+|   |       
+|   +---ProcessTimeline
+|   |       ProcessTimeline.tsx
+|   |       styles.module.scss
+|   |       
+|   +---ProjectCardGrid
+|   |       ProjectCardGrid.tsx
+|   |       styles.module.scss
+|   |       
+|   +---RotatingLogo
+|   |       RotatingLogo.tsx
+|   |       styles.module.scss
+|   |       
+|   +---ScottAppsCTA
+|   |       ScottAppsCTA.tsx
+|   |       styles.module.scss
+|   |       
+|   +---SectionIndustriesServed
+|   |       SectionIndustriesServed.tsx
+|   |       styles.module.scss
+|   |       
+|   +---SectionIntro
+|   |       SectionIntro.tsx
+|   |       styles.module.scss
+|   |       
+|   +---SectionMap
+|   |       SectionMap.tsx
+|   |       styles.module.scss
+|   |       
+|   +---SectionServices
+|   |       SectionServices.tsx
+|   |       styles.module.scss
+|   |       
+|   +---ServiceCardComponent
+|   |       ServiceCardComponent.tsx
+|   |       styles.module.scss
+|   |       
+|   +---StyledDivider
+|   |       StyledDivider.tsx
+|   |       styles.module.scss
+|   |       
+|   +---TechStack
+|   |       styles.module.scss
+|   |       TechStack.tsx
+|   |       
+|   +---Testimonials
+|   |       styles.module.scss
+|   |       Testimonials.tsx
+|   |       
+|   +---TrustBar
+|   |       styles.module.scss
+|   |       TrustBar.tsx
+|   |       
+|   +---ValueComparison
+|   |       styles.module.scss
+|   |       ValueComparison.tsx
+|   |       
+|   +---WhatToExpect
+|   |       styles.module.scss
+|   |       WhatToExpect.tsx
+|   |       
+|   \---WhyChooseUs
+|           styles.module.scss
+|           WhyChooseUs.tsx
+|           
++---Pages
+|   +---Contact
+|   |   +---Step1
+|   |   |       Step1.module.scss
+|   |   |       Step1.tsx
+|   |   |       
+|   |   +---Step2
+|   |   |       Step2.module.scss
+|   |   |       Step2.tsx
+|   |   |       
+|   |   \---Step3
+|   |           Step3.module.scss
+|   |           Step3.tsx
+|   |           
+|   \---Home
+|       +---ClientMap
+|       |       ClientMap.tsx
+|       |       MapContext.tsx
+|       |       styles.module.scss
+|       |       
+|       +---ServicesPage
+|       |       ServicesPage.tsx
+|       |       styles.module.scss
+|       |       
+|       \---WelcomePage
+|               styles.module.scss
+|               WelcomePage.tsx
+|               
+\---ToastifyComponent
+        ToastifyComponent.tsx
+        
+ 
+libs: 
+Folder PATH listing for volume Storage Bank 1
+Volume serial number is 000000D7 0CDC:C80E
+D:\SCOTT-APPS-SCOTT-APPLICATIONS\WEB-TEMPLATES\HVAC-TEMPLATE\LIBS
+|   adminAuth.ts
+|   authOptions.ts
+|   blog-posts.ts
+|   geoIpProvider.ts
+|   mongodb.ts
+|   useJourneyTracker.ts
+|   useTrackEvent.ts
+|   
+\---local-db
+        projects.ts
+        reviews.ts
+        
+ 
+src: 
+Folder PATH listing for volume Storage Bank 1
+Volume serial number is 000000A5 0CDC:C80E
+D:\SCOTT-APPS-SCOTT-APPLICATIONS\WEB-TEMPLATES\HVAC-TEMPLATE\SRC
+|   proxy.ts
+|   
+\---app
+    |   globals.css
+    |   globalVariables.scss
+    |   layout-fonts-snippet.tsx
+    |   layout.tsx
+    |   not-found.module.scss
+    |   not-found.tsx
+    |   page.module.scss
+    |   page.tsx
+    |   robots.ts
+    |   
+    +---about
+    |       layout.tsx
+    |       page.module.scss
+    |       page.tsx
+    |       
+    +---admin
+    |   |   AdminNav.tsx
+    |   |   AdminSessionProvider.tsx
+    |   |   layout.tsx
+    |   |   nav.module.scss
+    |   |   
+    |   +---(dashboard)
+    |   |   |   layout.module.scss
+    |   |   |   layout.tsx
+    |   |   |   page.module.scss
+    |   |   |   page.tsx
+    |   |   |   
+    |   |   +---events
+    |   |   |       events.module.scss
+    |   |   |       page.tsx
+    |   |   |       
+    |   |   +---leads
+    |   |   |   |   leads.module.scss
+    |   |   |   |   LeadSettingsModal.tsx
+    |   |   |   |   LeadStatusSelect.tsx
+    |   |   |   |   LeadStatusTag.tsx
+    |   |   |   |   page.tsx
+    |   |   |   |   
+    |   |   |   \---[id]
+    |   |   |           detail.module.scss
+    |   |   |           LeadDetailClient.tsx
+    |   |   |           page.tsx
+    |   |   |           
+    |   |   \---sessions
+    |   |           page.tsx
+    |   |           sessions.module.scss
+    |   |           
+    |   +---login
+    |   |       page.tsx
+    |   |       styles.module.scss
+    |   |       
+    |   \---styles
+    |           _admin.scss
+    |           
+    +---api
+    |   +---admin
+    |   |   +---analytics
+    |   |   |       route.ts
+    |   |   |       
+    |   |   +---events
+    |   |   |       route.ts
+    |   |   |       
+    |   |   +---leads
+    |   |   |   |   route.ts
+    |   |   |   |   
+    |   |   |   \---[id]
+    |   |   |           route.ts
+    |   |   |           
+    |   |   +---sessions
+    |   |   |       route.ts
+    |   |   |       
+    |   |   +---setup
+    |   |   |       route.ts
+    |   |   |       
+    |   |   \---{analytics,events}
+    |   +---auth
+    |   |   \---[...nextauth]
+    |   |           route.ts
+    |   |           
+    |   +---gallery-images
+    |   |       route.ts
+    |   |       
+    |   +---newsletter-signup
+    |   |       route.ts
+    |   |       
+    |   +---poll
+    |   |       route.ts
+    |   |       
+    |   +---submitContact
+    |   |       route.ts
+    |   |       
+    |   +---trackConsent
+    |   |       route.ts
+    |   |       
+    |   +---trackEvent
+    |   |       route.ts
+    |   |       
+    |   +---trackJourney
+    |   |       route.ts
+    |   |       
+    |   +---trackPageView
+    |   |       route.ts
+    |   |       
+    |   \---trackSession
+    |           route.ts
+    |           
+    +---blogs
+    |   |   layout.tsx
+    |   |   page.module.scss
+    |   |   page.tsx
+    |   |   
+    |   +---heat-pump-vs-traditional-hvac-texas
+    |   |       layout.tsx
+    |   |       page.module.scss
+    |   |       page.tsx
+    |   |       
+    |   +---how-often-should-you-replace-hvac-filter
+    |   |       layout.tsx
+    |   |       page.module.scss
+    |   |       page.tsx
+    |   |       
+    |   +---signs-ac-needs-replacement-waco-tx
+    |   |       layout.tsx
+    |   |       page.module.scss
+    |   |       page.tsx
+    |   |       
+    |   \---_shared
+    |           page.module.scss
+    |           
+    +---contact
+    |       layout.tsx
+    |       page.module.scss
+    |       page.tsx
+    |       
+    +---industries
+    |   |   layout.tsx
+    |   |   page.module.scss
+    |   |   page.tsx
+    |   |   
+    |   +---automotive
+    |   |       layout.tsx
+    |   |       page.tsx
+    |   |       
+    |   +---manufacturing
+    |   |       layout.tsx
+    |   |       page.tsx
+    |   |       
+    |   \---oil-gas
+    |           layout.tsx
+    |           page.tsx
+    |           
+    +---llms.txt
+    |       route.ts
+    |       
+    +---privacy-policy
+    |       layout.tsx
+    |       page.module.scss
+    |       page.tsx
+    |       
+    +---projects
+    |       layout.tsx
+    |       page.module.scss
+    |       page.tsx
+    |       
+    +---service-areas
+    |       layout.tsx
+    |       page.module.scss
+    |       page.tsx
+    |       
+    +---services
+    |   |   layout.tsx
+    |   |   page.module.scss
+    |   |   page.tsx
+    |   |   
+    |   +---ac-repair
+    |   |   |   layout.tsx
+    |   |   |   page.module.scss
+    |   |   |   page.tsx
+    |   |   |   
+    |   |   +---killeen-tx
+    |   |   |       layout.tsx
+    |   |   |       page.tsx
+    |   |   |       
+    |   |   +---temple-tx
+    |   |   |       layout.tsx
+    |   |   |       page.tsx
+    |   |   |       
+    |   |   \---waco-tx
+    |   |           layout.tsx
+    |   |           page.tsx
+    |   |           
+    |   +---duct-cleaning
+    |   |   |   layout.tsx
+    |   |   |   page.tsx
+    |   |   |   
+    |   |   +---killeen-tx
+    |   |   |       layout.tsx
+    |   |   |       page.tsx
+    |   |   |       
+    |   |   +---temple-tx
+    |   |   |       layout.tsx
+    |   |   |       page.tsx
+    |   |   |       
+    |   |   \---waco-tx
+    |   |           layout.tsx
+    |   |           page.tsx
+    |   |           
+    |   +---heating
+    |   |   |   layout.tsx
+    |   |   |   page.module.scss
+    |   |   |   page.tsx
+    |   |   |   
+    |   |   +---killeen-tx
+    |   |   |       layout.tsx
+    |   |   |       page.tsx
+    |   |   |       
+    |   |   +---temple-tx
+    |   |   |       layout.tsx
+    |   |   |       page.tsx
+    |   |   |       
+    |   |   \---waco-tx
+    |   |           layout.tsx
+    |   |           page.tsx
+    |   |           
+    |   +---indoor-air-quality
+    |   |   |   layout.tsx
+    |   |   |   page.tsx
+    |   |   |   
+    |   |   +---killeen-tx
+    |   |   |       layout.tsx
+    |   |   |       page.tsx
+    |   |   |       
+    |   |   +---temple-tx
+    |   |   |       layout.tsx
+    |   |   |       page.tsx
+    |   |   |       
+    |   |   \---waco-tx
+    |   |           layout.tsx
+    |   |           page.tsx
+    |   |           
+    |   +---installation
+    |   |   |   layout.tsx
+    |   |   |   page.tsx
+    |   |   |   
+    |   |   +---killeen-tx
+    |   |   |       layout.tsx
+    |   |   |       page.tsx
+    |   |   |       
+    |   |   +---temple-tx
+    |   |   |       layout.tsx
+    |   |   |       page.tsx
+    |   |   |       
+    |   |   \---waco-tx
+    |   |           layout.tsx
+    |   |           page.tsx
+    |   |           
+    |   \---maintenance
+    |       |   layout.tsx
+    |       |   page.module.scss
+    |       |   page.tsx
+    |       |   
+    |       +---killeen-tx
+    |       |       layout.tsx
+    |       |       page.tsx
+    |       |       
+    |       +---temple-tx
+    |       |       layout.tsx
+    |       |       page.tsx
+    |       |       
+    |       \---waco-tx
+    |               layout.tsx
+    |               page.tsx
+    |               
+    \---sitemap.xml
+            route.ts
+            
+ 

@@ -1,0 +1,245 @@
+// components/PageComponents/BlogPreviewGrid/styles.module.scss
+@use '../../../src/app/globalVariables.scss' as *;
+
+.section {
+  padding: clamp(5rem, 8vw, 8rem) 1.5rem;
+  background: $white;
+}
+
+.container {
+  max-width: 1280px; margin: 0 auto;
+  display: flex; flex-direction: column; gap: 3rem;
+}
+
+// ── SECTION HEADER ────────────────────────────────────────────────────────────
+.sectionHeader {
+  display: flex; align-items: flex-end;
+  justify-content: space-between; gap: 2rem; flex-wrap: wrap;
+}
+
+.headerLeft {
+  display: flex; flex-direction: column; gap: 0.75rem; max-width: 580px;
+}
+
+.eyebrow {
+  display: flex; align-items: center; gap: 0.75rem;
+  font-family: $textFont; font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 0.22em; text-transform: uppercase; color: $orange;
+}
+
+.eyebrowLine {
+  display: inline-block; width: 32px; height: 2px;
+  background: $orange; border-radius: 2px; flex-shrink: 0;
+}
+
+.title {
+  font-family: $titleFont;
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
+  font-weight: 700; text-transform: uppercase;
+  color: $obsidian; margin: 0;
+  letter-spacing: 0.03em; line-height: 1.1;
+}
+
+.subtitle {
+  font-family: $textFont; font-size: 1rem;
+  color: $darkgrey; line-height: 1.7; margin: 0;
+}
+
+.viewAll {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-family: $headerFont; font-size: 0.85rem; font-weight: 700;
+  color: $orange; text-decoration: none; letter-spacing: 0.04em;
+  border: 1px solid rgba($orange, 0.3); border-radius: 9999px;
+  padding: 0.45rem 1.1rem;
+  transition: background 0.2s, border-color 0.2s;
+  white-space: nowrap;
+  &:hover { background: rgba($orange, 0.07); border-color: $orange; }
+
+  svg { transition: transform 0.2s; }
+  &:hover svg { transform: translateX(3px); }
+}
+
+// ── MAIN LAYOUT ───────────────────────────────────────────────────────────────
+.layout {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 2.5rem;
+  align-items: start;
+
+  @media (max-width: 900px) { grid-template-columns: 1fr; }
+}
+
+// ── FEATURED CARD ─────────────────────────────────────────────────────────────
+.featuredWrap { height: 100%; }
+
+.featuredCard {
+  display: flex; flex-direction: column;
+  text-decoration: none; color: inherit;
+  border-radius: 20px; overflow: hidden;
+  border: 1px solid $lightgrey;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+  height: 100%; min-height: 480px;
+  transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+
+  &:hover {
+    border-color: rgba($orange, 0.4);
+    transform: translateY(-5px);
+    box-shadow: 0 18px 48px rgba(0,0,0,0.1);
+    .readNow { gap: 0.65rem; }
+  }
+}
+
+.featuredImg {
+  position: relative; width: 100%; aspect-ratio: 16 / 10;
+  overflow: hidden; flex-shrink: 0;
+}
+
+.featuredOverlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, transparent 40%, rgba($obsidian, 0.5) 100%);
+  z-index: 1;
+}
+
+.featuredBody {
+  padding: 1.75rem 2rem 2rem;
+  display: flex; flex-direction: column; gap: 0.85rem;
+  flex: 1; background: $white;
+}
+
+.catPill {
+  display: inline-block; width: fit-content;
+  font-family: $textFont; font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: $obsidian; background: $orange;
+  padding: 0.28rem 0.75rem; border-radius: 9999px;
+}
+
+.featuredTitle {
+  font-family: $headerFont;
+  font-size: clamp(1.25rem, 2.5vw, 1.65rem);
+  font-weight: 700; color: $obsidian; margin: 0; line-height: 1.3;
+}
+
+.featuredExcerpt {
+  font-family: $textFont; font-size: 0.95rem;
+  color: $darkgrey; line-height: 1.72; margin: 0; flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.featuredMeta {
+  display: flex; align-items: center; gap: 0.6rem;
+}
+
+.metaDate, .metaRead {
+  font-family: $textFont; font-size: 0.78rem; color: $grey;
+}
+
+.metaDot {
+  width: 3px; height: 3px; border-radius: 50%; background: $lightgrey; flex-shrink: 0;
+}
+
+.readNow {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  font-family: $headerFont; font-size: 0.85rem; font-weight: 700;
+  color: $orange; letter-spacing: 0.04em;
+  transition: gap 0.2s;
+}
+
+// ── NUMBERED LIST ─────────────────────────────────────────────────────────────
+.listWrap {
+  display: flex; flex-direction: column; gap: 0;
+  border: 1px solid $lightgrey; border-radius: 20px;
+  overflow: hidden; background: $white;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+}
+
+.listLabel {
+  display: block;
+  padding: 1rem 1.5rem;
+  font-family: $textFont; font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase; color: $darkgrey;
+  border-bottom: 1px solid $lightgrey;
+  background: $offwhite;
+}
+
+.listItem {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 1.1rem 1.5rem;
+  text-decoration: none; color: inherit;
+  border-bottom: 1px solid $lightgrey;
+  transition: background 0.2s;
+
+  &:last-of-type { border-bottom: none; }
+
+  &:hover {
+    background: rgba($orange, 0.03);
+    .listNum { color: $orange; }
+    .listTitle { color: $orange; }
+    .listArrow { color: $orange; transform: translateX(3px); }
+  }
+}
+
+.listNum {
+  font-family: $titleFont; font-size: 1.5rem; font-weight: 700;
+  color: $lightgrey; line-height: 1; flex-shrink: 0; width: 36px;
+  transition: color 0.2s;
+}
+
+.listThumb {
+  position: relative; width: 72px; height: 56px;
+  border-radius: 8px; overflow: hidden; flex-shrink: 0;
+  border: 1px solid $lightgrey;
+}
+
+.listText {
+  flex: 1; display: flex; flex-direction: column; gap: 0.2rem; min-width: 0;
+}
+
+.listCat {
+  font-family: $textFont; font-size: 0.67rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase; color: $orange;
+}
+
+.listTitle {
+  font-family: $headerFont; font-size: 0.9rem; font-weight: 700;
+  color: $obsidian; line-height: 1.35;
+  transition: color 0.2s;
+  // Clamp to 2 lines
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.listRead {
+  font-family: $textFont; font-size: 0.72rem; color: $grey;
+}
+
+.listArrow {
+  color: $lightgrey; flex-shrink: 0;
+  transition: color 0.2s, transform 0.2s;
+}
+
+// ── BOTTOM CTA ────────────────────────────────────────────────────────────────
+.allBtn {
+  display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+  padding: 1rem 1.5rem;
+  font-family: $headerFont; font-size: 0.88rem; font-weight: 700;
+  color: $white; background: $obsidian;
+  text-decoration: none; letter-spacing: 0.04em;
+  transition: background 0.25s;
+
+  &:hover { background: $blackflat; }
+  svg { transition: transform 0.2s; }
+  &:hover svg { transform: translateX(3px); }
+}
+
+// ── RESPONSIVE ────────────────────────────────────────────────────────────────
+@media (max-width: 640px) {
+  .sectionHeader { flex-direction: column; align-items: flex-start; }
+  .listItem { padding: 1rem 1.1rem; gap: 0.75rem; }
+  .listThumb { width: 56px; height: 44px; }
+}

@@ -1,0 +1,273 @@
+// PageComponents/PricingTable/styles.module.scss
+@use '../../../src/app/globalVariables.scss' as *;
+
+// NO background — parent controls canvas
+.section {
+  padding: clamp(5rem, 8vw, 9rem) 1.5rem;
+  position: relative;
+  overflow: hidden;
+
+  // Faint radial glow top-center
+  &::before {
+    content: '';
+    position: absolute;
+    top: -160px; left: 50%;
+    transform: translateX(-50%);
+    width: 900px; height: 500px;
+    background: radial-gradient(ellipse, rgba($green, 0.06) 0%, transparent 65%);
+    pointer-events: none; z-index: 0;
+  }
+}
+
+.container {
+  position: relative; z-index: 1;
+  max-width: 1200px; margin: 0 auto;
+  display: flex; flex-direction: column; align-items: center; gap: 4rem;
+}
+
+// ── HEADER ───────────────────────────────────────
+.header {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 1rem; text-align: center;
+}
+
+.eyebrow {
+  font-family: $textFont; font-size: 0.78rem; font-weight: 700;
+  letter-spacing: 0.22em; text-transform: uppercase; color: $green;
+}
+
+.title {
+  font-family: $titleFont;
+  font-size: clamp(2.6rem, 5.5vw, 4rem);
+  color: $obsidian; margin: 0;
+  letter-spacing: -0.025em; line-height: 1.05;
+}
+
+.subtitle {
+  font-family: $textFont; font-size: 1.05rem; color: $darkgrey;
+  line-height: 1.65; margin: 0; max-width: 500px;
+}
+
+// ── BILLING TOGGLE ────────────────────────────────
+.toggleWrap {
+  display: flex; align-items: center; gap: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+.toggleLabel {
+  font-family: $textFont; font-size: 0.92rem; font-weight: 500;
+  color: $grey; display: flex; align-items: center; gap: 0.5rem;
+  transition: color 0.2s ease;
+}
+
+.toggleActive { color: $obsidian; font-weight: 700; }
+
+.toggle {
+  width: 48px; height: 26px;
+  background: #ddd; border: none;
+  border-radius: 9999px; position: relative; cursor: pointer;
+  transition: background 0.25s ease;
+  flex-shrink: 0;
+  padding: 0;
+}
+
+.toggleOn { background: $green; }
+
+.toggleThumb {
+  position: absolute;
+  top: 3px; left: 3px;
+  width: 20px; height: 20px;
+  background: $white; border-radius: 50%;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.18);
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+
+  .toggleOn & { transform: translateX(22px); }
+}
+
+.saveBadge {
+  background: rgba($green, 0.12); color: $green;
+  border: 1px solid rgba($green, 0.25);
+  font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 0.18rem 0.55rem; border-radius: 9999px;
+}
+
+// ── GRID ─────────────────────────────────────────
+.grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  align-items: stretch;
+}
+
+// ── CARD ─────────────────────────────────────────
+.card {
+  background: $white;
+  border: 1px solid #e4e4e0;
+  border-radius: 24px;
+  padding: 2.5rem 2rem;
+  display: flex; flex-direction: column; gap: 1.25rem;
+  position: relative; overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+    border-color: rgba($green, 0.35);
+  }
+}
+
+// Popular card — dark inverted
+.cardPopular {
+  background: $obsidian;
+  border-color: rgba($green, 0.4);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.2);
+  transform: scale(1.03);
+
+  &:hover {
+    transform: scale(1.03) translateY(-6px);
+    border-color: $green;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.3);
+  }
+
+  .tierName  { color: $white; }
+  .tierDesc  { color: rgba($white, 0.55); }
+  .currency  { color: $green; }
+  .price     { color: $white; }
+  .per       { color: rgba($white, 0.45); }
+  .billedAnnually { color: rgba($white, 0.4); }
+  .divider   { background: rgba($white, 0.1); }
+  .featureItem { color: rgba($white, 0.8); }
+  .featureExcluded { color: rgba($white, 0.25); }
+  .featureIcon svg { color: $green; }
+  .featureExcluded .featureIcon svg { color: rgba($white, 0.2); }
+}
+
+.popularBadge {
+  position: absolute; top: 0; right: 2rem;
+  background: $green; color: $obsidian;
+  font-family: $textFont; font-size: 0.72rem; font-weight: 800;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 0.4rem 1rem;
+  border-radius: 0 0 10px 10px;
+}
+
+// ── CARD HEADER ───────────────────────────────────
+.cardHeader { display: flex; flex-direction: column; gap: 0.4rem; }
+
+.tierName {
+  font-family: $titleFont;
+  font-size: clamp(1.6rem, 3vw, 2rem);
+  color: $obsidian; margin: 0;
+  letter-spacing: -0.02em; line-height: 1;
+}
+
+.tierDesc {
+  font-family: $textFont; font-size: 0.92rem;
+  color: $darkgrey; margin: 0; line-height: 1.5;
+}
+
+// ── PRICE ────────────────────────────────────────
+.priceWrap {
+  display: flex; align-items: flex-start; gap: 2px;
+  line-height: 1;
+}
+
+.currency {
+  font-family: $textFont; font-size: 1.4rem; font-weight: 700;
+  color: $green; padding-top: 0.4rem;
+}
+
+.price {
+  font-family: $titleFont;
+  font-size: clamp(3rem, 6vw, 4rem);
+  color: $obsidian; line-height: 1;
+}
+
+.per {
+  font-family: $textFont; font-size: 0.9rem;
+  color: $grey; align-self: flex-end; padding-bottom: 0.5rem;
+}
+
+.billedAnnually {
+  font-family: $textFont; font-size: 0.82rem;
+  color: $grey; margin: -0.5rem 0 0; font-style: italic;
+}
+
+// ── DIVIDER ───────────────────────────────────────
+.divider {
+  height: 1px; background: #ebebeb; flex-shrink: 0;
+}
+
+// ── FEATURES ─────────────────────────────────────
+.featureList {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-direction: column; gap: 0.75rem;
+  flex: 1;
+}
+
+.featureItem {
+  font-family: $textFont; font-size: 0.93rem;
+  color: $obsidian; display: flex; align-items: center; gap: 0.7rem;
+  line-height: 1.4;
+}
+
+.featureExcluded {
+  color: $lightgrey;
+  .featureIcon svg { color: $lightgrey; }
+}
+
+.featureIcon {
+  flex-shrink: 0; width: 18px; display: flex;
+  align-items: center; justify-content: center;
+
+  svg { font-size: 0.82rem; color: $green; }
+}
+
+// ── CTA ──────────────────────────────────────────
+.cta {
+  display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+  padding: 0.9rem 1.75rem; margin-top: 0.5rem;
+  background: $obsidian; color: $white;
+  font-family: $textFont; font-size: 0.95rem; font-weight: 700;
+  border-radius: 10px; text-decoration: none;
+  letter-spacing: 0.02em;
+  transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+
+  .cardPopular & {
+    background: $green; color: $obsidian;
+    &:hover { background: $lightgreen; }
+  }
+
+  &:hover {
+    background: $blackflat; transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(0,0,0,0.16);
+  }
+}
+
+.ctaArrow {
+  font-size: 0.8rem; opacity: 0.75;
+  transition: transform 0.2s ease;
+  .cta:hover & { transform: translateX(3px); }
+}
+
+// ── FOOTNOTE ─────────────────────────────────────
+.footnote {
+  font-family: $textFont; font-size: 0.88rem;
+  color: $grey; text-align: center; margin: 0;
+  letter-spacing: 0.02em;
+}
+
+// ── RESPONSIVE ───────────────────────────────────
+@media (max-width: 900px) {
+  .grid { grid-template-columns: 1fr; max-width: 480px; }
+  .cardPopular { transform: scale(1); }
+  .cardPopular:hover { transform: translateY(-6px); }
+}
+
+@media (max-width: 480px) {
+  .grid { max-width: 100%; }
+  .card { padding: 2rem 1.5rem; }
+}

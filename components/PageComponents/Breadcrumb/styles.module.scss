@@ -1,0 +1,58 @@
+// Uses globalVariables.scss via direct import
+@use '../../../src/app/globalVariables.scss' as *;
+
+// PageComponents/Breadcrumb/styles.module.scss
+
+.nav {
+  background: rgba(249, 115, 22, 0.04);
+  border-bottom: 1px solid rgba(249, 115, 22, 0.1);
+  padding: 0.55rem 2rem;
+
+  @media (max-width: 768px) { padding: 0.55rem 1rem; }
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0; margin: 0;
+  align-items: center;
+  gap: 0.1rem;
+  max-width: 1400px;
+}
+
+.item {
+  display: flex; align-items: center; gap: 0.25rem;
+}
+
+.homeLink {
+  display: flex; align-items: center;
+  color: $darkgrey;
+  text-decoration: none;
+  transition: opacity 0.2s;
+  padding: 0.2rem;
+
+  &:hover { opacity: 0.8; }
+}
+
+.sep {
+  color: rgba(255, 255, 255, 0.2);
+  display: flex; align-items: center;
+  margin: 0 0.15rem;
+}
+
+.link {
+  font-size: 0.78rem; font-weight: 500;
+  color: $darkgrey;
+  text-decoration: none;
+  transition: opacity 0.2s;
+  letter-spacing: 0.02em;
+
+  &:hover { opacity: 0.5; }
+}
+
+.current {
+  font-size: 0.78rem; font-weight: 600;
+  color: $orange;
+  letter-spacing: 0.02em;
+}

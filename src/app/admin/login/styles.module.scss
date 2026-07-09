@@ -1,0 +1,195 @@
+// src/app/admin/login/styles.module.scss
+@use '../styles/admin' as *;
+@use 'sass:color';
+
+.page {
+  min-height: 100vh;
+  background: $bg;
+  display:    flex;
+  align-items: center;
+  justify-content: center;
+  padding:    1.5rem;
+
+  // Subtle ambient glow
+  &::before {
+    content:  '';
+    position: fixed;
+    inset:    0;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 0%, rgba($orange, 0.05), transparent 60%),
+      radial-gradient(ellipse 40% 60% at 0% 100%, rgba($blue, 0.03), transparent 55%);
+    pointer-events: none;
+    z-index: 0;
+  }
+}
+
+.card {
+  position:   relative;
+  z-index:    1;
+  width:      100%;
+  max-width:  420px;
+  background: $surface;
+  border:     1px solid $border2;
+  border-radius: $radius-xl;
+  padding:    2.5rem 2rem;
+  display:    flex;
+  flex-direction: column;
+  gap:        1.25rem;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+}
+
+.brand {
+  text-align: center;
+  margin-bottom: 0.25rem;
+
+  .eyebrow {
+    display:        block;
+    font-family:    $font-head;
+    font-size:      0.68rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color:          $orange;
+    margin-bottom:  0.4rem;
+  }
+}
+
+.title {
+  font-family:    $font-title;
+  font-size:      3rem;
+  color:          $text-primary;
+  margin:         0;
+  letter-spacing: 0.08em;
+  line-height:    1;
+}
+
+.form {
+  display:        flex;
+  flex-direction: column;
+  gap:            1rem;
+}
+
+.field {
+  display:        flex;
+  flex-direction: column;
+  gap:            0.4rem;
+}
+
+.label {
+  font-family:    $font-sans;
+  font-size:      0.72rem;
+  font-weight:    600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color:          $text-muted;
+}
+
+.input {
+  width:         100%;
+  box-sizing:    border-box;
+  padding:       0.8rem 1rem;
+  background:    rgba(255, 255, 255, 0.04);
+  border:        1px solid $border2;
+  border-radius: $radius-md;
+  font-family:   $font-sans;
+  font-size:     0.92rem;
+  color:         $text-primary;
+  transition:    border-color 0.18s ease, background 0.18s ease;
+
+  &::placeholder { color: $text-muted; }
+
+  &:focus {
+    outline:      none;
+    border-color: $orange;
+    background:   rgba(255, 255, 255, 0.06);
+  }
+
+  &:disabled { opacity: 0.5; }
+}
+
+.btn {
+  background:    $orange;
+  border:        none;
+  border-radius: $radius-md;
+  color:         $obsidian;
+  cursor:        pointer;
+  font-family:   $font-sans;
+  font-size:     0.92rem;
+  font-weight:   700;
+  margin-top:    0.5rem;
+  padding:       0.85rem;
+  transition:    background 0.2s ease, transform 0.15s ease;
+  width:         100%;
+  letter-spacing: 0.03em;
+
+  &:hover:not(:disabled) {
+    background: color.adjust($orange, $lightness: -8%);
+    transform:  translateY(-1px);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor:  not-allowed;
+  }
+}
+
+.error {
+  background:    rgba(226, 75, 74, 0.1);
+  border:        1px solid rgba(226, 75, 74, 0.3);
+  border-radius: $radius-md;
+  color:         #f09595;
+  font-family:   $font-sans;
+  font-size:     0.83rem;
+  padding:       0.65rem 1rem;
+}
+
+.setupBadge {
+  background:    rgba($orange, 0.08);
+  border:        1px solid rgba($orange, 0.2);
+  border-radius: $radius-md;
+  color:         $orange;
+  font-family:   $font-sans;
+  font-size:     0.78rem;
+  font-weight:   500;
+  padding:       0.5rem 0.875rem;
+  text-align:    center;
+}
+
+.footer {
+  font-family: $font-sans;
+  font-size:   0.73rem;
+  color:       $text-muted;
+  text-align:  center;
+  margin:      0;
+}
+
+.redirectMsg {
+  font-family: $font-sans;
+  font-size:   0.9rem;
+  color:       $text-secondary;
+  text-align:  center;
+}
+
+// Loading dots
+.loading {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  gap:             8px;
+  padding:         2rem 0;
+}
+
+.dot {
+  width:         8px;
+  height:        8px;
+  border-radius: 50%;
+  background:    $orange;
+  animation:     dotPulse 1.2s ease-in-out infinite;
+
+  &:nth-child(2) { animation-delay: 0.2s; }
+  &:nth-child(3) { animation-delay: 0.4s; }
+}
+
+@keyframes dotPulse {
+  0%, 80%, 100% { opacity: 0.15; transform: scale(0.7); }
+  40%            { opacity: 1;    transform: scale(1);   }
+}

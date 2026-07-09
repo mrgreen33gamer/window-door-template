@@ -1,0 +1,137 @@
+@use '../../../src/app/globalVariables.scss' as *;
+
+// ── SECTION ───────────────────────────────────────────────────────────────────
+.section {
+  padding: clamp(5rem, 8vw, 8rem) 1.5rem;
+  background: $obsidian;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(
+      -55deg, transparent, transparent 22px,
+      rgba($white, 0.012) 22px, rgba($white, 0.012) 23px
+    );
+    pointer-events: none;
+  }
+}
+
+// ── CONTAINER ─────────────────────────────────────────────────────────────────
+.container {
+  position: relative; z-index: 1;
+  max-width: 1280px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 5rem;
+  align-items: start;
+
+  @media (max-width: 1060px) {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+}
+
+// ── LEFT COL ──────────────────────────────────────────────────────────────────
+.leftCol {
+  display: flex; flex-direction: column; gap: 1.5rem;
+  position: sticky; top: 7rem;
+
+  @media (max-width: 1060px) { position: static; }
+}
+
+.eyebrow {
+  font-family: $textFont; font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase; color: $orange;
+}
+
+.headline {
+  font-family: $titleFont;
+  font-size: clamp(2.2rem, 3.5vw, 3.2rem);
+  font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.03em; line-height: 1.08;
+  color: $white; margin: 0;
+
+  em { color: $orange; font-style: normal; }
+}
+
+.body {
+  font-family: $textFont; font-size: 0.95rem; line-height: 1.76;
+  color: rgba($white, 0.52); margin: 0; max-width: 340px;
+}
+
+.cta {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.9rem 1.8rem;
+  background: $orange; color: $obsidian;
+  font-family: $headerFont; font-size: 0.9rem; font-weight: 800;
+  text-decoration: none; border-radius: 8px;
+  clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 7px, 100% 100%, 7px 100%, 0 calc(100% - 7px));
+  box-shadow: 0 5px 20px rgba($orange, 0.35);
+  width: fit-content;
+  transition: background 0.22s, transform 0.22s;
+  &:hover { background: $lightorange; transform: translateY(-2px); }
+}
+
+.ratingRow {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba($white, 0.08);
+}
+
+.stars { display: flex; gap: 2px; }
+
+.star { color: $orange; }
+
+.ratingText {
+  font-family: $textFont; font-size: 0.8rem; font-weight: 600;
+  color: rgba($white, 0.38);
+}
+
+// ── RIGHT COL ─────────────────────────────────────────────────────────────────
+.rightCol { display: flex; flex-direction: column; }
+
+// ── GRID ──────────────────────────────────────────────────────────────────────
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: rgba($white, 0.08);
+  border: 1px solid rgba($white, 0.08);
+  border-radius: 14px;
+  overflow: hidden;
+
+  @media (max-width: 600px) { grid-template-columns: 1fr; }
+}
+
+// ── CARD ──────────────────────────────────────────────────────────────────────
+.card {
+  display: flex; align-items: flex-start; gap: 1rem;
+  padding: 1.75rem;
+  background: rgba($white, 0.03);
+  transition: background 0.2s;
+
+  &:hover { background: rgba($orange, 0.06); }
+}
+
+.iconWrap {
+  width: 44px; height: 44px; flex-shrink: 0;
+  background: rgba($orange, 0.12); border: 1px solid rgba($orange, 0.22);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.icon { color: $orange; font-size: 1.05rem; }
+
+.cardText { display: flex; flex-direction: column; gap: 0.4rem; }
+
+.cardTitle {
+  font-family: $headerFont; font-size: 0.92rem; font-weight: 700;
+  color: $white; margin: 0;
+}
+
+.cardBody {
+  font-family: $textFont; font-size: 0.83rem; line-height: 1.68;
+  color: rgba($white, 0.45); margin: 0;
+}

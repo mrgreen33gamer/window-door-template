@@ -1,0 +1,168 @@
+// Uses globalVariables.scss via direct import
+@use '../../../src/app/globalVariables.scss' as *;
+
+// PageComponents/AboutHero/styles.module.scss
+
+.heroSection {
+  position: relative;
+  padding: clamp(5rem, 10vw, 9rem) 1.5rem clamp(4rem, 8vw, 7rem);
+  background: $obsidian;
+  color: $white;
+  overflow: hidden;
+}
+
+.grain {
+  pointer-events: none;
+  position: absolute; inset: 0; opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 200px 200px; z-index: 0;
+}
+
+.accentBar {
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 3px; z-index: 2;
+  background: linear-gradient(90deg, transparent, $orange 25%, $lightorange 60%, transparent);
+}
+
+.heroContainer {
+  position: relative; z-index: 1;
+  max-width: 1300px; margin: 0 auto;
+  display: flex; align-items: center;
+  gap: clamp(3rem, 6vw, 6rem);
+}
+
+// ── TEXT COLUMN ──────────────────────────────────
+.textColumn {
+  flex: 1;
+  display: flex; flex-direction: column; gap: 1.75rem;
+}
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-size: 0.82rem; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: $orange;
+  border: 1px solid rgba(249, 115, 22, 0.3);
+  background: rgba(249, 115, 22, 0.08);
+  border-radius: 9999px;
+  padding: 0.35rem 1rem;
+  width: fit-content;
+}
+
+.heroTitle {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(2.8rem, 5.5vw, 4.6rem);
+  font-weight: 700; text-transform: uppercase;
+  line-height: 1.05; margin: 0;
+  letter-spacing: 0.03em;
+  color: $white;
+
+  em { font-style: italic; color: $orange; }
+}
+
+.heroSubtitle {
+  font-size: clamp(1rem, 2vw, 1.12rem);
+  line-height: 1.75; color: rgba(255, 255, 255, 0.68);
+  max-width: 500px; margin: 0;
+  strong { color: $white; font-weight: 600; }
+}
+
+// ── STATS ────────────────────────────────────────
+.statRow {
+  display: flex; align-items: center; gap: 1.5rem;
+  padding-top: 0.5rem; flex-wrap: wrap;
+}
+
+.stat { display: flex; flex-direction: column; gap: 0.2rem; }
+
+.statNumber {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 700; color: $white; line-height: 1;
+}
+
+.statLabel {
+  font-size: 0.75rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: $darkgrey;
+}
+
+.statDivider {
+  width: 1px; height: 2.5rem;
+  background: rgba(255, 255, 255, 0.12); flex-shrink: 0;
+}
+
+// ── BADGES ───────────────────────────────────────
+.badges { display: flex; flex-wrap: wrap; gap: 0.55rem; }
+
+.badge {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-size: 0.75rem; font-weight: 600;
+  color: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px; padding: 0.3rem 0.75rem;
+  background: rgba(255, 255, 255, 0.04);
+
+  svg { color: $orange; flex-shrink: 0; }
+}
+
+// ── IMAGE COLUMN ─────────────────────────────────
+.imageColumn { flex: 1; position: relative; }
+
+.imageFrame {
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -10px -10px 10px 10px;
+    border: 2px solid rgba(249, 115, 22, 0.25);
+    border-radius: 20px;
+    pointer-events: none;
+  }
+}
+
+.imageWrapper {
+  position: relative;
+  width: 100%; aspect-ratio: 4 / 3;
+  border-radius: 16px; overflow: hidden;
+}
+
+.imageOverlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, transparent 55%, rgba(13, 27, 42, 0.45));
+}
+
+// ── TRUST CARD ───────────────────────────────────
+.trustCard {
+  position: absolute; bottom: -1rem; left: -1.5rem;
+  display: flex; align-items: center; gap: 0.65rem;
+  background: $obsidian;
+  border: 1px solid rgba(249, 115, 22, 0.3);
+  border-radius: 12px;
+  padding: 0.85rem 1.15rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  color: $orange;
+  z-index: 2;
+}
+
+.trustCardText { display: flex; flex-direction: column; gap: 2px; }
+
+.trustCardTitle {
+  font-size: 0.88rem; font-weight: 700; color: $white;
+}
+
+.trustCardSub {
+  font-size: 0.72rem; color: $darkgrey;
+}
+
+// ── RESPONSIVE ───────────────────────────────────
+@media (max-width: 900px) {
+  .heroContainer { flex-direction: column; }
+  .imageColumn   { width: 100%; }
+  .trustCard     { left: 0; bottom: -1rem; }
+}
+
+@media (max-width: 600px) {
+  .statRow  { gap: 1rem; }
+  .badges   { gap: 0.4rem; }
+}

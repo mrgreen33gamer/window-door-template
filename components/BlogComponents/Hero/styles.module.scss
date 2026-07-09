@@ -1,0 +1,48 @@
+// components/BlogComponents/Hero/styles.module.scss
+
+@use '../../../src/app/globalVariables.scss' as *;
+
+.heroSection {
+  text-align: left;
+  margin-bottom: 4rem;
+  background: linear-gradient(to bottom, #f8f9fa, #ffffff);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  h1 {
+    font-family: $titleFont;
+    font-size: 3.5rem;
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    color: $obsidian;
+    font-weight: 700;
+    text-align: left !important;
+  }
+  p {
+    font-family: $textFont;
+    font-size: 1.3rem;
+    letter-spacing: 0.2px;
+    line-height: 1.8;
+    margin: 0 auto 2.5rem;
+    color: $darkgrey;
+  }
+  .heroImage {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  }
+}
+
+@media (max-width: 768px) {
+  .heroSection {
+    padding: 2rem 1rem;
+    h1 {
+      font-size: 2.8rem;
+    }
+    p {
+      font-size: 1.1rem;
+      max-width: 100%;
+    }
+  }
+}

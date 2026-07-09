@@ -1,0 +1,1080 @@
+// components/PageComponents/ProjectCardGrid/styles.module.scss
+@use '../../../src/app/globalVariables.scss' as *;
+@use 'sass:color';
+
+// ─── Section shell ────────────────────────────────────────────────────────────
+.section {
+  padding: clamp(4rem, 7vw, 7rem) clamp(1.5rem, 5vw, 3rem);
+  background: #f7f7f4;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(ellipse at 80% 10%, rgba($blue, 0.04), transparent 45%),
+      radial-gradient(ellipse at 10% 90%, rgba($green, 0.03), transparent 40%);
+    pointer-events: none;
+  }
+}
+
+.container {
+  max-width: 1360px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+// ─── Section header ───────────────────────────────────────────────────────────
+.sectionHeader {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.sectionTitle {
+  font-family: $titleFont;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  color: $obsidian;
+  line-height: 1.0;
+  letter-spacing: 0.03em;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.sectionSubtitle {
+  font-family: $textFont;
+  font-size: clamp(1rem, 1.8vw, 1.1rem);
+  color: $darkgrey;
+  line-height: 1.7;
+}
+
+// ─── Filter / category tabs ───────────────────────────────────────────────────
+.filterRow {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.filterBtn {
+  font-family: $textFont;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 0.55rem 1.2rem;
+  border-radius: 100px;
+  border: 1.5px solid #dddcdc;
+  background: $white;
+  color: $darkgrey;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+
+  &:hover {
+    border-color: $obsidian;
+    color: $obsidian;
+  }
+
+  &.filterActive {
+    background: $obsidian;
+    border-color: $obsidian;
+    color: $white;
+    box-shadow: 0 4px 14px rgba($obsidian, 0.18);
+
+    .filterCount {
+      background: rgba($white, 0.15);
+      color: $white;
+    }
+  }
+}
+
+.filterCount {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  min-width: 1.3rem;
+  height: 1.3rem;
+  padding: 0 0.3rem;
+  border-radius: 100px;
+  background: #eee;
+  color: $darkgrey;
+  transition: all 0.25s ease;
+}
+
+// ─── Grid ─────────────────────────────────────────────────────────────────────
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: auto;
+  gap: 1.25rem;
+
+  @media (max-width: 1100px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ─── Card ─────────────────────────────────────────────────────────────────────
+.card {
+  background: $white;
+  border: 1px solid #e8e8e4;
+  border-radius: 22px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+  position: relative;
+  outline: none;
+
+  &:hover,
+  &:focus-visible {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.1);
+    border-color: rgba($blue, 0.2);
+
+    .cardImage img { transform: scale(1.04); }
+    .cardHoverOverlay { opacity: 1; }
+  }
+
+  // Wide card: spans 2 columns on desktop
+  &.cardWide {
+    @media (min-width: 1101px) {
+      grid-column: span 2;
+
+      .cardImage { height: 340px; }
+      .cardBody { padding: clamp(1.5rem, 3vw, 2.25rem); }
+      .cardTitle { font-size: clamp(1.35rem, 2.2vw, 1.75rem); }
+    }
+  }
+}
+
+// ─── Card image ───────────────────────────────────────────────────────────────
+.cardImage {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #e8e8e4;
+
+  img {
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba($obsidian, 0.02) 0%, rgba($obsidian, 0.38) 100%);
+    z-index: 1;
+    pointer-events: none;
+  }
+}
+
+.cardHoverOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba($obsidian, 0.55);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  backdrop-filter: blur(2px);
+}
+
+.viewDetailsBtn {
+  font-family: $textFont;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: $white;
+  letter-spacing: 0.05em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1.5px solid rgba($white, 0.6);
+  padding: 0.65rem 1.4rem;
+  border-radius: 100px;
+  transition: border-color 0.2s;
+}
+
+.resultBadge {
+  position: absolute;
+  top: 1rem; right: 1rem;
+  z-index: 2;
+  font-family: $headerFont;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: $obsidian;
+  background: $lightgreen;
+  padding: 0.35rem 0.85rem;
+  border-radius: 100px;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.categoryLabel {
+  position: absolute;
+  bottom: 1rem; left: 1rem;
+  z-index: 2;
+  font-family: $textFont;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba($white, 0.85);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+// ─── Card body ────────────────────────────────────────────────────────────────
+.cardBody {
+  padding: clamp(1.25rem, 2.5vw, 1.75rem);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex: 1;
+}
+
+.cardMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.clientName {
+  font-family: $textFont;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: $obsidian;
+  letter-spacing: 0.03em;
+}
+
+.location,
+.year {
+  font-family: $textFont;
+  font-size: 0.75rem;
+  color: $darkgrey;
+
+  &::before {
+    content: '·';
+    margin-right: 0.45rem;
+    opacity: 0.5;
+  }
+}
+
+.cardTitle {
+  font-family: $headerFont;
+  font-size: clamp(1.1rem, 1.8vw, 1.25rem);
+  color: $obsidian;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+  margin: 0;
+}
+
+.cardDesc {
+  font-family: $textFont;
+  font-size: 0.9rem;
+  color: $darkgrey;
+  line-height: 1.7;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.tagRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: auto;
+  padding-top: 0.25rem;
+}
+
+.tag {
+  font-family: $textFont;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: $blue;
+  background: rgba($blue, 0.08);
+  border: 1px solid rgba($blue, 0.15);
+  padding: 0.25rem 0.65rem;
+  border-radius: 100px;
+}
+
+// ─── Load More ────────────────────────────────────────────────────────────────
+.loadMoreRow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding-top: 0.5rem;
+}
+
+.loadMoreBtn {
+  font-family: $headerFont;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $obsidian;
+  background: $white;
+  border: 1.5px solid #dddcdc;
+  padding: 0.85rem 2rem;
+  border-radius: 100px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  transition: all 0.25s ease;
+
+  &:hover {
+    background: $obsidian;
+    color: $white;
+    border-color: $obsidian;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba($obsidian, 0.15);
+  }
+}
+
+.loadMoreCount {
+  font-family: $textFont;
+  font-size: 0.8rem;
+  color: $darkgrey;
+  letter-spacing: 0.02em;
+}
+
+// ─── SERVICE CTA CARD (injected in All tab every 7 items) ─────────────────────
+.ctaCard {
+  border-radius: 22px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  cursor: default;
+
+  // On desktop: takes one column slot like a regular card
+  // If adjacent to a wide card that spans 2 cols, it fills the remaining col naturally
+}
+
+.ctaCardDark {
+  background: $obsidian;
+  border: 1px solid rgba($white, 0.06);
+
+  .ctaCardEyebrow { color: $green; }
+  .ctaCardHeadline { color: $white; }
+  .ctaCardBody { color: rgba($white, 0.58); }
+
+  .ctaCardBtn {
+    background: $green;
+    color: $obsidian;
+
+    &:hover {
+      background: color.adjust(#b1de00, $lightness: -8%);
+    }
+  }
+
+  .ctaCardIcon {
+    background: rgba($green, 0.12);
+    border-color: rgba($green, 0.22);
+    color: $green;
+  }
+
+  // Subtle radial glow
+  &::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, rgba($green, 0.12) 0%, transparent 65%);
+    pointer-events: none;
+  }
+}
+
+.ctaCardLight {
+  background: $white;
+  border: 1px solid #e8e8e4;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+
+  .ctaCardEyebrow { color: $darkgrey; }
+  .ctaCardHeadline { color: $obsidian; }
+  .ctaCardBody { color: $darkgrey; }
+
+  .ctaCardBtn {
+    background: $obsidian;
+    color: $white;
+
+    &:hover {
+      background: $blackflat;
+    }
+  }
+
+  .ctaCardIcon {
+    background: rgba($obsidian, 0.06);
+    border-color: rgba($obsidian, 0.12);
+    color: $obsidian;
+  }
+}
+
+.ctaCardInner {
+  padding: 2rem 2rem 2.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.ctaCardIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  margin-bottom: 0.25rem;
+  flex-shrink: 0;
+}
+
+.ctaCardEyebrow {
+  font-family: $textFont;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.ctaCardHeadline {
+  font-family: $headerFont;
+  font-size: clamp(1.1rem, 1.8vw, 1.3rem);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+  margin: 0;
+}
+
+.ctaCardBody {
+  font-family: $textFont;
+  font-size: 0.88rem;
+  line-height: 1.7;
+  margin: 0;
+  flex: 1;
+}
+
+.ctaCardBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  align-self: flex-start;
+  padding: 0.7rem 1.35rem;
+  border-radius: 8px;
+  font-family: $textFont;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  margin-top: 0.5rem;
+  transition: background 0.25s ease, transform 0.2s ease;
+
+  svg { font-size: 0.75rem; transition: transform 0.2s ease; }
+
+  &:hover {
+    transform: translateY(-1px);
+    svg { transform: translateX(3px); }
+  }
+}
+
+// ─── GRAPHIC DESIGN GALLERY ───────────────────────────────────────────────────
+.galleryGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+
+  @media (max-width: 1100px) { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 700px)  { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 420px)  { grid-template-columns: 1fr; }
+}
+
+.galleryThumb {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid #e8e8e4;
+  background: #e8e8e4;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+
+  img {
+    transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+    border-color: rgba($green, 0.35);
+
+    img { transform: scale(1.06); }
+    .galleryThumbOverlay { opacity: 1; }
+  }
+}
+
+.galleryThumbOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba($obsidian, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.28s ease;
+  color: $white;
+  font-size: 1.2rem;
+  backdrop-filter: blur(2px);
+  z-index: 2;
+}
+
+// ─── Gallery Lightbox (fullscreen modal) ─────────────────────────────────────
+.galleryModal {
+  // Override the default modal sizing for full-image display
+  max-width: 92vw !important;
+  width: 92vw !important;
+  max-height: 92vh !important;
+  background: $obsidian !important;
+  border-radius: 20px !important;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden !important;
+}
+
+.galleryLightboxImage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  height: 75vh;
+}
+
+.galleryLightboxCaption {
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba($white, 0.08);
+  flex-shrink: 0;
+}
+
+.galleryLightboxAlt {
+  font-family: $textFont;
+  font-size: 0.82rem;
+  color: rgba($white, 0.55);
+  margin: 0;
+  line-height: 1.4;
+  flex: 1;
+  padding-right: 1rem;
+}
+
+.galleryLightboxCount {
+  font-family: $textFont;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: rgba($white, 0.35);
+  white-space: nowrap;
+  letter-spacing: 0.06em;
+}
+
+// ─── Gallery loading / empty ──────────────────────────────────────────────────
+.galleryLoading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 4rem 2rem;
+  font-family: $textFont;
+  font-size: 0.9rem;
+  color: $darkgrey;
+}
+
+.gallerySpinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #e8e8e4;
+  border-top-color: $green;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+// ─── Generic empty state (used by gallery when folder is empty) ───────────────
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+  padding: 4rem 2rem;
+  max-width: 460px;
+  margin: 0 auto;
+}
+
+.emptyIcon {
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  background: rgba($obsidian, 0.06);
+  border: 1px solid rgba($obsidian, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: $darkgrey;
+}
+
+.emptyTitle {
+  font-family: $headerFont;
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: $obsidian;
+  margin: 0;
+}
+
+.emptyBody {
+  font-family: $textFont;
+  font-size: 0.9rem;
+  color: $darkgrey;
+  line-height: 1.7;
+  margin: 0;
+
+  code {
+    font-family: monospace;
+    font-size: 0.82rem;
+    background: rgba($obsidian, 0.06);
+    border: 1px solid rgba($obsidian, 0.1);
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    color: $obsidian;
+  }
+}
+
+// ─── Empty Tab CTA ("Be the first") ──────────────────────────────────────────
+.emptyTabCta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.25rem;
+  padding: clamp(4rem, 8vw, 7rem) 2rem;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.emptyTabIcon {
+  width: 72px;
+  height: 72px;
+  border-radius: 20px;
+  background: $obsidian;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  color: $green;
+  box-shadow: 0 8px 28px rgba($obsidian, 0.18);
+}
+
+.emptyTabEyebrow {
+  font-family: $textFont;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: $darkgrey;
+}
+
+.emptyTabTitle {
+  font-family: $titleFont;
+  font-size: clamp(2.4rem, 5vw, 3.5rem);
+  color: $obsidian;
+  margin: 0;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+.emptyTabBody {
+  font-family: $textFont;
+  font-size: 1rem;
+  color: $darkgrey;
+  line-height: 1.75;
+  margin: 0;
+  max-width: 420px;
+}
+
+.emptyTabActions {
+  display: flex;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+.emptyTabBtnPrimary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.75rem;
+  background: $green;
+  color: $obsidian;
+  font-family: $textFont;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: background 0.25s ease, transform 0.2s ease;
+
+  svg { font-size: 0.78rem; transition: transform 0.2s ease; }
+
+  &:hover {
+    background: color.adjust(#b1de00, $lightness: -8%);
+    transform: translateY(-2px);
+    svg { transform: translateX(3px); }
+  }
+}
+
+.emptyTabBtnGhost {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.85rem 1.75rem;
+  background: transparent;
+  color: $obsidian;
+  font-family: $textFont;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  border-radius: 10px;
+  border: 1.5px solid #dddcdc;
+  text-decoration: none;
+  transition: border-color 0.25s ease, background 0.25s ease, transform 0.2s ease;
+
+  &:hover {
+    border-color: $obsidian;
+    background: rgba($obsidian, 0.04);
+    transform: translateY(-2px);
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// MODAL (unchanged from original)
+// ─────────────────────────────────────────────────────────────────────────────
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  background: rgba($obsidian, 0.72);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+.modalPanel {
+  position: relative;
+  background: $white;
+  border-radius: 28px;
+  width: 100%;
+  max-width: 760px;
+  max-height: 92vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.35);
+  scroll-behavior: smooth;
+
+  &::-webkit-scrollbar { width: 5px; }
+  &::-webkit-scrollbar-track { background: transparent; }
+  &::-webkit-scrollbar-thumb { background: #ddd; border-radius: 9999px; }
+}
+
+.modalClose {
+  position: absolute;
+  top: 1.25rem; right: 1.25rem;
+  z-index: 10;
+  width: 2.5rem; height: 2.5rem;
+  border-radius: 50%;
+  border: none;
+  background: rgba($obsidian, 0.65);
+  color: $white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.2s ease;
+  backdrop-filter: blur(4px);
+
+  &:hover { background: $obsidian; }
+}
+
+.modalContent {
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.modalMeta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.modalCategory {
+  font-family: $textFont;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $blue;
+  background: rgba($blue, 0.08);
+  border: 1px solid rgba($blue, 0.15);
+  padding: 0.3rem 0.75rem;
+  border-radius: 100px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.modalResult {
+  font-family: $textFont;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: $obsidian;
+  background: $lightgreen;
+  padding: 0.3rem 0.75rem;
+  border-radius: 100px;
+}
+
+.modalYear {
+  font-family: $textFont;
+  font-size: 0.78rem;
+  color: $darkgrey;
+  margin-left: auto;
+}
+
+.modalTitle {
+  font-family: $titleFont;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  color: $obsidian;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.modalClient {
+  font-family: $textFont;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: $darkgrey;
+  letter-spacing: 0.03em;
+  margin: 0;
+}
+
+.modalDesc {
+  font-family: $textFont;
+  font-size: 1rem;
+  color: #444;
+  line-height: 1.82;
+  margin: 0;
+}
+
+.modalTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.modalTag {
+  font-family: $textFont;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: $darkgrey;
+  background: #f4f4f0;
+  border: 1px solid #e8e8e4;
+  padding: 0.3rem 0.7rem;
+  border-radius: 100px;
+}
+
+.modalOffline {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.55rem 1.2rem;
+  background: #f4f4f0;
+  color: $darkgrey;
+  font-family: $textFont;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 100px;
+  border: 1.5px solid #e8e8e4;
+  align-self: flex-start;
+}
+
+.modalCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.75rem;
+  background: $obsidian;
+  color: $white;
+  font-family: $textFont;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border-radius: 10px;
+  text-decoration: none;
+  align-self: flex-start;
+  transition: background 0.25s ease, transform 0.25s ease;
+
+  &:hover {
+    background: $blue;
+    transform: translateY(-2px);
+    color: $white;
+  }
+
+  svg { font-size: 0.78rem; opacity: 0.75; }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CAROUSEL (unchanged from original)
+// ─────────────────────────────────────────────────────────────────────────────
+.carousel {
+  position: relative;
+  width: 100%;
+  height: 340px;
+  background: #e8e8e4;
+  flex-shrink: 0;
+  overflow: hidden;
+
+  @media (max-width: 520px) { height: 240px; }
+}
+
+.carouselTrack {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.carouselSlide {
+  position: absolute;
+  inset: 0;
+}
+
+.carouselCaption {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  font-family: $textFont;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba($white, 0.8);
+  background: rgba($obsidian, 0.55);
+  padding: 0.3rem 0.85rem;
+  border-radius: 100px;
+  white-space: nowrap;
+  backdrop-filter: blur(4px);
+  pointer-events: none;
+}
+
+.carouselBtn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  width: 2.5rem; height: 2.5rem;
+  border-radius: 50%;
+  border: none;
+  background: rgba($obsidian, 0.6);
+  color: $white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.2s;
+  backdrop-filter: blur(4px);
+
+  &:hover { background: $obsidian; }
+  &.carouselBtnPrev { left: 1rem; }
+  &.carouselBtnNext { right: 1rem; }
+}
+
+.carouselDots {
+  position: absolute;
+  bottom: 1rem; right: 1.25rem;
+  z-index: 5;
+  display: flex;
+  gap: 0.35rem;
+}
+
+.dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  border: none;
+  background: rgba($white, 0.45);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s, width 0.2s;
+
+  &.dotActive {
+    background: $white;
+    width: 18px;
+    border-radius: 9999px;
+  }
+}
+
+// ─── Responsive ───────────────────────────────────────────────────────────────
+@media (max-width: 640px) {
+  .modalPanel { border-radius: 20px; }
+  .carousel { height: 220px; }
+  .modalContent { padding: 1.5rem; }
+  .modalTitle { font-size: 1.6rem; }
+  .carouselBtn { width: 2rem; height: 2rem; font-size: 0.75rem; }
+  .emptyTabActions { flex-direction: column; align-items: stretch; }
+  .emptyTabBtnPrimary,
+  .emptyTabBtnGhost { justify-content: center; }
+}

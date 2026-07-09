@@ -1,0 +1,17 @@
+// src/app/about/page.module.scss
+@use '../globalVariables.scss' as *;
+
+.pageWrapper {
+  min-height: 100vh;
+  background: transparent;
+}
+
+.section {
+  margin-bottom: 5rem;
+}
+
+@media (max-width: 768px) {
+  .section {
+    margin-bottom: 3rem;
+  }
+}

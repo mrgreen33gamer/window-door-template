@@ -1,0 +1,140 @@
+@use '../../../src/app/globalVariables.scss' as *;
+
+// NO background — parent controls canvas
+.section {
+  padding: clamp(4rem, 7vw, 7rem) 1.5rem;
+  width: 100%;
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+// ── HEADER ───────────────────────────────────────
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.eyebrow {
+  font-family: $textFont;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: $green;
+}
+
+.title {
+  font-family: $titleFont;
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  margin: 0;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: $obsidian;
+
+  em {
+    font-style: italic;
+    color: $green;
+  }
+}
+
+.subtitle {
+  font-family: $textFont;
+  font-size: 1.02rem;
+  line-height: 1.65;
+  margin: 0;
+  color: $darkgrey;
+  max-width: 540px;
+}
+
+// ── MAP CARD ─────────────────────────────────────
+.mapCard {
+  position: relative;
+  width: 100%;
+  height: 480px;
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1px solid $lightgrey;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
+  transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  background: rgba($lightgrey, 0.4);
+
+  &:hover {
+    border-color: rgba($green, 0.4);
+    box-shadow: 0 16px 56px rgba(0, 0, 0, 0.12);
+  }
+}
+
+.mapLoaded .skeleton {
+  opacity: 0;
+  pointer-events: none;
+}
+
+// ── SKELETON LOADER ───────────────────────────────
+.skeleton {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  background: rgba($lightgrey, 0.4);
+  z-index: 2;
+  transition: opacity 0.4s ease;
+}
+
+.skeletonPulse {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 3px solid rgba($green, 0.2);
+  border-top-color: $green;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.skeletonLabel {
+  font-family: $textFont;
+  font-size: 0.88rem;
+  color: $grey;
+  letter-spacing: 0.06em;
+}
+
+// ── IFRAME ───────────────────────────────────────
+.iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  border: 0;
+}
+
+// ── RESPONSIVE ───────────────────────────────────
+@media (max-width: 768px) {
+  .mapCard {
+    height: 400px;
+    border-radius: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .mapCard {
+    height: 320px;
+    border-radius: 14px;
+  }
+
+  .subtitle {
+    display: none;
+  }
+}

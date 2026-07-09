@@ -1,0 +1,26 @@
+// PageComponents/RotatingLogo/styles.module.scss
+// No background — purely a composable widget
+.animatedLogo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  // overflow hidden intentionally removed — let size prop control clipping
+}
+
+.innerLogo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  position: relative;
+}
+
+.outerLogo {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 0;
+}

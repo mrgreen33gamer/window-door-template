@@ -1,0 +1,228 @@
+// components/PageComponents/AuthorBio/styles.module.scss
+// ✅ Added .credentials list style for E-E-A-T signals
+@use '../../../src/app/globalVariables.scss' as *;
+
+.authorBio {
+  padding: clamp(3.5rem, 6vw, 6rem) 1.5rem;
+  background: transparent;
+}
+
+.card {
+  max-width: 1180px;
+  margin: 0 auto;
+  background: $white;
+  border-radius: 20px;
+  border: 1px solid $lightgrey;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  display: flex;
+  align-items: center;
+  gap: 0;
+  overflow: hidden;
+  position: relative;
+  transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+
+  &:hover {
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+    transform: translateY(-3px);
+  }
+}
+
+// Left accent strip — $green
+.accentStrip {
+  flex-shrink: 0;
+  width: 5px;
+  align-self: stretch;
+  background: $green;
+}
+
+// ── IMAGE COLUMN ──────────────────────────────
+.imageCol {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2.5rem 2.5rem 2.5rem 2.25rem;
+}
+
+.imageRing {
+  position: relative;
+  border-radius: 50%;
+  padding: 4px;
+  background: $green;
+  box-shadow: 0 6px 24px rgba($green, 0.25);
+}
+
+.authorImage {
+  display: block;
+  width: 160px !important;
+  height: 160px !important;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid $white;
+}
+
+.verifiedBadge {
+  font-family: $textFont;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: $darkgreen;
+  background: rgba($green, 0.1);
+  border: 1px solid rgba($green, 0.25);
+  border-radius: 9999px;
+  padding: 0.3rem 0.85rem;
+  white-space: nowrap;
+}
+
+// ── CONTENT ───────────────────────────────────
+.content {
+  flex: 1;
+  padding: 2.5rem 3rem 2.5rem 1rem;
+  min-width: 0;
+}
+
+.role {
+  font-family: $textFont;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: $darkgrey;
+  margin: 0 0 0.5rem;
+}
+
+.title {
+  font-family: $titleFont;
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  color: $obsidian;
+  margin: 0 0 1rem;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.description {
+  font-family: $textFont;
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: $darkgrey;
+  margin: 0 0 1rem;
+  max-width: 640px;
+
+  strong {
+    color: $obsidian;
+    font-weight: 600;
+  }
+}
+
+// ✅ NEW: Credentials list — E-E-A-T signals
+.credentials {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+
+  li {
+    font-family: $textFont;
+    font-size: 0.9rem;
+    color: $darkgrey;
+    line-height: 1.5;
+    padding-left: 1.4rem;
+    position: relative;
+
+    &::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: $green;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+  }
+}
+
+.updated {
+  font-family: $textFont;
+  font-size: 0.88rem;
+  color: $grey;
+  font-style: italic;
+  margin: 0 0 1.75rem;
+}
+
+// ── FOOTER ROW ────────────────────────────────
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+
+.linkedinLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.4rem;
+  background: $obsidian;
+  color: $white;
+  border-radius: 9999px;
+  font-family: $textFont;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: background 0.3s ease-in-out, transform 0.3s;
+
+  &:hover {
+    background: $blackflat;
+    transform: translateY(-2px);
+  }
+}
+
+.badges {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.badge {
+  background: $lightgrey;
+  color: $blackflat;
+  font-family: $textFont;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.3rem 0.8rem;
+  border-radius: 9999px;
+  letter-spacing: 0.04em;
+}
+
+// ── RESPONSIVE ────────────────────────────────
+@media (max-width: 860px) {
+  .card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .accentStrip {
+    width: 100%;
+    height: 5px;
+    align-self: auto;
+  }
+
+  .imageCol {
+    padding: 2rem;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .authorImage {
+    width: 100px !important;
+    height: 100px !important;
+  }
+
+  .content {
+    padding: 0 2rem 2rem;
+  }
+}

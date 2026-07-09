@@ -1,0 +1,354 @@
+@use '../globalVariables.scss' as *;
+
+// ── PAGE ──────────────────────────────────────────────────────────────────────
+.page {
+  background: $white;
+  min-height: 100vh;
+}
+
+// ── HERO ──────────────────────────────────────────────────────────────────────
+.hero {
+  position: relative;
+  background: $obsidian;
+  overflow: hidden;
+  padding: clamp(6rem, 12vh, 9rem) clamp(1.5rem, 6vw, 5rem) clamp(3.5rem, 6vh, 5rem);
+}
+
+.heroBg {
+  position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background-image:
+    repeating-linear-gradient(-55deg, transparent, transparent 22px, rgba($white, 0.012) 22px, rgba($white, 0.012) 23px),
+    radial-gradient(ellipse 55% 60% at 80% 30%, rgba($orange, 0.08) 0%, transparent 65%);
+}
+
+.heroInner {
+  position: relative; z-index: 1;
+  max-width: 700px;
+  display: flex; flex-direction: column; gap: 1.35rem;
+}
+
+.heroBadge {
+  display: inline-flex; align-items: center; gap: 0.55rem;
+  font-family: $textFont; font-size: 0.73rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba($orange, 0.9);
+  border: 1px solid rgba($orange, 0.28); background: rgba($orange, 0.07);
+  border-radius: 9999px; padding: 0.35rem 0.95rem; width: fit-content;
+}
+
+.badgeDot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: $orange; box-shadow: 0 0 8px rgba($orange, 0.8);
+  animation: pulse 2.4s ease-in-out infinite; flex-shrink: 0;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.4; transform: scale(0.75); }
+}
+
+.heroTitle {
+  font-family: $titleFont;
+  font-size: clamp(3rem, 6.5vw, 5.5rem);
+  font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.02em; line-height: 1.0;
+  color: $white; margin: 0;
+}
+
+.heroAccent { color: $orange; display: block; }
+
+.heroSub {
+  font-family: $textFont; font-size: clamp(0.95rem, 1.4vw, 1.08rem);
+  color: rgba($white, 0.58); line-height: 1.76; margin: 0;
+}
+
+// ── MAIN SECTION ──────────────────────────────────────────────────────────────
+.mainSection {
+  padding: clamp(3.5rem, 6vw, 5.5rem) clamp(1.5rem, 5vw, 4rem);
+  background: $white;
+}
+
+.mainInner {
+  max-width: 1200px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 3.5rem;
+  align-items: start;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+}
+
+// ── LEFT COL ──────────────────────────────────────────────────────────────────
+.leftCol {
+  display: flex; flex-direction: column; gap: 2rem;
+  position: sticky; top: 7rem;
+
+  @media (max-width: 900px) { position: static; }
+}
+
+// ── INFO CARDS ────────────────────────────────────────────────────────────────
+.infoCards {
+  display: flex; flex-direction: column; gap: 0.75rem;
+}
+
+.infoCard {
+  display: flex; align-items: flex-start; gap: 0.9rem;
+  padding: 1rem 1.1rem;
+  background: rgba($obsidian, 0.03);
+  border: 1px solid rgba($obsidian, 0.09);
+  border-radius: 12px;
+  transition: border-color 0.25s, background 0.25s;
+
+  &:hover {
+    border-color: rgba($orange, 0.2);
+    background: rgba($orange, 0.03);
+  }
+}
+
+.infoIcon {
+  width: 40px; height: 40px; border-radius: 9px; flex-shrink: 0;
+  background: rgba($orange, 0.1); border: 1px solid rgba($orange, 0.18);
+  display: flex; align-items: center; justify-content: center;
+  color: $orange;
+}
+
+.infoText {
+  display: flex; flex-direction: column; gap: 0.15rem;
+  min-width: 0; flex: 1;
+}
+
+.infoLabel {
+  font-family: $textFont; font-size: 0.67rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase; color: rgba($obsidian, 0.4);
+  white-space: nowrap;
+}
+
+.infoValue {
+  font-family: $textFont; font-size: 0.86rem; font-weight: 500;
+  color: $obsidian; line-height: 1.45;
+  word-break: break-word; overflow-wrap: anywhere;
+  text-decoration: none;
+
+  &:is(a):hover { color: $orange; }
+}
+
+// ── TRUST BLOCK ───────────────────────────────────────────────────────────────
+.trustBlock {
+  padding: 1.25rem 1.25rem 1.25rem;
+  background: rgba($obsidian, 0.03);
+  border: 1px solid rgba($obsidian, 0.08);
+  border-radius: 12px;
+  display: flex; flex-direction: column; gap: 0.7rem;
+}
+
+.trustHeading {
+  font-family: $headerFont; font-size: 0.82rem; font-weight: 700;
+  letter-spacing: 0.05em; text-transform: uppercase;
+  color: rgba($obsidian, 0.45); margin: 0 0 0.25rem;
+}
+
+.trustItem {
+  display: flex; align-items: center; gap: 0.55rem;
+  font-family: $textFont; font-size: 0.83rem; font-weight: 500;
+  color: rgba($obsidian, 0.65);
+  svg { color: $orange; flex-shrink: 0; }
+}
+
+// ── RIGHT COL ─────────────────────────────────────────────────────────────────
+.rightCol { display: flex; flex-direction: column; }
+
+// ── FORM CARD ─────────────────────────────────────────────────────────────────
+.formCard {
+  background: $white;
+  border: 1px solid rgba($obsidian, 0.1);
+  border-radius: 18px; overflow: hidden;
+  box-shadow: 0 8px 40px rgba($obsidian, 0.08);
+  @media only screen and (max-width: 500px) {
+    border: none;
+  }
+}
+
+.formCardHeader {
+  display: flex; align-items: flex-start; gap: 1rem;
+  padding: 1.75rem 2rem 0;
+  margin-bottom: 1.5rem;
+}
+
+.formCardIcon {
+  width: 48px; height: 48px; border-radius: 10px; flex-shrink: 0;
+  background: $orange; color: $obsidian;
+  display: flex; align-items: center; justify-content: center;
+  clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 7px, 100% 100%, 7px 100%, 0 calc(100% - 7px));
+  box-shadow: 0 4px 16px rgba($orange, 0.35);
+}
+
+.formTitle {
+  font-family: $titleFont;
+  font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+  font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.03em; color: $obsidian; margin: 0 0 0.25rem; line-height: 1.1;
+}
+
+.formSubtitle {
+  font-family: $textFont; font-size: 0.85rem; line-height: 1.6;
+  color: rgba($obsidian, 0.45); margin: 0;
+}
+
+// ── URGENCY TOGGLE ────────────────────────────────────────────────────────────
+.urgencyToggle {
+  display: flex; align-items: center; gap: 0.65rem;
+  margin: 0 2rem 1.25rem;
+  padding: 0.65rem 1.1rem;
+  border: 1.5px solid rgba($obsidian, 0.1); border-radius: 8px;
+  background: none; cursor: pointer; text-align: left; width: calc(100% - 4rem);
+  font-family: $textFont; font-size: 0.83rem; font-weight: 600; color: rgba($obsidian, 0.5);
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+
+  &:hover { border-color: rgba($orange, 0.35); color: rgba($obsidian, 0.75); }
+}
+
+.urgencyActive {
+  border-color: rgba(239,68,68,0.4) !important;
+  background: rgba(239,68,68,0.05) !important;
+  color: #c0392b !important;
+}
+
+.urgencyDot {
+  width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0;
+  background: rgba($obsidian, 0.2);
+  transition: background 0.2s, box-shadow 0.2s;
+
+  .urgencyActive & {
+    background: #ef4444;
+    box-shadow: 0 0 8px rgba(239,68,68,0.7);
+  }
+}
+
+// ── FORM ──────────────────────────────────────────────────────────────────────
+.form {
+  display: flex; flex-direction: column; gap: 1rem;
+  padding: 0 2rem 2rem;
+
+  @media only screen and (max-width: 500px) {
+    padding: 0;
+  }
+}
+
+.row {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+  @media (max-width: 560px) { grid-template-columns: 1fr; }
+}
+
+.field { display: flex; flex-direction: column; gap: 0.35rem; }
+
+.label {
+  font-family: $textFont; font-size: 0.73rem; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase; color: rgba($obsidian, 0.5);
+}
+
+.optional {
+  font-weight: 400; text-transform: none; letter-spacing: 0; color: rgba($obsidian, 0.35);
+}
+
+.input {
+  font-family: $textFont; font-size: 0.9rem; color: $obsidian;
+  background: rgba($obsidian, 0.04); border: 1.5px solid rgba($obsidian, 0.12);
+  border-radius: 8px; padding: 0.78rem 0.95rem; width: 100%;
+  outline: none; appearance: none;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+
+  &:focus {
+    border-color: $orange;
+    background: $white;
+    box-shadow: 0 0 0 3px rgba($orange, 0.1);
+  }
+
+  &::placeholder { color: rgba($obsidian, 0.3); }
+}
+
+.textarea { resize: vertical; min-height: 110px; }
+
+// ── RECAPTCHA ─────────────────────────────────────────────────────────────────
+.recaptchaWrap {
+  margin: 0.25rem 0;
+}
+
+// ── ERROR ─────────────────────────────────────────────────────────────────────
+.errorMsg {
+  display: flex; align-items: center; gap: 0.55rem;
+  padding: 0.8rem 1rem; border-radius: 8px;
+  background: rgba(red, 0.07); border: 1px solid rgba(red, 0.15);
+  font-family: $textFont; font-size: 0.84rem; color: #c0392b;
+  svg { flex-shrink: 0; }
+}
+
+// ── SUBMIT ────────────────────────────────────────────────────────────────────
+.submitBtn {
+  display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+  width: 100%; padding: 1rem;
+  background: $orange; color: $obsidian;
+  font-family: $headerFont; font-size: 1rem; font-weight: 800;
+  border: none; border-radius: 8px; cursor: pointer;
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  box-shadow: 0 6px 24px rgba($orange, 0.38);
+  transition: background 0.22s, transform 0.22s;
+
+  &:hover:not(:disabled) { background: $lightorange; transform: translateY(-2px); }
+  &:disabled { opacity: 0.65; cursor: not-allowed; }
+}
+
+.formNote {
+  font-family: $textFont; font-size: 0.8rem; text-align: center;
+  color: rgba($obsidian, 0.4); margin: 0;
+
+  a { color: $orange; font-weight: 700; text-decoration: none; &:hover { text-decoration: underline; } }
+}
+
+// ── SUCCESS CARD ──────────────────────────────────────────────────────────────
+.successCard {
+  background: $white;
+  border: 1px solid rgba($obsidian, 0.1);
+  border-radius: 18px;
+  padding: clamp(3rem, 5vw, 4rem) 2rem;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 1.25rem; text-align: center;
+  box-shadow: 0 8px 40px rgba($obsidian, 0.08);
+}
+
+.successIconWrap {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: rgba($orange, 0.1); border: 2px solid rgba($orange, 0.3);
+  display: flex; align-items: center; justify-content: center;
+  color: $orange;
+}
+
+.successTitle {
+  font-family: $titleFont; font-size: 2.2rem; font-weight: 700;
+  text-transform: uppercase; color: $obsidian; margin: 0;
+}
+
+.successText {
+  font-family: $textFont; font-size: 0.95rem; line-height: 1.72;
+  color: rgba($obsidian, 0.55); margin: 0; max-width: 420px;
+
+  a { color: $orange; font-weight: 700; text-decoration: none; &:hover { text-decoration: underline; } }
+}
+
+.successMeta {
+  display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center;
+
+  span {
+    font-family: $textFont; font-size: 0.78rem; font-weight: 700;
+    color: rgba($obsidian, 0.55); background: rgba($orange, 0.07);
+    border: 1px solid rgba($orange, 0.2); border-radius: 100px;
+    padding: 0.3rem 0.9rem;
+  }
+}
+
+// ── WRAPPERS ──────────────────────────────────────────────────────────────────
+.faqWrap {
+  background: $white;
+}

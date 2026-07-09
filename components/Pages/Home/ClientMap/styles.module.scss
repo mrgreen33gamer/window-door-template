@@ -1,0 +1,37 @@
+// ClientMap\styles.module.scss
+@use '../../../../src/app/globalVariables.scss' as *;
+@forward '../DefaultPageStyle.module.scss';
+.section {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 10px solid #5d7209;
+  box-sizing: border-box;
+}
+.mapContainer {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  box-sizing: border-box;
+}
+.mapWrapper {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+}
+.fallbackImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

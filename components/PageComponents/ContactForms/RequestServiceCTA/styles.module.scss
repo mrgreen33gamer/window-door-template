@@ -1,0 +1,265 @@
+// components/PageComponents/RequestServiceCTA/styles.module.scss
+@use '../../../src/app/globalVariables.scss' as *;
+
+// RequestServiceCTA carries its own dark canvas — it is a full-bleed page interrupt
+.section {
+  width: 100%;
+  padding: clamp(5rem, 9vw, 8rem) 1.5rem;
+  background: $obsidian;
+  position: relative;
+  overflow: hidden;
+
+  // Subtle grid
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba($white, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba($white, 0.025) 1px, transparent 1px);
+    background-size: 52px 52px;
+    pointer-events: none;
+    z-index: 0;
+  }
+}
+
+.orb {
+  position: absolute;
+  top: -160px;
+  right: -80px;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(ellipse, rgba($green, 0.1) 0%, transparent 65%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 5rem;
+  align-items: center;
+}
+
+// ── TEXT BLOCK ────────────────────────────────────────────────────────────
+.textBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: $textFont;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: $green;
+  width: fit-content;
+}
+
+.eyebrowIcon { font-size: 0.75rem; }
+
+.headline {
+  font-family: $titleFont;
+  font-size: clamp(2.6rem, 5vw, 4rem);
+  color: $white;
+  margin: 0;
+  letter-spacing: -0.025em;
+  line-height: 1.06;
+}
+
+.subline {
+  font-family: $textFont;
+  font-size: 1.05rem;
+  color: rgba($white, 0.58);
+  line-height: 1.75;
+  margin: 0;
+}
+
+// ── PICKER BLOCK ──────────────────────────────────────────────────────────
+.pickerBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.pickerLabel {
+  font-family: $textFont;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba($white, 0.4);
+  margin: 0;
+  transition: color 0.2s ease;
+}
+
+// ── CHIPS ─────────────────────────────────────────────────────────────────
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.75rem 1.25rem;
+  background: rgba($white, 0.04);
+  border: 1px solid rgba($white, 0.1);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: border-color 0.22s ease, background 0.22s ease, box-shadow 0.22s ease;
+
+  &:hover {
+    border-color: rgba($green, 0.4);
+    background: rgba($green, 0.06);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $green;
+    outline-offset: 2px;
+  }
+}
+
+.chipActive {
+  border-color: $green;
+  background: rgba($green, 0.1);
+  box-shadow: 0 4px 16px rgba($green, 0.2);
+}
+
+.chipIconWrap {
+  width: 34px;
+  height: 34px;
+  background: rgba($green, 0.1);
+  border: 1px solid rgba($green, 0.18);
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  color: $green;
+  flex-shrink: 0;
+  transition: background 0.22s ease;
+
+  .chipActive & { background: rgba($green, 0.2); }
+}
+
+.chipLabel {
+  font-family: $textFont;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: rgba($white, 0.8);
+  white-space: nowrap;
+  transition: color 0.2s ease;
+
+  .chipActive & { color: $white; }
+}
+
+.checkDot {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: $green;
+  border: 2px solid $obsidian;
+  box-shadow: 0 0 0 2px rgba($green, 0.3);
+}
+
+// ── CTA ──────────────────────────────────────────────────────────────────
+.ctaWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.65rem;
+}
+
+.ctaBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 1rem 2.25rem;
+  background: rgba($white, 0.1);
+  color: rgba($white, 0.7);
+  border: 1px solid rgba($white, 0.15);
+  font-family: $textFont;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+
+  &:hover {
+    background: rgba($white, 0.15);
+    color: $white;
+    border-color: rgba($white, 0.3);
+  }
+}
+
+.ctaBtnActive {
+  background: $green;
+  color: $obsidian;
+  border-color: $green;
+  box-shadow: 0 8px 28px rgba($green, 0.3);
+
+  &:hover {
+    background: $lightgreen;
+    border-color: $lightgreen;
+    color: $obsidian;
+    transform: translateY(-2px);
+    box-shadow: 0 14px 36px rgba($green, 0.35);
+  }
+}
+
+.ctaArrow {
+  font-size: 0.85rem;
+  transition: transform 0.2s ease;
+  .ctaBtn:hover & { transform: translateX(3px); }
+}
+
+.ctaHint {
+  font-family: $textFont;
+  font-size: 0.78rem;
+  color: rgba($white, 0.3);
+  margin: 0;
+  font-style: italic;
+  animation: hintPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes hintPulse {
+  0%, 100% { opacity: 0.5; }
+  50%       { opacity: 1; }
+}
+
+// ── RESPONSIVE ────────────────────────────────────────────────────────────
+@media (max-width: 960px) {
+  .container {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  .ctaWrap { align-items: flex-start; }
+}
+
+@media (max-width: 640px) {
+  .chips { gap: 0.55rem; }
+  .chip { padding: 0.65rem 1rem; }
+  .chipLabel { font-size: 0.84rem; }
+}
+
+@media (max-width: 420px) {
+  .headline { font-size: 2.2rem; }
+  .ctaBtn { width: 100%; justify-content: center; }
+}

@@ -1,0 +1,152 @@
+// components/Pages/Contact/Step1/Step1.module.scss
+@use '../../../../src/app/globalVariables.scss' as *;
+
+// ── STEP CONTAINER ────────────────────────────────────────────────────────────
+.step {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  padding: 0.5rem 0 0.25rem;
+  width: 100%;
+}
+
+// ── FIELD ROW ─────────────────────────────────────────────────────────────────
+.fieldRow {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  animation: fieldIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes fieldIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+// ── INPUT WRAP (floating label host) ─────────────────────────────────────────
+.inputWrap {
+  position: relative;
+  width: 100%;
+}
+
+// ── FLOATING LABEL ────────────────────────────────────────────────────────────
+.label {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: $textFont;
+  font-size: 1rem;
+  font-weight: 400;
+  color: rgba($white, 0.35);
+  pointer-events: none;
+  transition:
+    top 0.22s cubic-bezier(0.4, 0, 0.2, 1),
+    font-size 0.22s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.22s ease,
+    transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  line-height: 1;
+}
+
+.req {
+  color: $green;
+  font-weight: 700;
+}
+
+// ── INPUT ─────────────────────────────────────────────────────────────────────
+.input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1.5px solid rgba($white, 0.14);
+  border-radius: 0;
+  padding: 1.5rem 2rem 0.6rem 0;
+  font-family: $textFont;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: $white;
+  outline: none;
+  transition: border-color 0.25s ease;
+  caret-color: $green;
+
+  // Autofill override
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus {
+    -webkit-text-fill-color: $white;
+    -webkit-box-shadow: 0 0 0px 1000px transparent inset;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+
+  // Float the label when focused OR has a value (placeholder=" " trick)
+  &:focus ~ .label,
+  &:not(:placeholder-shown) ~ .label {
+    top: 0.35rem;
+    transform: translateY(0);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: $green;
+  }
+
+  &:focus {
+    border-color: rgba($green, 0.5);
+  }
+}
+
+// ── ANIMATED UNDERLINE ────────────────────────────────────────────────────────
+.underline {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 0;
+  background: linear-gradient(90deg, $green, $lightgreen);
+  border-radius: 2px;
+  transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 10px rgba($green, 0.4);
+}
+
+.inputWrap:focus-within .underline {
+  width: 100%;
+}
+
+// ── TICK ──────────────────────────────────────────────────────────────────────
+.tick {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.9rem;
+  color: $green;
+  animation: tickPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  line-height: 1;
+}
+
+@keyframes tickPop {
+  from { transform: translateY(-50%) scale(0.4); opacity: 0; }
+  to   { transform: translateY(-50%) scale(1);   opacity: 1; }
+}
+
+// ── FILLED STATE – slightly brighter border ───────────────────────────────────
+.filled .input {
+  border-color: rgba($green, 0.25);
+}
+
+// ── HINT TEXT ────────────────────────────────────────────────────────────────
+.hint {
+  font-family: $textFont;
+  font-size: 0.75rem;
+  color: rgba($white, 0.28);
+  margin: 0;
+  padding-left: 0;
+  letter-spacing: 0.01em;
+  line-height: 1.5;
+}
+
+// ── RESPONSIVE ───────────────────────────────────────────────────────────────
+@media (max-width: 480px) {
+  .step       { gap: 1.5rem; }
+  .input      { font-size: 1rem; }
+}

@@ -1,0 +1,87 @@
+@use '../../../src/app/globalVariables.scss' as *;
+
+.section {
+  width: 100%;
+  padding: 2.5rem 1.5rem;
+  background: $white;
+  border-top: 1px solid rgba(0,0,0,0.06);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  @media only screen and (max-width: 800px) {
+    padding: 2rem 1rem;
+  }
+}
+
+.headline {
+  text-align: center;
+  font-family: $headerFont; font-size: 0.78rem; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba($obsidian, 0.4);
+  margin: 0 0 1.5rem;
+}
+
+.grid {
+  max-width: 1300px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: auto auto auto auto auto auto;
+  gap: 0;
+
+  @media (max-width: 1246px) { grid-template-columns: auto auto auto }
+  @media (max-width: 900px) { grid-template-columns: auto auto }
+  @media (max-width: 500px)  { grid-template-columns: auto; justify-content: center; }
+}
+
+.badge {
+  display: flex; align-items: flex-start; gap: 0.75rem; align-items: center;
+  padding: 1.1rem 1.2rem;
+  border-right: 1px solid rgba($obsidian, 0.07);
+  transition: background 0.2s;
+
+  &:last-child { border-right: none; }
+  &:hover { background: rgba($orange, 0.04); }
+
+  @media (max-width: 1100px) {
+    border-bottom: 1px solid rgba($obsidian, 0.07);
+    &:nth-child(3n) { border-right: none; }
+  }
+
+  @media (max-width: 500px) {
+    justify-content: flex-start;
+    border-right: none; border-left: none;
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}
+
+.iconWrap {
+  width: 38px; height: 38px; flex-shrink: 0;
+  background: rgba($orange, 0.1); border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  color: $orange;
+  border: 1px solid rgba($orange, 0.15);
+    @media (max-width: 500px) {
+      width: 48px; height: 48px;
+    }
+}
+
+.textWrap {
+  display: flex; flex-direction: column; gap: 2px; min-width: 0;
+
+}
+
+.title {
+  font-family: $headerFont; font-size: 0.82rem; font-weight: 700;
+  color: $obsidian; line-height: 1.2; white-space: nowrap;
+    @media (max-width: 500px) {
+      font-size: 1rem;
+      letter-spacing: 2px;
+    }
+}
+
+.sub {
+  font-family: $textFont; font-size: 0.7rem; font-weight: 500;
+  color: rgba($obsidian, 0.48); line-height: 1.2;
+    @media (max-width: 500px) {
+      font-size: 0.9rem;
+    }
+}

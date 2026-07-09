@@ -1,0 +1,130 @@
+// Uses globalVariables.scss via direct import
+@use '../../../src/app/globalVariables.scss' as *;
+
+// PageComponents/LocalServiceAreas/styles.module.scss
+
+.section {
+  padding: clamp(5rem, 8vw, 8rem) 1.5rem;
+  background: $white;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(
+      -55deg, transparent, transparent 20px,
+      rgba(255, 255, 255, 0.01) 20px, rgba(255, 255, 255, 0.01) 21px
+    );
+    pointer-events: none;
+  }
+}
+
+.container {
+  position: relative; z-index: 1;
+  max-width: 1280px; margin: 0 auto;
+  display: flex; flex-direction: column; gap: 3.5rem;
+}
+
+.header {
+  display: flex; flex-direction: column;
+  align-items: center; text-align: center; gap: 0.75rem;
+}
+
+.eyebrow {
+  font-size: 0.78rem; font-weight: 700;
+  letter-spacing: 0.22em; text-transform: uppercase; color: $orange;
+}
+
+.title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  font-weight: 700; text-transform: uppercase;
+  color: $obsidian; margin: 0;
+  letter-spacing: 0.04em; line-height: 1.1;
+}
+
+.subtitle {
+  font-size: 1rem; color: $darkgrey;
+  line-height: 1.7; margin: 0; max-width: 540px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.25rem;
+}
+
+.card {
+  background: $white;
+  border: 1px solid $lightgrey;
+  border-radius: 16px;
+  padding: 1.5rem 1.5rem 1.25rem;
+  display: flex; flex-direction: column; gap: 0.65rem;
+  position: relative; overflow: hidden;
+  transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease;
+
+  &:hover {
+    border-color: rgba($orange, 0.22);
+    background: rgba(249, 115, 22, 0.04);
+    transform: translateY(-4px);
+  }
+}
+
+.cardHub {
+  border-color: rgba(249, 115, 22, 0.3);
+  background: rgba(249, 115, 22, 0.06);
+
+  &::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, $orange, $lightorange);
+  }
+}
+
+.badge {
+  display: inline-flex; align-items: center;
+  font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 0.22rem 0.6rem; border-radius: 4px;
+  width: fit-content;
+}
+
+.badgeHub {
+  background: $orange; color: $obsidian;
+}
+
+.badgeNearby {
+  background: rgba(249, 115, 22, 0.12);
+  color: $orange;
+  border: 1px solid rgba(249, 115, 22, 0.25);
+}
+
+.pinWrap {
+  color: $orange;
+  display: flex;
+}
+
+.townName {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.35rem; font-weight: 700;
+  text-transform: uppercase;
+  color: $obsidian; margin: 0; letter-spacing: 0.04em;
+}
+
+.benefit {
+  font-size: 0.87rem; color: $darkgrey;
+  line-height: 1.65; margin: 0; flex: 1;
+}
+
+.cta {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  margin-top: 0.25rem;
+  font-size: 0.82rem; font-weight: 700;
+  color: $orange; text-decoration: none;
+  letter-spacing: 0.04em;
+  transition: gap 0.2s;
+
+  &:hover { gap: 0.55rem; }
+}
