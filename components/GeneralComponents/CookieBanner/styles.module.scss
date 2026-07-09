@@ -259,3 +259,51 @@
     justify-content: center;
   }
 }
+
+/* === COOKIE UNIQUENESS — window-door-template === */
+.backdrop {
+  bottom: 1.5rem !important;
+  right: 1.5rem !important;
+  left: auto !important;
+  top: auto !important;
+  max-width: 360px !important;
+  transform: none;
+}
+
+.card {
+  background: linear-gradient(145deg, $obsidian 0%, color.adjust($obsidian, $lightness: 4%) 100%) !important;
+  border: 1px solid rgba($white, 0.08) !important;
+  border-radius: 18px !important;
+  padding: 1.5rem !important;
+  
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: -40px; left: -40px;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, rgba($orange, 0.12) 0%, transparent 65%);
+    pointer-events: none;
+  }
+}
+
+.iconWrap {
+  border-radius: 12px !important;
+  background: rgba($orange, 0.14) !important;
+  border-color: rgba($orange, 0.28) !important;
+  color: $orange !important;
+}
+
+.btnAccept {
+  background: $green !important;
+  color: $obsidian !important;
+  border-radius: 999px !important;
+  &:hover { filter: brightness(1.08); }
+}
+
+.btnDecline,
+.btnEssential {
+  border-radius: 999px !important;
+}
+/* end cookie uniqueness */

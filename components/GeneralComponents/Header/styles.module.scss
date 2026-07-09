@@ -218,3 +218,20 @@
 }
 
 /* end identity layer */
+
+/* === HEADER PATTERN UNIQUENESS — window-door-template === */
+.header,
+.shell,
+.bar,
+.navShell,
+.root {
+  // best-effort: classes vary; also target common wrappers
+}
+
+.header {
+  background-image: linear-gradient(90deg, rgba($orange, 0.08) 0%, transparent 40%, transparent 100%) !important;
+  border-bottom: 1px solid rgba($white, 0.06) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+}
+/* end header pattern */

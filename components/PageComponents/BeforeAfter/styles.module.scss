@@ -173,3 +173,44 @@
   .sliderWrap { aspect-ratio: 4 / 3; }
   .handlePill { width: 34px; height: 34px; font-size: 0.8rem; }
 }
+
+/* === BEFORE/AFTER SLIDER UNIQUENESS — window-door-template === */
+.card {
+  border-radius: 0 !important;
+}
+
+.sliderWrap {
+  aspect-ratio: 4 / 3 !important;
+  border-radius: 0 0 0 0 !important;
+}
+
+.handle,
+.divider,
+.sliderHandle {
+  width: 4px !important;
+  background: $green !important;
+  box-shadow: 0 0 12px rgba(0,0,0,0.35) !important;
+}
+
+.handleKnob,
+.knob,
+.sliderKnob {
+  border-color: $green !important;
+  background: $obsidian !important;
+  border-radius: 8px !important;
+}
+
+.grid {
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)) !important;
+}
+
+.resultBadge {
+  border-radius: 8px !important;
+}
+
+.beforeLabel, .afterLabel, .label {
+  border-radius: 999px !important;
+  background: rgba($obsidian, 0.72) !important;
+  border: 1px solid rgba($white, 0.12) !important;
+}
+/* end before/after uniqueness */

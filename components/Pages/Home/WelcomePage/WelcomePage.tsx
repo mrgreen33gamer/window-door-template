@@ -14,46 +14,57 @@ function MaterialsMosaic({
 }: {
   materials: Array<{ name: string; swatch: string; imageSrc?: string }>;
 }) {
-  // Mosaic span classes for visual interest (cycle pattern)
-  const spanClass = (i: number) => {
-    const mod = i % 6;
-    if (mod === 0) return styles.tileWide;
-    if (mod === 3) return styles.tileTall;
-    return '';
-  };
-
+  // Window frame mockups with glass panes
   return (
-    <div className={styles.mosaic} role="list" aria-label="Material samples">
-      {materials.map((m, i) => (
-        <motion.div
-          key={`${m.name}-${i}`}
-          className={`${styles.tile} ${spanClass(i)}`}
-          role="listitem"
-          initial={{ opacity: 0, y: 18, scale: 0.96 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{
-            duration: 0.45,
-            delay: 0.35 + i * 0.07,
-            ease: [0.22, 1, 0.36, 1],
-          }}
-        >
-          <div
-            className={styles.tileFace}
-            style={{ backgroundColor: m.swatch }}
-          >
-            {m.imageSrc ? (
-              <img
-                src={m.imageSrc}
-                alt=""
-                className={styles.tileImage}
-                draggable={false}
-              />
-            ) : null}
-            <div className={styles.tileOverlay} aria-hidden="true" />
-          </div>
-          <span className={styles.tileName}>{m.name}</span>
-        </motion.div>
-      ))}
+    <div className={styles.windowGrid} role="list" aria-label="Window & door styles">
+      <div className={styles.windowGridHeader} aria-hidden="true">
+        <span className={styles.windowGridTitle}>Opening Styles</span>
+        <span className={styles.windowGridMeta}>Measured & sealed</span>
+      </div>
+      <div className={styles.windowGridInner}>
+        {materials.map((m, i) => {
+          const isDoor = i === 3 || i === 4; // Entry / Storm
+          return (
+            <motion.div
+              key={`${m.name}-${i}`}
+              className={`${styles.windowCard} ${isDoor ? styles.doorStyle : ''}`}
+              role="listitem"
+              initial={{ opacity: 0, y: 18, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{
+                duration: 0.45,
+                delay: 0.32 + i * 0.07,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+            >
+              <div className={styles.windowFrame} style={{ borderColor: m.swatch }}>
+                <div className={styles.windowMullion} aria-hidden="true">
+                  <span className={styles.mullionV} />
+                  {!isDoor ? <span className={styles.mullionH} /> : null}
+                </div>
+                <div
+                  className={styles.glassPane}
+                  style={{ backgroundColor: m.swatch }}
+                >
+                  {m.imageSrc ? (
+                    <img
+                      src={m.imageSrc}
+                      alt=""
+                      className={styles.glassImage}
+                      draggable={false}
+                    />
+                  ) : null}
+                  <div className={styles.glassShine} aria-hidden="true" />
+                </div>
+              </div>
+              <div className={styles.windowMeta}>
+                <span className={styles.windowName}>{m.name}</span>
+                <span className={styles.windowSku}>CV-{String(i + 1).padStart(2, '0')}</span>
+              </div>
+            </motion.div>
+          );
+        })}
+      </div>
     </div>
   );
 }
