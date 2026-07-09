@@ -34,7 +34,7 @@ export default function AdminNav() {
     <>
       {/* Brand */}
       <div className={styles.brand}>
-        <span className={styles.eyebrow}>ARCTIC AIR HVAC</span>
+        <span className={styles.eyebrow}>ARCTIC AIR window and door</span>
         <span className={styles.siteName}>Dashboard</span>
         <span className={styles.badge}>Admin</span>
       </div>

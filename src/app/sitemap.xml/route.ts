@@ -1,19 +1,21 @@
 // src/app/sitemap.xml/route.ts
-// Arctic Air HVAC — XML Sitemap
-// Covers: all static pages, all 6 core service pages, all 16 city subpages
+// ClearView Windows & Doors — XML Sitemap
+// Covers: all static pages, all 6 core service pages, all 3 industry pages, blog posts
 import { NextResponse } from 'next/server';
 import { getAllPosts } from '&/blog-posts';
 
 export const revalidate = 0;
 
 export async function GET() {
-  const baseUrl = 'https://www.arcticairhvac.com';
+  const baseUrl = 'https://www.clearviewwindowsdoors.com';
   const today   = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
 
   const staticPages = [
     { url: '/',               priority: '1.0',  changefreq: 'weekly'  },
     { url: '/about',          priority: '0.9',  changefreq: 'monthly' },
     { url: '/services',       priority: '0.9',  changefreq: 'weekly'  },
+    { url: '/industries',     priority: '0.85', changefreq: 'monthly' },
+    { url: '/service-areas',  priority: '0.85', changefreq: 'monthly' },
     { url: '/contact',        priority: '0.8',  changefreq: 'monthly' },
     { url: '/blogs',          priority: '0.7',  changefreq: 'weekly'  },
     { url: '/privacy-policy', priority: '0.4',  changefreq: 'yearly'  },
@@ -21,33 +23,20 @@ export async function GET() {
 
   // ── Core service pages ─────────────────────────────────────────────────────
   const coreServices = [
-    { url: '/services/ac-repair',          priority: '0.95', changefreq: 'weekly'  },
-    { url: '/services/heating',            priority: '0.90', changefreq: 'weekly'  },
-    { url: '/services/installation',       priority: '0.90', changefreq: 'weekly'  },
-    { url: '/services/maintenance',        priority: '0.85', changefreq: 'monthly' },
-    { url: '/services/duct-cleaning',      priority: '0.80', changefreq: 'monthly' },
-    { url: '/services/indoor-air-quality', priority: '0.80', changefreq: 'monthly' },
+    { url: '/services/window-replacement',         priority: '0.95', changefreq: 'weekly'  },
+    { url: '/services/entry-door-installation',    priority: '0.90', changefreq: 'weekly'  },
+    { url: '/services/patio-sliding-doors',        priority: '0.90', changefreq: 'weekly'  },
+    { url: '/services/storm-impact-windows',       priority: '0.85', changefreq: 'monthly' },
+    { url: '/services/window-repair',              priority: '0.85', changefreq: 'monthly' },
+    { url: '/services/energy-efficiency-upgrades', priority: '0.85', changefreq: 'monthly' },
   ];
 
-  // ── Cities ─────────────────────────────────────────────────────────────────
-  const cities = [
-    'waco-tx', 'hewitt-tx', 'woodway-tx', 'robinson-tx',
-    'china-spring-tx', 'killeen-tx', 'temple-tx', 'valley-mills-tx',
+  // ── Industry pages ─────────────────────────────────────────────────────────
+  const industries = [
+    { url: '/industries/homebuilders',            priority: '0.80', changefreq: 'monthly' },
+    { url: '/industries/property-management',     priority: '0.80', changefreq: 'monthly' },
+    { url: '/industries/commercial-storefronts',  priority: '0.80', changefreq: 'monthly' },
   ];
-
-  // ── AC Repair city pages ───────────────────────────────────────────────────
-  const acRepairCities = cities.map(city => ({
-    url: `/services/ac-repair/${city}`,
-    priority: city === 'waco-tx' ? '0.90' : '0.85',
-    changefreq: 'weekly',
-  }));
-
-  // ── Heating city pages ─────────────────────────────────────────────────────
-  const heatingCities = cities.map(city => ({
-    url: `/services/heating/${city}`,
-    priority: city === 'waco-tx' ? '0.90' : '0.85',
-    changefreq: 'weekly',
-  }));
 
   // ── Blog pages ─────────────────────────────────────────────────────────────
   const blogPages = getAllPosts().map((post: any) => ({
@@ -59,8 +48,7 @@ export async function GET() {
   const allPages = [
     ...staticPages,
     ...coreServices,
-    ...acRepairCities,
-    ...heatingCities,
+    ...industries,
     ...blogPages,
   ];
 

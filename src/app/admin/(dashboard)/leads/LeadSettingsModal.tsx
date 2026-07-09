@@ -11,7 +11,7 @@ const STATUSES = ['new', 'contacted', 'qualified', 'converted', 'lost'] as const
 type Status = typeof STATUSES[number];
 
 const STATUS_META: Record<Status, { color: string; bg: string; border: string; label: string }> = {
-  new:       { color: '#f97316', bg: 'rgba(177,222,0,0.10)',  border: 'rgba(222, 100, 0, 0.28)',  label: 'New'       },
+  new:       { color: '#7c3aed', bg: 'rgba(177,222,0,0.10)',  border: 'rgba(222, 100, 0, 0.28)',  label: 'New'       },
   contacted: { color: '#378add', bg: 'rgba(55,138,221,0.10)', border: 'rgba(55,138,221,0.25)', label: 'Contacted' },
   qualified: { color: '#27ef27', bg: 'rgba(239,159,39,0.10)', border: 'rgba(62, 239, 39, 0.28)', label: 'Qualified' },
   converted: { color: '#5dcaa5', bg: 'rgba(93,202,165,0.10)', border: 'rgba(93,202,165,0.25)', label: 'Converted' },

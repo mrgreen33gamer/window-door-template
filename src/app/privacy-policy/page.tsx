@@ -13,7 +13,7 @@ export default function PolicyPage() {
           <section className={styles.section}>
             <h2 className={styles.sectionTitle}>1. Introduction</h2>
             <p className={styles.text}>
-              Scott Applications ("we," "us," or "our") is committed to protecting your privacy. 
+              ClearView Windows & Doors ("we," "us," or "our") is committed to protecting your privacy. 
               This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or use our services.
             </p>
           </section>
@@ -57,8 +57,8 @@ export default function PolicyPage() {
             <p className={styles.text}>
               You have the right to access, correct, or delete your personal information. 
               To exercise these rights, please contact us at{' '}
-              <a href="mailto:contact@scottapps.com" className={styles.link}>
-                contact@scottapps.com
+              <a href="mailto:hello@clearviewwindowsdoors.com" className={styles.link}>
+                hello@clearviewwindowsdoors.com
               </a>.
             </p>
           </section>

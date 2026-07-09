@@ -42,7 +42,7 @@ interface LeadsData {
 
 const STATUSES = ['all', 'new', 'contacted', 'qualified', 'converted', 'lost'];
 const STATUS_COLORS: Record<string, string> = {
-  new: '#f97316', contacted: '#378add', qualified: '#27ef27',
+  new: '#7c3aed', contacted: '#378add', qualified: '#27ef27',
   converted: '#5dcaa5', lost: 'rgba(255,255,255,0.28)',
 };
 
@@ -137,7 +137,7 @@ export default function AdminLeadsPage() {
         <div className={styles.chartCard}>
           <p className={styles.chartTitle}>Leads Per Day</p>
           {tableData.leadsPerDay?.length ? (
-            <LineChart data={tableData.leadsPerDay} label="Leads" color="#f97316" height={200} />
+            <LineChart data={tableData.leadsPerDay} label="Leads" color="#7c3aed" height={200} />
           ) : (
             <p className={styles.empty}>{loading ? 'Loading…' : 'No leads yet.'}</p>
           )}

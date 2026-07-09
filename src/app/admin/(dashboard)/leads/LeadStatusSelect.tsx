@@ -12,7 +12,7 @@ const STATUSES = ['new', 'contacted', 'qualified', 'converted', 'lost'] as const
 type Status = typeof STATUSES[number];
 
 const STATUS_COLORS: Record<Status, string> = {
-  new:       '#f97316',
+  new:       '#7c3aed',
   contacted: '#378add',
   qualified: '#27ef27',
   converted: '#5dcaa5',
@@ -148,7 +148,7 @@ export default function LeadStatusSelect({
             width:        '14px',
             height:       '14px',
             border:       '2px solid rgba(255,255,255,0.15)',
-            borderTopColor: '#f97316',
+            borderTopColor: '#7c3aed',
             borderRadius: '50%',
             animation:    'spin 0.65s linear infinite',
             flexShrink:   0,

@@ -13,7 +13,7 @@ Chart.register(DoughnutController, ArcElement, Tooltip, Legend);
 
 interface Slice { label: string; count: number; }
 
-const PALETTE = ['#f97316', '#286a99', '#ef9f27', '#5dcaa5', '#e24b4a', '#c9dd77', '#586426'];
+const PALETTE = ['#7c3aed', '#286a99', '#ef9f27', '#5dcaa5', '#e24b4a', '#c9dd77', '#586426'];
 
 interface DoughnutChartProps {
   data:   Slice[];

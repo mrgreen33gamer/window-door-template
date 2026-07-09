@@ -62,7 +62,7 @@ async function fetchOverview(range: Range): Promise<OverviewData | null> {
 }
 
 const STATUS_COLOR: Record<string, string> = {
-  new: '#f97316', contacted: '#378add', qualified: '#27ef27',
+  new: '#7c3aed', contacted: '#378add', qualified: '#27ef27',
   converted: '#5dcaa5', lost: 'rgba(255,255,255,0.28)',
 };
 
@@ -218,7 +218,7 @@ export default function AdminOverviewPage() {
                     <div style={{
                       height: '100%',
                       width: `${Math.round((item.count / statusTotal) * 100)}%`,
-                      background: STATUS_COLOR[item.status] ?? '#f97316',
+                      background: STATUS_COLOR[item.status] ?? '#7c3aed',
                       borderRadius: 2,
                       transition: 'width 0.5s ease',
                     }} />

@@ -49,14 +49,14 @@ const NAV_LINKS = [
 ];
 
 const MARQUEE_ITEMS = [
-  'Same-Day Emergency Service Available',
-  '1-Year Parts & Labor Warranty',
+  'Free In-Home Measurements',
+  'Lifetime Product + 10-Yr Install Warranty',
   'Flat-Rate Pricing — No Surprises',
-  '4.9★ Google Rating · 300+ Reviews',
-  'NATE Certified Technicians',
+  '4.9★ Google Rating · 650+ Reviews',
+  'Factory-Certified Installers',
   'No Contracts — Ever',
-  'Serving Central Texas Since 2010',
-  'Licensed & Insured · Waco, TX',
+  'Serving Central Texas Since 2012',
+  'Bonded & Insured · Waco, TX',
 ];
 
 export default function Header() {
@@ -211,7 +211,7 @@ export default function Header() {
           <div className={styles.navInner}>
 
             {/* Logo */}
-            <Link href="/" className={styles.logo} aria-label="Arctic Air HVAC home">
+            <Link href="/" className={styles.logo} aria-label="ClearView Windows & Doors home">
               <span className={styles.logoMark} aria-hidden="true">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                   <line x1="12" y1="2" x2="12" y2="22"/>
@@ -223,8 +223,8 @@ export default function Header() {
                 </svg>
               </span>
               <span className={styles.logoText}>
-                <span className={styles.logoName}>Arctic Air HVAC</span>
-                <span className={styles.logoTagline}>Heating · Cooling · Comfort</span>
+                <span className={styles.logoName}>ClearView</span>
+                <span className={styles.logoTagline}>Windows · Doors · Efficiency</span>
               </span>
             </Link>
 
@@ -247,7 +247,7 @@ export default function Header() {
 
             {/* Desktop CTAs */}
             <div className={styles.ctaGroup}>
-              <a href="tel:+12549001234" className={styles.callBtn}>
+              <a href="tel:+12547403300" className={styles.callBtn}>
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                   <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.17 12a19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 3.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
                 </svg>
@@ -303,7 +303,7 @@ export default function Header() {
                 <polyline points="18 8 22 12 18 16"/>
               </svg>
             </span>
-            Arctic Air HVAC
+            ClearView
           </span>
           <button
             className={styles.drawerClose}
@@ -343,11 +343,11 @@ export default function Header() {
         </ul>
 
         <div className={styles.drawerActions}>
-          <a href="tel:+12549001234" className={styles.drawerCallBtn} onClick={() => setMenuOpen(false)}>
+          <a href="tel:+12547403300" className={styles.drawerCallBtn} onClick={() => setMenuOpen(false)}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
               <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.17 12a19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 3.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
             </svg>
-            Call (254) 900-1234
+            Call (254) 740-3300
           </a>
           <Link href="/contact" className={styles.drawerEstimateBtn} onClick={() => setMenuOpen(false)}>
             Free Estimate
@@ -357,7 +357,7 @@ export default function Header() {
 
         <div className={styles.drawerFoot}>
           <span className={styles.drawerDot} aria-hidden="true" />
-          Licensed &amp; Insured · Waco, TX
+          Bonded &amp; Insured · Waco, TX
         </div>
       </nav>
     </>

@@ -107,7 +107,7 @@ export default function HourHeatmap({ data }: { data: HourData[] }) {
             fontFamily: 'var(--font-poppins)',
             fontSize:   '0.9rem',
             fontWeight: 700,
-            color:      '#f97316',
+            color:      '#7c3aed',
           }}>
             {tooltip.count} click{tooltip.count !== 1 ? 's' : ''}
           </div>

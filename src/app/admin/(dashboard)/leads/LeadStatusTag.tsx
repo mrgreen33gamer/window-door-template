@@ -5,7 +5,7 @@
 'use client';
 
 const STATUS_COLORS: Record<string, { text: string; bg: string; border: string }> = {
-  new:       { text: '#f97316', bg: 'rgba(222, 133, 0, 0.1)',       border: 'rgba(222, 100, 0, 0.28)'      },
+  new:       { text: '#7c3aed', bg: 'rgba(222, 133, 0, 0.1)',       border: 'rgba(222, 100, 0, 0.28)'      },
   contacted: { text: '#378add', bg: 'rgba(55,138,221,0.10)',      border: 'rgba(55,138,221,0.28)'     },
   qualified: { text: '#27ef27', bg: 'rgba(72, 239, 39, 0.1)',      border: 'rgba(62, 239, 39, 0.28)'     },
   converted: { text: '#5dcaa5', bg: 'rgba(93,202,165,0.10)',      border: 'rgba(93,202,165,0.28)'     },

@@ -133,7 +133,7 @@ export default function AdminLoginPage() {
     <div className={styles.page}>
       <div className={styles.card}>
         <div className={styles.brand}>
-          <span className={styles.eyebrow}>Scott Applications</span>
+          <span className={styles.eyebrow}>ClearView Windows & Doors</span>
           <h1 className={styles.title}>Admin</h1>
         </div>
 
@@ -168,7 +168,7 @@ export default function AdminLoginPage() {
               type="email"
               value={email}
               onChange={e => setEmail(e.target.value)}
-              placeholder="admin@scottapps.com"
+              placeholder="admin@clearviewwindowsdoors.com"
               autoComplete="email"
               disabled={loading}
             />
