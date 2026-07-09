@@ -310,7 +310,7 @@ const softwareProjects: Project[] = [
     id: 'scott-apps-invoicing',
     title: 'Scott Apps — Invoicing SaaS Platform',
     contactName: 'Joshua Feliciano',
-    client: 'Scott Applications LLC',
+    client: 'ClearView Windows & Doors',
     location: 'Waco, TX',
     category: 'Software',
     year: '2026',
@@ -326,7 +326,7 @@ const softwareProjects: Project[] = [
       { src: '/pages/home/references/clientProfiles/scottapps/carousel/image-2.png', alt: 'Invoice creation', caption: '' },
       { src: '/pages/home/references/clientProfiles/scottapps/carousel/image-3.png', alt: 'Payment tracking', caption: '' },
     ],
-    liveUrl: 'https://scottapps.com',
+    liveUrl: 'https://clearviewwindowsdoors.com',
   },
   {
     id: 'waco-exchange',

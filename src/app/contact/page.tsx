@@ -1,5 +1,5 @@
 // src/app/contact/page.tsx
-// Arctic Air HVAC — Contact Page (unique build, not just a form import)
+// ClearView Windows & Doors — Contact Page (unique build, not just a form import)
 // FIXED: Added useTrackEvent for:
 //   - phone_click  on the Phone & Text info card link
 //   - email_click  on the Email info card link
@@ -19,36 +19,36 @@ import CTABanner from '#/PageComponents/CTABanner/CTABanner';
 
 // ── Service options ────────────────────────────────────────────────────────────
 const SERVICES = [
-  'AC Repair', 'Heating / Furnace Repair', 'New System Installation',
-  'Seasonal Maintenance / Tune-Up', 'Duct Cleaning', 'Indoor Air Quality',
-  'Emergency Service', 'Other / Not Sure',
+  'Window Replacement', 'Entry Door Installation', 'Patio & Sliding Doors',
+  'Storm & Impact Windows', 'Window Repair', 'Energy Efficiency Upgrades',
+  'Free Measurement', 'Other / Not Sure',
 ];
 
 // ── FAQ data ──────────────────────────────────────────────────────────────────
 const faq = [
   {
     question: "What's the fastest way to reach you for an emergency?",
-    answer: "Call us directly at (254) 900-1234. We answer 7 days a week including evenings. For a genuine HVAC emergency in Central Texas heat or cold, call — don't wait on a form response.",
+    answer: "Call us directly at (254) 740-3300. We answer 7 days a week including evenings. For a genuine urgent window or door issue in Central Texas, call — don't wait on a form response.",
   },
   {
     question: 'How quickly can someone come out?',
-    answer: "Same-day service is available most days during business hours. Evening and weekend emergency calls are dispatched within 1–2 hours. We'll give you an honest ETA when you call — not a 4-hour window.",
+    answer: "Free measurements are available most days; install dates follow product lead times. Same-week service is available most days during business hours. Evening and weekend emergency calls are dispatched within 1–2 hours. We'll give you an honest ETA when you call — not a 4-hour window.",
   },
   {
     question: 'Do you charge for the diagnostic visit?',
     answer: 'We charge a standard diagnostic fee for non-emergency visits, which is waived when you proceed with the repair. Emergency dispatch calls have a separate fee. We\'ll confirm the amount when you schedule.',
   },
   {
-    question: 'Do you work on commercial HVAC systems?',
-    answer: 'Yes — light commercial HVAC for restaurants, offices, retail spaces, and small warehouses is within our scope. Call to discuss your specific system and location.',
+    question: 'Do you work on commercial storefront glass and doors?',
+    answer: 'Yes — light commercial storefronts, office entries, and multi-unit properties are within our scope. Call to discuss your openings and timeline.',
   },
   {
     question: 'What areas do you serve?',
-    answer: 'Waco, Hewitt, Woodway, Robinson, China Spring, Temple, Killeen, Hillsboro, Valley Mills, and most of Central Texas within about 60 miles of Waco. Call us — we probably cover your area.',
+    answer: 'Waco, Hewitt, Woodway, McGregor, China Spring, Bellmead, Temple, Killeen, and most of Central Texas within about 60 miles of Waco. Call us — we probably cover your area.',
   },
   {
     question: 'How do I know if I need a repair or a full replacement?',
-    answer: "Our tech will tell you honestly after the diagnosis. If the repair cost exceeds 50% of a new system's cost and your unit is over 10 years old, we'll recommend replacement — but we'll always show you the numbers and let you decide.",
+    answer: "Our specialist will tell you honestly after the measurement. If repair cost approaches replacement value or the frame is failed, we'll recommend replacement — but we'll always show you the numbers and let you decide.",
   },
 ];
 
@@ -114,7 +114,7 @@ export default function ContactPage() {
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55, delay: 0.08 }}>
             Let&apos;s Get Your<br />
-            <span className={styles.heroAccent}>HVAC Fixed</span>
+            <span className={styles.heroAccent}>Power Restored</span>
           </motion.h1>
           <motion.p className={styles.heroSub}
             initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
@@ -141,8 +141,8 @@ export default function ContactPage() {
                     </svg>
                   ),
                   label:     'Phone & Text',
-                  value:     '(254) 900-1234',
-                  href:      'tel:+12549001234',
+                  value:     '(254) 740-3300',
+                  href:      'tel:+12547403300',
                   eventType: 'phone_click' as const,
                   eventLabel: 'Contact Page Phone',
                 },
@@ -154,8 +154,8 @@ export default function ContactPage() {
                     </svg>
                   ),
                   label:     'Email',
-                  value:     'contact@arcticairhvac.com',
-                  href:      'mailto:contact@arcticairhvac.com',
+                  value:     'hello@clearviewwindowsdoors.com',
+                  href:      'mailto:hello@clearviewwindowsdoors.com',
                   eventType: 'email_click' as const,
                   eventLabel: 'Contact Page Email',
                 },
@@ -167,7 +167,7 @@ export default function ContactPage() {
                     </svg>
                   ),
                   label:     'Address',
-                  value:     '4521 Bosque Blvd, Waco TX 76710',
+                  value:     '501 Lake Air Dr, Waco TX 76710',
                   href:      'https://maps.google.com/?q=4521+Bosque+Blvd+Waco+TX+76710',
                   eventType: 'click' as const,
                   eventLabel: 'Contact Page Address',
@@ -216,11 +216,11 @@ export default function ContactPage() {
 
             {/* Trust callouts */}
             <div className={styles.trustBlock}>
-              <p className={styles.trustHeading}>Why homeowners choose Arctic Air</p>
+              <p className={styles.trustHeading}>Why homeowners choose ClearView</p>
               {[
                 'Flat-rate pricing — written quote before we start',
                 '1-year parts & labor warranty on every repair',
-                'NATE-certified, TDLR-licensed technicians only',
+                'factory-certified installers only',
                 'Same-day service, 7 days a week',
                 'No contracts, no lock-in — ever',
               ].map(t => (
@@ -248,8 +248,8 @@ export default function ContactPage() {
                   </div>
                   <h2 className={styles.successTitle}>Request Received!</h2>
                   <p className={styles.successText}>
-                    A licensed Arctic Air technician will reach out shortly — usually within one business day. For urgent needs, call us at{' '}
-                    <a href="tel:+12549001234">(254) 900-1234</a>.
+                    A licensed ClearView electrician will reach out shortly — usually within one business day. For urgent needs, call us at{' '}
+                    <a href="tel:+12547403300">(254) 740-3300</a>.
                   </p>
                   <div className={styles.successMeta}>
                     <span>✓ Flat-rate quote</span>
@@ -371,14 +371,14 @@ export default function ContactPage() {
                     <p className={styles.formNote}>
                       Or call/text us directly:{' '}
                       <a
-                        href="tel:+12549001234"
+                        href="tel:+12547403300"
                         onClick={() => trackEvent({
                           eventType:    'phone_click',
                           elementLabel: 'Contact Page Form Note Phone',
                           section:      'contact-page-form',
                         })}
                       >
-                        (254) 900-1234
+                        (254) 740-3300
                       </a>{' '}
                       — we answer 7 days a week.
                     </p>
@@ -399,11 +399,11 @@ export default function ContactPage() {
       {/* ── CTA Banner ───────────────────────────────────────────────────── */}
       <CTABanner
         headline="Need Us Right Now?"
-        subline="Call (254) 900-1234 — we answer 7 days a week, evenings included. Emergency service available across Central Texas."
-        primaryText="Call (254) 900-1234"
-        primaryLink="tel:+12549001234"
+        subline="Call (254) 740-3300 — we answer 7 days a week, evenings included. Emergency service available across Central Texas."
+        primaryText="Call (254) 740-3300"
+        primaryLink="tel:+12547403300"
         secondaryText="Send a Text"
-        secondaryLink="sms:+12549001234"
+        secondaryLink="sms:+12547403300"
       />
 
     </main>

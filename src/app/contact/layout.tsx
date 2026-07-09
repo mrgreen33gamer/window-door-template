@@ -1,35 +1,35 @@
 // src/app/contact/layout.tsx
 import type { Metadata } from 'next';
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://hvac-pro-template.vercel.app';
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.clearviewwindowsdoors.com';
 const url = `${BASE_URL}/contact`;
 
 export const metadata: Metadata = {
-  title: 'Contact Arctic Air HVAC | Schedule Service in Waco & Central Texas',
+  title: 'Contact ClearView Windows & Doors | Schedule Service in Waco & Central Texas',
   description:
-    'Contact Arctic Air HVAC to schedule AC repair, heating service, or a free estimate. Serving Waco, Hewitt, Killeen, Temple, and all of Central Texas. Call (254) 900-1234.',
+    'Contact ClearView Windows & Doors to schedule window and door repair, panel upgrades, or a free estimate. Serving Waco, Hewitt, Killeen, Temple, and all of Central Texas. Call (254) 740-3300.',
   keywords: [
-    'contact Arctic Air HVAC',
-    'HVAC service Waco TX',
-    'schedule AC repair Waco',
-    'HVAC estimate Central Texas',
-    'Arctic Air contact',
-    '254-900-1234',
+    'contact ClearView Windows & Doors',
+    'window and door service Waco TX',
+    'schedule window and door repair Waco',
+    'window and door estimate Central Texas',
+    'ClearView contact',
+    '254-740-3300',
   ],
   alternates: { canonical: url },
   openGraph: {
-    title: 'Contact Arctic Air HVAC | Schedule Service in Waco & Central Texas',
+    title: 'Contact ClearView Windows & Doors | Schedule Service in Waco & Central Texas',
     description:
-      'Call, text, or submit a request. Same-day service available. Flat-rate pricing, 1-year warranty, NATE-certified techs.',
+      'Call, text, or submit a request. Same-day service available. Flat-rate pricing, 10-Year Installation Warranty, factory-certified installers.',
     url,
-    siteName: 'Arctic Air HVAC',
+    siteName: 'ClearView Windows & Doors',
     locale: 'en_US',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Contact Arctic Air HVAC | Waco & Central Texas',
-    description: 'Schedule HVAC service or get a free estimate. Call (254) 900-1234.',
+    title: 'Contact ClearView Windows & Doors | Waco & Central Texas',
+    description: 'Schedule window and door service or get a free estimate. Call (254) 740-3300.',
   },
 };
 

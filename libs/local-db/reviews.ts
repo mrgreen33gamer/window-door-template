@@ -1,8 +1,5 @@
 // libs/local-db/reviews.ts
-// ─────────────────────────────────────────────────────────────────────────────
-// Static testimonials for Arctic Air HVAC — used by Testimonials component,
-// schema markup, and aggregate rating in layout.tsx.
-// ─────────────────────────────────────────────────────────────────────────────
+// Static testimonials for ClearView Windows & Doors
 
 export interface Review {
   name:     string;
@@ -19,64 +16,64 @@ const reviews: Review[] = [
     location: 'Waco, TX',
     rating:   5,
     date:     'March 2026',
-    service:  'AC Replacement',
-    text:     "Our old unit finally gave out in the middle of a Texas summer. Arctic Air had a new system installed within 48 hours. The tech explained everything clearly, pricing was upfront, and the house has never been this comfortable. I can't recommend them enough.",
+    service:  'Window Replacement',
+    text:     "We replaced 14 single-pane windows with Low-E vinyl. ClearView measured carefully, the install crew was clean and on schedule, and our cooling bill dropped the first month. Pricing was upfront — no games.",
   },
   {
     name:     'Sandra K.',
     location: 'Hewitt, TX',
     rating:   5,
     date:     'February 2026',
-    service:  'Heating Repair',
-    text:     'Woke up at 6am to a cold house with the heater completely out. Called Arctic Air and they had someone at my door by 9am. Fixed the same day, fair price. This is the kind of service you tell your neighbors about.',
+    service:  'Entry Door Installation',
+    text:     'Our old wood door was warping and leaking. ClearView installed a fiberglass entry door with a new frame and weather seal. Looks incredible and the house is quieter. Highly recommend Daniel and the crew.',
   },
   {
     name:     'James R.',
     location: 'Woodway, TX',
     rating:   5,
     date:     'January 2026',
-    service:  'Annual Maintenance Plan',
-    text:     'Been on their maintenance plan for two years now. They come out twice a year, always on time, always thorough. Caught a refrigerant issue last fall before it became a $3,000 emergency. The plan pays for itself every single year.',
+    service:  'Patio & Sliding Doors',
+    text:     'Sticky sliding door that never sealed. ClearView swapped it for a modern patio door with Low-E glass. Smooth operation, solid weather strip, and they hauled away the old unit. Fair price, great result.',
   },
   {
     name:     'Patricia L.',
-    location: 'Robinson, TX',
+    location: 'Temple, TX',
     rating:   5,
     date:     'December 2025',
-    service:  'New Installation',
-    text:     'Had three companies quote us. Arctic Air was honest about what size system we actually needed — not just upselling the biggest unit. The install was clean, fast, and our energy bill dropped by almost 30% the first month.',
+    service:  'Energy Efficiency Upgrades',
+    text:     'They helped us prioritize which windows to replace first based on solar heat gain. We did the west elevation only and already feel the difference. Honest advice instead of a hard sell for the whole house.',
   },
   {
     name:     'David M.',
-    location: 'China Spring, TX',
+    location: 'Killeen, TX',
     rating:   5,
     date:     'November 2025',
-    service:  'Duct Cleaning',
-    text:     'We had duct cleaning done before winter and the difference in air quality was immediate. My wife has allergies and she said it was the best she\'d breathed indoors in years. Great crew, very professional, left the house spotless.',
+    service:  'Storm & Impact Windows',
+    text:     'After the last windstorm we wanted better protection. ClearView walked us through impact options, installed on schedule, and the finish work was clean. Peace of mind for storm season.',
   },
   {
     name:     'Angela W.',
-    location: 'Temple, TX',
+    location: 'China Spring, TX',
     rating:   5,
     date:     'October 2025',
-    service:  'AC Repair',
-    text:     'AC went down on a Friday afternoon. I expected to wait all weekend but they came out Friday evening, diagnosed the problem fast, and had the part the next morning. No after-hours gouge either — totally fair rate. My new HVAC company for life.',
+    service:  'Window Repair',
+    text:     'Fogged glass in two bedroom windows. ClearView repaired the seals/sashes without forcing a full replacement. Saved us money and fixed the problem. They are my go-to window company now.',
   },
   {
     name:     'Robert H.',
-    location: 'Killeen, TX',
+    location: 'Bellmead, TX',
     rating:   5,
     date:     'September 2025',
-    service:  'Smart Thermostat Install',
-    text:     'Got a Nest installed and properly configured by Arctic Air. They set up the schedule for our family and showed us how to use the app. The tech was patient and knowledgeable — didn\'t feel rushed at all. Highly recommend.',
+    service:  'Commercial Storefront',
+    text:     'We hired ClearView for storefront glass and entry doors on a retail refresh. They coordinated after-hours so we stayed open, and the inspector signed off first pass. Professional from start to finish.',
   },
   {
     name:     'Cheryl B.',
-    location: 'Waco, TX',
+    location: 'McGregor, TX',
     rating:   5,
     date:     'August 2025',
-    service:  'Emergency Repair',
-    text:     'Called them at 10pm on a 102-degree day when our AC died. They answered immediately, had someone out within the hour, and fixed it that night. I have two small kids at home — this company genuinely saved us. Thank you.',
+    service:  'Window Replacement',
+    text:     'Full replacement on a 1970s ranch. Factory-certified crew, meticulous flashing, and they actually cleaned up better than most remodelers. Lifetime product support and a real installation warranty — that sold me.',
   },
 ];
 

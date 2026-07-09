@@ -1,4 +1,4 @@
-// Arctic Air HVAC — About Page
+// ClearView Windows & Doors — About Page
 "use client";
 
 import styles from "./page.module.scss";
@@ -12,14 +12,16 @@ import Testimonials    from "#/PageComponents/Testimonials/Testimonials";
 import GuaranteeSection from "#/PageComponents/GuaranteeSection/GuaranteeSection";
 import CTABanner       from "#/PageComponents/CTABanner/CTABanner";
 import ProcessTimeline from "#/PageComponents/ProcessTimeline/ProcessTimeline";
+import AboutHero       from "#/PageComponents/AboutHero/AboutHero";
+import AboutStory      from "#/PageComponents/AboutStory/AboutStory";
 
 import {
   faTrophy, faChartLine, faClock,
   faHouseUser, faUsers, faLeaf,
-  faSearch,
-  faRocket,
-  faStar,
-  faTools,
+  faClipboardCheck,
+  faShieldHalved,
+  faWindowMaximize,
+  faCircleCheck,
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function AboutPage() {
@@ -27,43 +29,46 @@ export default function AboutPage() {
   const whyFeatures = [
     {
       icon: faHouseUser,
-      title: "Locally Owned Since 2010",
-      description: "Arctic Air was founded in Waco by Mike Hawkins, a Waco native and Master HVAC technician with 20+ years in the trade. We're not a franchise — every decision is made locally, every call is answered by someone who lives here.",
+      title: "Locally Owned Since 2012",
+      description: "ClearView was founded in Waco by Daniel Crowe. We're not a franchise — every decision is made locally, every call is answered by someone who lives here.",
     },
     {
       icon: faUsers,
       title: "A Crew You Can Trust in Your Home",
-      description: "Every technician on our team is background-checked, NATE-certified, and TDLR-licensed in Texas. We treat every home we enter with the same respect we'd want for our own families — shoe covers, clean workspace, no mess left behind.",
+      description: "Every installer on our team is background-checked, factory-certified, and bonded & insured. Shoe covers, clean workspace, no mess left behind.",
     },
     {
       icon: faLeaf,
       title: "Honest From the First Call",
-      description: "We won't upsell equipment you don't need. We won't recommend a replacement when a repair will do the job for years. Our reputation is built on straight talk — and 15 years of repeat customers prove it works.",
+      description: "We won't upsell a full-home replacement when a targeted repair or partial upgrade will do. Our reputation is built on straight talk — and 14 years of repeat customers prove it works.",
     },
   ];
 
   const metrics = [
-    { icon: faTrophy,    value: 2400, label: "Homes and businesses we've served in Central Texas", suffix: "+", duration: 3 },
-    { icon: faChartLine, value: 98,   label: "Customer satisfaction rate",                         suffix: "%", duration: 2 },
-    { icon: faClock,     value: 15,   label: "Years serving Central Texas families",                suffix: "+", duration: 2 },
+    { icon: faTrophy,    value: 3500, label: "Window and door installs across Central Texas", suffix: "+", duration: 3 },
+    { icon: faChartLine, value: 98,   label: "Customer satisfaction rate",                     suffix: "%", duration: 2 },
+    { icon: faClock,     value: 14,   label: "Years serving Central Texas families",           suffix: "+", duration: 2 },
   ];
 
   const processSteps = [
-    { number: 1, title: "Audit Your Automotive Digital Presence", description: "We review your GBP, website speed, inventory visibility, and local search rankings — identifying every search where a competitor is capturing your customer.", icon: faSearch },
-    { number: 2, title: "Build Inventory & Booking Systems",       description: "Vehicle listing pages, online booking, and a GBP optimized for your service menu — deployed as one cohesive digital presence.", icon: faRocket },
-    { number: 3, title: "Automate Review Collection",              description: "Post-service review requests that systematically build your Google reputation — turning every completed job into a public trust signal.", icon: faStar },
-    { number: 4, title: "Add Customer & Service Tools",            description: "Custom service history, CRM, and customer communication tools when you're ready to streamline your shop operations.", icon: faTools },
+    { number: 1, title: "Call or Book Online", description: "Phone, text, or form — we'll confirm a free measurement that fits your schedule.", icon: faClipboardCheck },
+    { number: 2, title: "Measure Honestly", description: "A ClearView specialist measures openings and explains options in plain English — not just the most expensive package.", icon: faShieldHalved },
+    { number: 3, title: "Flat-Rate Quote", description: "Written price before any order is placed. You decide — zero pressure to proceed.", icon: faWindowMaximize },
+    { number: 4, title: "Install & Warranty", description: "Factory-certified install, clean job site, Lifetime Product Warranty Support + 10-Year Installation Warranty.", icon: faCircleCheck },
   ];
 
   return (
     <main className={styles.pageWrapper}>
 
+      <AboutHero cityName="Waco" />
+      <AboutStory cityName="Waco" />
+
       <SectionIntro
-        title="About Arctic Air HVAC"
-        subtitle="Waco-owned, Waco-operated, and Waco-proud since 2010. We do honest HVAC work at fair prices for the families and businesses we've called neighbors for 15 years."
+        title="About ClearView Windows & Doors"
+        subtitle="Waco-owned, Waco-operated, and Waco-proud since 2012. We install energy-efficient windows and entry doors at fair prices for the families and businesses we've called neighbors for 14 years."
       />
 
-      <TrustBar headline="2,400+ Central Texas homes and businesses trust Arctic Air — and we've earned every one" />
+      <TrustBar headline="3,500+ Central Texas installs — and we've earned every one" />
 
       <div className={styles.section}>
         <WhyChooseUs
@@ -74,7 +79,7 @@ export default function AboutPage() {
       </div>
 
       <div className={styles.section}>
-        <ImpactMetrics title="15 Years, By the Numbers" metrics={metrics} cityName="Waco" />
+        <ImpactMetrics title="14 Years, By the Numbers" metrics={metrics} cityName="Waco" />
       </div>
 
       <div className={styles.section}>
@@ -90,11 +95,11 @@ export default function AboutPage() {
       </div>
 
       <CTABanner
-        headline="Waco's HVAC Company — Ready When You Need Us"
-        subline="Same-day and emergency service. Flat-rate pricing. 1-year warranty. No contracts — ever."
+        headline="Waco's Window & Door Company — Ready When You Need Us"
+        subline="Free in-home measurements. Flat-rate pricing. Lifetime Product Warranty Support + 10-Year Installation Warranty. No contracts — ever."
         primaryText="Call Us Now"
-        primaryLink="tel:+12549001234"
-        secondaryText="Request Service Online"
+        primaryLink="tel:+12547403300"
+        secondaryText="Request Estimate Online"
         secondaryLink="/contact"
       />
 

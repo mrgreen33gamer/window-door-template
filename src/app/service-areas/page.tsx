@@ -1,5 +1,5 @@
 // src/app/service-areas/page.tsx
-// Arctic Air HVAC — Service Areas Page
+// ClearView Windows & Doors — Service Areas Page
 'use client';
 
 import Link from 'next/link';
@@ -14,7 +14,7 @@ const SERVICE_AREAS = [
     slug:        'waco-tx',
     county:      'McLennan County',
     badge:       'Home Base',
-    description: 'Our headquarters. Fastest response times, same-day service available 7 days a week. Full HVAC repair, installation, maintenance, and emergency service across all of Waco.',
+    description: 'Our headquarters. Fastest response times, same-day service available 7 days a week. Full window replacement, entry doors, patio doors, storm windows, repairs, and energy upgrades across all of Waco.',
     highlights:  ['Same-day service', 'Emergency dispatch', 'All services available'],
   },
   {
@@ -22,39 +22,47 @@ const SERVICE_AREAS = [
     slug:        'hewitt-tx',
     county:      'McLennan County',
     badge:       'Primary Area',
-    description: 'Full HVAC coverage for Hewitt homes and businesses. Fast dispatch from our Waco base — typically under 45 minutes.',
-    highlights:  ['45-min dispatch', 'Residential & commercial', 'Maintenance plans'],
+    description: 'Full window and door coverage for Hewitt homes and businesses. Fast dispatch from our Waco base — typically under 45 minutes.',
+    highlights:  ['45-min dispatch', 'Residential & commercial', 'Window replacements'],
   },
   {
     city:        'Woodway',
     slug:        'woodway-tx',
     county:      'McLennan County',
     badge:       'Primary Area',
-    description: "Serving Woodway's residential neighborhoods with the same flat-rate pricing and 1-year warranty as every other area we cover.",
-    highlights:  ['Flat-rate pricing', '1-year warranty', 'All major brands'],
+    description: "Serving Woodway's residential neighborhoods with the same flat-rate pricing and 10-Year Installation Warranty as every other area we cover.",
+    highlights:  ['Flat-rate pricing', '10-Year Installation Warranty', 'factory-certified'],
   },
   {
-    city:        'Robinson',
-    slug:        'robinson-tx',
+    city:        'Bellmead',
+    slug:        'bellmead-tx',
     county:      'McLennan County',
     badge:       '',
-    description: 'Reliable HVAC service for Robinson residents. We cover all makes and models — Carrier, Trane, Lennox, Rheem, Goodman, and more.',
-    highlights:  ['All brands serviced', 'NATE-certified techs', 'No contracts'],
+    description: 'Reliable window and door service for Bellmead residents and businesses. Window replacements, repairs, and lighting installs — same-day when available.',
+    highlights:  ['Residential & commercial', 'factory-certified electricians', 'No contracts'],
   },
   {
     city:        'China Spring',
     slug:        'china-spring-tx',
     county:      'McLennan County',
     badge:       '',
-    description: 'Rural and residential HVAC service for the China Spring area. We make the drive — flat-rate pricing applies just the same.',
+    description: 'Rural and residential window and door service for the China Spring area. We make the drive — flat-rate pricing applies just the same.',
     highlights:  ['Rural coverage', 'Flat-rate pricing', 'Emergency available'],
+  },
+  {
+    city:        'McGregor',
+    slug:        'mcgregor-tx',
+    county:      'McLennan County',
+    badge:       '',
+    description: 'Window and door replacement and repair for McGregor homes and light industrial properties.',
+    highlights:  ['Shop & residential', 'Window replacements', 'Same-day when available'],
   },
   {
     city:        'Killeen',
     slug:        'killeen-tx',
     county:      'Bell County',
     badge:       '',
-    description: 'HVAC repair, installation, and maintenance for Killeen and Fort Cavazos area homes and businesses. Military-friendly scheduling.',
+    description: 'Window and door replacement, repair, and upgrades for Killeen and Fort Cavazos area homes and businesses. Military-friendly scheduling.',
     highlights:  ['Military-friendly', 'Residential & commercial', 'Same-day when available'],
   },
   {
@@ -62,31 +70,15 @@ const SERVICE_AREAS = [
     slug:        'temple-tx',
     county:      'Bell County',
     badge:       '',
-    description: 'Full-service HVAC coverage for Temple. Scott & White medical district and surrounding neighborhoods served. All systems, all brands.',
+    description: 'Full-service window and door coverage for Temple. Medical district and surrounding neighborhoods served. Full residential and commercial window and door service.',
     highlights:  ['Full service coverage', 'All neighborhoods', 'Commercial & residential'],
-  },
-  {
-    city:        'Valley Mills',
-    slug:        'valley-mills-tx',
-    county:      'Bosque County',
-    badge:       '',
-    description: 'Extending our coverage into Bosque County — Valley Mills residents get the same certified technicians, flat-rate pricing, and 1-year warranty.',
-    highlights:  ['Bosque County coverage', 'Certified techs', '1-year warranty'],
-  },
-  {
-    city:        'Hillsboro',
-    slug:        'hillsboro-tx',
-    county:      'Hill County',
-    badge:       '',
-    description: 'HVAC service for Hillsboro and Hill County. When your AC goes down in the summer heat, we\'ll get there fast.',
-    highlights:  ['Hill County coverage', 'Fast dispatch', 'Emergency service'],
   },
 ];
 
 const faq = [
   {
     question: 'What areas do you service?',
-    answer: 'We serve Waco and the surrounding Central Texas region — including Hewitt, Woodway, Robinson, China Spring, Killeen, Temple, Valley Mills, Hillsboro, and most communities within about 60 miles of Waco. Call us if you\'re not sure — we probably cover your area.',
+    answer: 'We serve Waco and the surrounding Central Texas region — including Hewitt, Woodway, McGregor, China Spring, Bellmead, Killeen, Temple, and most communities within about 60 miles of Waco. Call us if you\'re not sure — we probably cover your area.',
   },
   {
     question: 'Is your pricing the same in all service areas?',
@@ -97,12 +89,12 @@ const faq = [
     answer: 'Yes. Emergency service is available 7 days a week across all of our service areas. Response times vary by distance from our Waco base — we\'ll give you an honest ETA when you call.',
   },
   {
-    question: 'Do you work on commercial HVAC in all areas?',
-    answer: 'Yes — light commercial HVAC for restaurants, offices, retail spaces, and small warehouses is within scope across all our coverage areas. Call to discuss your specific system and location.',
+    question: 'Do you work on commercial electrical in all areas?',
+    answer: 'Yes — light commercial electrical for restaurants, offices, retail spaces, and small warehouses is within scope across all our coverage areas. Call to discuss your specific project and location.',
   },
   {
     question: 'How fast can you get to me?',
-    answer: 'For Waco and immediate surrounding areas (Hewitt, Woodway, Robinson, China Spring), we typically dispatch within 1–2 hours for same-day calls. For outlying areas like Killeen, Temple, and Valley Mills, same-day service is often available — call to confirm availability.',
+    answer: 'For Waco and immediate surrounding areas (Hewitt, Woodway, Bellmead, China Spring, McGregor), we typically dispatch within 1–2 hours for same-day calls. For outlying areas like Killeen and Temple, same-day service is often available — call to confirm availability.',
   },
 ];
 
@@ -122,21 +114,21 @@ export default function ServiceAreasPage() {
           >
             <div className={styles.heroBadge}>
               <span className={styles.badgeDot} />
-              Central Texas HVAC — Since 2010
+              Central Texas Electrical — Since 2010
             </div>
             <h1 className={styles.heroTitle}>
               Service Areas
               <span className={styles.heroAccent}>We Come to You.</span>
             </h1>
             <p className={styles.heroSub}>
-              Based in Waco, serving all of Central Texas. Flat-rate pricing, NATE-certified techs, and a 1-year warranty — no matter where you are.
+              Based in Waco, serving all of Central Texas. Flat-rate pricing, factory-certified electricians, and a 10-Year Installation Warranty — no matter where you are.
             </p>
             <div className={styles.heroActions}>
-              <a href="tel:+12549001234" className={styles.heroCTAPrimary}>
+              <a href="tel:+12547403300" className={styles.heroCTAPrimary}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                   <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.17 12a19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 3.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
                 </svg>
-                Call (254) 900-1234
+                Call (254) 740-3300
               </a>
               <Link href="/contact" className={styles.heroCTASecondary}>
                 Free Estimate
@@ -153,9 +145,9 @@ export default function ServiceAreasPage() {
             transition={{ duration: 0.5, delay: 0.2 }}>
             {[
               { val: '60mi',   lbl: 'Coverage radius from Waco' },
-              { val: '9+',     lbl: 'Cities we actively serve' },
+              { val: '8+',     lbl: 'Cities we actively serve' },
               { val: 'Same Day', lbl: 'Service when available' },
-              { val: '1-Year', lbl: 'Warranty on every repair' },
+              { val: '2-Year', lbl: 'Workmanship Warranty' },
             ].map(({ val, lbl }) => (
               <div key={lbl} className={styles.trustStat}>
                 <span className={styles.trustVal}>{val}</span>
@@ -173,7 +165,7 @@ export default function ServiceAreasPage() {
             <span className={styles.sectionEyebrow}>Full Coverage Map</span>
             <h2 className={styles.sectionTitle}>Every Community We Serve</h2>
             <p className={styles.sectionSub}>
-              Click any city to see local service details, common HVAC issues in your area, and what to expect from our team.
+              Click any city to see local service details, common electrical issues in your area, and what to expect from our team.
             </p>
           </div>
 
@@ -223,7 +215,7 @@ export default function ServiceAreasPage() {
                   </ul>
 
                   <div className={styles.areaFooter}>
-                    <a href="tel:+12549001234" className={styles.areaCallBtn}>
+                    <a href="tel:+12547403300" className={styles.areaCallBtn}>
                       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                         <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.17 12a19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 3.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
                       </svg>
@@ -257,8 +249,8 @@ export default function ServiceAreasPage() {
             <h3>Don't see your city?</h3>
             <p>We cover most of Central Texas within about 60 miles of Waco. Call us — there's a good chance we serve your area.</p>
           </div>
-          <a href="tel:+12549001234" className={styles.unlistedCTA}>
-            Call (254) 900-1234
+          <a href="tel:+12547403300" className={styles.unlistedCTA}>
+            Call (254) 740-3300
           </a>
         </div>
       </section>
@@ -273,9 +265,9 @@ export default function ServiceAreasPage() {
       {/* ── CTA Banner ── */}
       <CTABanner
         headline="Ready to Schedule? We'll Come to You."
-        subline="Same-day service available across Central Texas. Flat-rate pricing, 1-year warranty, no contracts ever."
-        primaryText="Call (254) 900-1234"
-        primaryLink="tel:+12549001234"
+        subline="Same-day service available across Central Texas. Flat-rate pricing, 10-Year Installation Warranty, no contracts ever."
+        primaryText="Call (254) 740-3300"
+        primaryLink="tel:+12547403300"
         secondaryText="Get a Free Estimate"
         secondaryLink="/contact"
       />
