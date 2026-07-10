@@ -439,8 +439,9 @@
   }
 }
 
-/* === MOBILE HERO VISUAL DEFER (fleet QA) === */
-@media (max-width: 640px) {
+/* === TABLET + MOBILE HERO VISUAL DEFER (fleet QA) === */
+/* Hide side dials/meters on tablet & phone so the hero fold stays clean */
+@media (max-width: 960px) {
   .visual,
   .heroVisual,
   .meterWrap,
@@ -448,6 +449,10 @@
   .heroArt {
     display: none !important;
   }
+}
+
+/* === MOBILE HERO COPY TIGHTEN (fleet QA) === */
+@media (max-width: 640px) {
   .sub,
   .heroSub,
   .description {

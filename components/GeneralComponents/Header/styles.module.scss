@@ -1,4 +1,4 @@
-﻿// _archetype-library/header-2-logo-center/styles.module.scss
+// _archetype-library/header-2-logo-center/styles.module.scss
 @use '../../../src/app/globalVariables.scss' as *;
 
 .header {
@@ -265,16 +265,60 @@
 /* end header pattern */
 
 /* === MOBILE HEADER SAFETY (fleet QA) === */
-@media (max-width: 1100px) {
+/* Logo left · flexible gap · hamburger menu pinned far right on tablet & phone */
+@media (max-width: 1024px) {
+  .navInner {
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .logo {
+    margin-right: auto !important;
+    justify-self: start !important;
+    min-width: 0 !important;
+    flex-shrink: 1 !important;
+  }
+
   .logoName {
-    font-size: clamp(0.95rem, 3.6vw, 1.2rem) !important;
-    letter-spacing: 0.04em !important;
-    max-width: min(70vw, 280px);
+    font-size: clamp(0.9rem, 3.8vw, 1.15rem) !important;
+    max-width: min(58vw, 240px);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-  .navInner {
-    height: 64px !important;
+
+  .logoTagline {
+    max-width: min(58vw, 240px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Header CTAs steal width and clip the menu button on compact headers */
+  .callBtn,
+  .estimateBtn,
+  .ctaEqual,
+  .ctaEqualAccent,
+  .ctaEqualOutline {
+    display: none !important;
+  }
+
+  .hamburger {
+    display: flex !important;
+    flex-shrink: 0 !important;
+    margin-left: auto !important;
+    justify-self: end !important;
+    grid-column: -1 !important;
+  }
+
+  /* header-4: hamburger lives inside .ctaGroup — keep that group right-aligned */
+  .ctaGroup:has(.hamburger) {
+    display: flex !important;
+    align-items: center !important;
+    margin-left: auto !important;
+    flex-shrink: 0 !important;
+    gap: 0.35rem !important;
   }
 }
