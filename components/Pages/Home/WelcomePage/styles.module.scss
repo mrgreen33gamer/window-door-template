@@ -404,3 +404,79 @@
   }
 }
 /* end hero pattern */
+
+/* === MOBILE HERO FOLD SAFETY (fleet QA) === */
+@media (max-width: 640px) {
+  .hero,
+  .section,
+  .welcome {
+    min-height: 100svh;
+    height: auto !important;
+  }
+  .headline,
+  .title,
+  .heroTitle {
+    font-size: clamp(2.05rem, 9vw, 2.85rem) !important;
+    line-height: 1.05 !important;
+  }
+  .layout,
+  .heroInner,
+  .contentWrap {
+    gap: 1.25rem !important;
+    padding-bottom: 2rem !important;
+  }
+  .ctaRow,
+  .actions,
+  .heroCtas {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .visual,
+  .heroVisual,
+  .meter,
+  .statGrid {
+    min-height: 0 !important;
+  }
+}
+
+/* === MOBILE HERO VISUAL DEFER (fleet QA) === */
+@media (max-width: 640px) {
+  .visual,
+  .heroVisual,
+  .meterWrap,
+  .rightCol,
+  .heroArt {
+    display: none !important;
+  }
+  .sub,
+  .heroSub,
+  .description {
+    font-size: 0.9rem !important;
+    line-height: 1.45 !important;
+    max-width: 34ch !important;
+  }
+  .chips {
+    display: none !important; /* trust chips below fold on phone — CTAs first */
+  }
+}
+
+/* === MOBILE SINGLE COLUMN FORCE (fleet QA) === */
+@media (max-width: 960px) {
+  .layout,
+  .heroLayout,
+  .grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+@media (max-width: 640px) {
+  .hero,
+  .section {
+    height: auto !important;
+    min-height: 100svh !important;
+    overflow: visible !important;
+  }
+  .layout {
+    padding-top: 5rem !important;
+    padding-bottom: 2rem !important;
+  }
+}
