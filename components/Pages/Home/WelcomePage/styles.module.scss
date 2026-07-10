@@ -485,3 +485,80 @@
     padding-bottom: 2rem !important;
   }
 }
+
+/* === MOBILE WELCOME STACK (fleet QA) === */
+/* Kill side-by-side hero chrome on phone: stack CTAs, rails, collages, dials */
+@media (max-width: 640px) {
+  .ctaRow,
+  .actions,
+  .heroCtas {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    width: 100% !important;
+    max-width: 22rem !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .ctaPrimary,
+  .ctaSecondary,
+  .ctaRow a,
+  .ctaRow button {
+    width: 100% !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+  }
+
+  .jobRail,
+  .jobStrip,
+  .shotRail {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 0.65rem !important;
+    width: 100% !important;
+    max-width: 22rem !important;
+    margin: 0 auto !important;
+  }
+
+  .collageGrid,
+  .collage {
+    grid-template-columns: 1fr !important;
+    grid-template-rows: auto !important;
+    min-height: 0 !important;
+    max-width: 22rem !important;
+    width: 100% !important;
+  }
+
+  .tileMain,
+  .tileSide,
+  .tile {
+    grid-column: auto !important;
+    grid-row: auto !important;
+    min-height: 140px !important;
+  }
+
+  .plantDialGrid {
+    grid-template-columns: 1fr 1fr !important;
+    max-width: 100% !important;
+  }
+
+  .scanCard {
+    grid-template-columns: 1fr !important;
+    gap: 0.35rem !important;
+  }
+
+  .scanRight {
+    align-items: flex-start !important;
+  }
+
+  .materials,
+  .matGrid,
+  .swatchGrid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  .statGrid,
+  .statsRow {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
