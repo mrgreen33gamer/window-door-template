@@ -36,7 +36,7 @@ const personSchema = {
 
 const AuthorBio: React.FC<AuthorBioProps> = ({
   cityName,
-  imageSrc = "/pages/seo-template-resources/owner.jpg",
+  imageSrc = "/pages/home/welcome/hero-main.jpg",
   imageAlt = "Daniel Crowe - Owner of ClearView Windows & Doors",
 }) => {
   const trackEvent = useTrackEvent();

@@ -118,7 +118,7 @@ export const metadata: Metadata = {
     siteName: "ClearView Windows & Doors",
     images: [
       {
-        url: `${BASE_URL}/logos/scott-apps-banner.png?v=1`,
+        url: `${BASE_URL}/pages/home/welcome/hero-main.jpg`,
         width: 1200,
         height: 630,
         alt: "ClearView Windows & Doors — Waco TX Windows & Entry Doors",
@@ -132,7 +132,7 @@ export const metadata: Metadata = {
     title: "ClearView Windows & Doors | Waco TX Windows & Entry Doors",
     description:
       "Window replacement, entry doors, patio doors & energy upgrades for Central Texas. Factory-certified installers — bonded & insured.",
-    images: [`${BASE_URL}/logos/scott-apps-banner.png?v=1`],
+    images: [`${BASE_URL}/pages/home/welcome/hero-main.jpg`],
   },
   robots: {
     index: true,

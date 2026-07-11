@@ -63,14 +63,14 @@ export default function HomePage() {
       title: "Window Repair",
       body: "Fogged glass, failed seals, broken balances, and hardware fixes — when a full replacement is not yet needed.",
       link: "/services/window-repair",
-      image: "/pages/home/services/service-1.jpg",
+      image: "/pages/home/welcome/before.jpg",
     },
     {
       icon: faLeaf,
       title: "Energy Efficiency Upgrades",
       body: "Low-E retrofits, weatherization, and targeted upgrades that cut cooling costs and improve comfort room by room.",
       link: "/services/energy-efficiency-upgrades",
-      image: "/pages/home/services/service-2.jpg",
+      image: "/pages/home/welcome/after.jpg",
     },
   ];
 
