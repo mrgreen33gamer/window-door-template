@@ -307,3 +307,45 @@
   border-radius: 999px !important;
 }
 /* end cookie uniqueness */
+
+/* === COOKIE NORMALIZE (2026-07-14): bottom-right anchor + squared ≤5px corners.
+   Authoritative — comes last so it overrides any brand override above.
+   Only touches position + corner radius; brand colors/accents are preserved. === */
+.backdrop {
+  top: auto !important;
+  left: auto !important;
+  right: 1.5rem !important;
+  bottom: 1.5rem !important;
+  transform: none !important;
+  max-width: 380px !important;
+  width: min(380px, calc(100vw - 3rem)) !important;
+}
+
+.card {
+  border-radius: 5px !important;
+}
+
+.iconWrap {
+  border-radius: 4px !important;
+}
+
+.btnAccept,
+.btnDecline,
+.btnEssential {
+  border-radius: 4px !important;
+}
+
+@media (max-width: 480px) {
+  .backdrop {
+    top: auto !important;
+    left: auto !important;
+    right: 0.75rem !important;
+    bottom: 0.75rem !important;
+    max-width: none !important;
+    width: calc(100vw - 1.5rem) !important;
+  }
+  .card {
+    border-radius: 5px !important;
+  }
+}
+/* end cookie normalize */
