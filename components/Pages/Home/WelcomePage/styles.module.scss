@@ -1,5 +1,6 @@
-// Hero D — Materials Grid mosaic
-// @use path assumes adaptation into components/Pages/Home/WelcomePage/
+// ClearView Hero — photographic parallax stage.
+// A window/door scene at dusk sits behind a slate scrim; an authentic installer
+// photo is framed as a spec card on the right. Tokens from globalVariables.scss.
 @use '../../../../src/app/globalVariables.scss' as *;
 
 .hero {
@@ -7,609 +8,359 @@
   min-height: 100svh;
   background: $obsidian;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  isolation: isolate;
 
-  &::before {
+  // Fine grain so the dark reads as material, not flat. Above photo+scrim, below content.
+  &::after {
     content: '';
-    position: absolute; inset: 0;
-    background-image: repeating-linear-gradient(
-      -55deg, transparent, transparent 22px,
-      rgba($white, 0.012) 22px, rgba($white, 0.012) 23px
-    );
-    pointer-events: none; z-index: 0;
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    opacity: 0.4;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
   }
 }
 
-.shard {
-  position: absolute; top: 0; right: 0;
-  width: 48%; height: 100%;
-  background: linear-gradient(135deg, transparent 0%, rgba($orange, 0.025) 40%, rgba($orange, 0.055) 100%);
-  clip-path: polygon(26% 0%, 100% 0%, 100% 100%, 0% 100%);
-  pointer-events: none; z-index: 1;
+// ── Photographic parallax background ──────────────────────────────────────────
+.bgLayer {
+  position: absolute;
+  top: -8%;
+  left: 0;
+  width: 100%;
+  height: 116%;
+  z-index: 0;
+  will-change: transform;
+}
+
+.bgImage {
+  object-fit: cover;
+  object-position: center 46%;
+}
+
+// Slate scrim — darker on the left (text column), lighter on the right (photo card).
+.scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 90% at 82% 16%, rgba(148, 163, 184, 0.18) 0%, rgba(148, 163, 184, 0) 55%),
+    radial-gradient(90% 80% at 10% 94%, rgba(51, 65, 85, 0.3) 0%, rgba(51, 65, 85, 0) 60%),
+    linear-gradient(100deg, rgba(15, 23, 42, 0.95) 0%, rgba(17, 26, 46, 0.84) 42%, rgba(20, 30, 50, 0.52) 74%, rgba(20, 30, 50, 0.36) 100%),
+    linear-gradient(180deg, rgba(15, 23, 42, 0.34) 0%, rgba(15, 23, 42, 0) 32%, rgba(15, 23, 42, 0.55) 100%);
 }
 
 .layout {
-  position: relative; z-index: 2;
-  max-width: 1380px; margin: 0 auto;
-  padding: clamp(6rem, 11vh, 9rem) clamp(1.5rem, 5vw, 5rem) clamp(5rem, 9vh, 7rem);
+  position: relative;
+  z-index: 3;
+  max-width: 1380px;
+  width: 100%;
+  margin: 0 auto;
+  padding: clamp(6rem, 11vh, 9rem) clamp(1.5rem, 5vw, 5rem) clamp(4rem, 8vh, 6rem);
   display: grid;
-  grid-template-columns: minmax(0, 520px) 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 460px);
   gap: clamp(2rem, 4vw, 4.5rem);
   align-items: center;
 
   @media (max-width: 960px) {
     grid-template-columns: 1fr;
     text-align: center;
-    gap: 2.75rem;
-    padding: clamp(5rem, 9vh, 7rem) 1.5rem clamp(4rem, 7vh, 6rem);
+    gap: 2.5rem;
   }
 }
 
 .content {
-  display: flex; flex-direction: column; gap: 1.5rem;
-  @media (max-width: 960px) { align-items: center; }
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  @media (max-width: 960px) {
+    align-items: center;
+  }
 }
 
 .badge {
-  display: inline-flex; align-items: center; gap: 0.55rem;
-  font-family: $textFont; font-size: 0.72rem; font-weight: 700;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  color: rgba($orange, 0.9);
-  border: 1px solid rgba($orange, 0.28); background: rgba($orange, 0.07);
-  border-radius: 9999px; padding: 0.35rem 0.95rem; width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: $headerFont;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: $lightgrey;
+  border: 1px solid rgba($lightorange, 0.42);
+  background: rgba($lightorange, 0.1);
+  border-radius: $radius-sm;
+  padding: 0.4rem 1rem;
+  width: fit-content;
 }
 
 .badgeDot {
-  width: 7px; height: 7px; border-radius: 50%;
-  background: $orange; box-shadow: 0 0 8px rgba($orange, 0.8);
-  animation: pulse 2.4s ease-in-out infinite; flex-shrink: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: $lightorange;
+  box-shadow: 0 0 8px rgba($lightorange, 0.8);
+  animation: pulse 2.4s ease-in-out infinite;
+  flex-shrink: 0;
 }
 
 @keyframes pulse {
   0%, 100% { opacity: 1; transform: scale(1); }
-  50%       { opacity: 0.4; transform: scale(0.72); }
+  50%      { opacity: 0.4; transform: scale(0.72); }
 }
 
 .headline {
   font-family: $titleFont;
   font-size: clamp(2.6rem, 5.2vw, 5rem);
-  font-weight: 800; line-height: 0.95;
-  letter-spacing: -0.02em; color: $white; margin: 0;
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  color: $offwhite;
+  margin: 0;
+  text-wrap: balance;
 }
 
-.accentLine { color: $orange; }
+.accentLine {
+  color: $lightorange;
+  background: linear-gradient(92deg, #cbd5e1 0%, #94a3b8 55%, #64748b 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
 .sub {
-  font-family: $textFont; font-size: clamp(1rem, 1.4vw, 1.15rem);
-  line-height: 1.55; color: rgba($white, 0.62); max-width: 34rem; margin: 0;
-  @media (max-width: 960px) { max-width: 28rem; }
+  font-family: $textFont;
+  font-size: clamp(1.02rem, 1.2vw, 1.15rem);
+  line-height: 1.62;
+  color: rgba(226, 232, 240, 0.76);
+  max-width: 36rem;
+  margin: 0;
+  @media (max-width: 960px) {
+    max-width: 36ch;
+  }
 }
 
 .ctaRow {
-  display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center;
-  @media (max-width: 960px) { justify-content: center; }
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  align-items: center;
+  margin-top: 0.4rem;
+  @media (max-width: 960px) {
+    justify-content: center;
+  }
 }
 
 .ctaPrimary {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  font-family: $headerFont; font-size: 0.92rem; font-weight: 700;
-  color: $obsidian; background: $orange; text-decoration: none;
-  padding: 0.85rem 1.35rem; border-radius: 8px;
-  transition: background 0.18s, transform 0.16s;
-  &:hover { background: $lightorange; transform: translateY(-1px); }
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: $headerFont;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: $offwhite;
+  background: linear-gradient(180deg, #64748b 0%, #475569 100%);
+  text-decoration: none;
+  padding: 0.95rem 1.6rem;
+  border-radius: $radius-sm;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.14) inset, 0 12px 26px rgba(15, 23, 42, 0.5);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+  &:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.08);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 16px 34px rgba(15, 23, 42, 0.6);
+  }
 }
 
 .ctaSecondary {
-  display: inline-flex; align-items: center; gap: 0.4rem;
-  font-family: $headerFont; font-size: 0.92rem; font-weight: 700;
-  color: rgba($white, 0.85); text-decoration: none;
-  padding: 0.85rem 1.2rem; border-radius: 8px;
-  border: 1px solid rgba($white, 0.14);
-  transition: border-color 0.18s, background 0.18s;
-  &:hover { border-color: rgba($white, 0.28); background: rgba($white, 0.04); }
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: $headerFont;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: rgba(226, 232, 240, 0.9);
+  text-decoration: none;
+  padding: 0.95rem 1.3rem;
+  border-radius: $radius-sm;
+  border: 1px solid rgba(226, 232, 240, 0.22);
+  transition: border-color 0.18s, color 0.18s, background 0.18s;
+  &:hover {
+    border-color: rgba($lightorange, 0.6);
+    color: $offwhite;
+    background: rgba(226, 232, 240, 0.05);
+  }
 }
 
 .chips {
-  display: flex; flex-wrap: wrap; gap: 0.5rem;
-  @media (max-width: 960px) { justify-content: center; }
-}
-
-.chip {
-  display: inline-flex; align-items: center; gap: 0.35rem;
-  font-family: $textFont; font-size: 0.72rem; font-weight: 600;
-  letter-spacing: 0.04em; text-transform: uppercase;
-  color: rgba($white, 0.55);
-  padding: 0.35rem 0.7rem; border-radius: 999px;
-  border: 1px solid rgba($white, 0.08); background: rgba($white, 0.03);
-  svg { color: rgba($orange, 0.8); }
-}
-
-.visual {
-  position: relative;
-  width: 100%;
-  min-height: 280px;
-}
-
-// ── ClearView Opening Spec Rack (unique — no stock photos) ─────────────────
-
-.specRack {
-  width: 100%;
-  max-width: 420px;
-  margin-left: auto;
-  border-radius: 8px;
-  background:
-    linear-gradient(170deg, #1c2430 0%, #0e1218 50%, #0a0d12 100%);
-  border: 1px solid rgba($orange, 0.26);
-  box-shadow: 0 26px 56px rgba(0, 0, 0, 0.5);
-  overflow: hidden;
-
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.3rem;
   @media (max-width: 960px) {
-    margin: 0 auto;
-    max-width: 400px;
+    justify-content: center;
   }
 }
 
-.rackCap {
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: $textFont;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(226, 232, 240, 0.6);
+  padding: 0.35rem 0.7rem;
+  border-radius: $radius-pill;
+  border: 1px solid rgba(226, 232, 240, 0.1);
+  background: rgba(226, 232, 240, 0.04);
+  svg { color: $lightorange; }
+}
+
+// ── Authentic installer photo card ────────────────────────────────────────────
+.visual {
+  position: relative;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 0.6rem;
-  padding: 0.5rem 0.85rem;
-  background: linear-gradient(180deg, #2c3644, #1a222c);
-  border-bottom: 1px solid rgba($orange, 0.18);
+  justify-content: center;
+  min-height: 340px;
+
+  @media (max-width: 960px) {
+    min-height: 0;
+    margin-top: 0.25rem;
+  }
 }
 
-.rackBolt {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #e5e7eb, #6b7280 70%);
-  flex-shrink: 0;
+.photoCard {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  aspect-ratio: 4 / 5;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  border: 1px solid rgba(148, 163, 184, 0.32);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.12) inset,
+    0 30px 60px -20px rgba(0, 0, 0, 0.7),
+    0 0 0 6px rgba(100, 116, 139, 0.08);
+
+  @media (max-width: 960px) {
+    max-width: 380px;
+    aspect-ratio: 4 / 3;
+  }
 }
 
-.rackBrand {
-  font-family: $textFont;
-  font-size: 0.56rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba($orange, 0.88);
+.photo {
+  object-fit: cover;
+  object-position: center 30%;
 }
 
-.rackHead {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 0.75rem;
-  padding: 0.8rem 1rem 0.55rem;
+// Slate-to-shadow glaze so the overlays stay readable
+.photoGlaze {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(15, 23, 42, 0) 42%, rgba(15, 23, 42, 0.76) 100%),
+    linear-gradient(300deg, rgba(100, 116, 139, 0.2) 0%, rgba(100, 116, 139, 0) 46%);
 }
 
-.rackEyebrow {
-  margin: 0 0 0.15rem;
-  font-family: $textFont;
-  font-size: 0.56rem;
+.photoBadge {
+  position: absolute;
+  top: 0.9rem;
+  left: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: $headerFont;
+  font-size: 0.62rem;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba($white, 0.4);
+  color: $offwhite;
+  background: rgba(15, 23, 42, 0.64);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(148, 163, 184, 0.34);
+  border-radius: $radius-pill;
+  padding: 0.4rem 0.85rem;
 }
 
-.rackTitle {
-  margin: 0;
-  font-family: $titleFont;
-  font-size: 1.12rem;
-  font-weight: 700;
-  color: $white;
-  line-height: 1;
-}
-
-.rackMeta {
-  font-family: $textFont;
-  font-size: 0.55rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba($white, 0.38);
-}
-
-.openingList {
-  list-style: none;
-  margin: 0;
-  padding: 0.25rem 0.7rem 0.55rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.42rem;
-}
-
-.openingRow {
-  display: grid;
-  grid-template-columns: 58px 1fr 10px;
-  gap: 0.6rem;
-  align-items: center;
-  padding: 0.38rem 0.45rem;
-  border-radius: 6px;
-  background: rgba($white, 0.03);
-  border: 1px solid rgba($white, 0.07);
-  transition: border-color 0.18s, transform 0.18s;
-
-  &:hover {
-    border-color: rgba($orange, 0.35);
-    transform: translateX(3px);
-  }
-}
-
-.openingFace {
-  --o-frame: #6b7280;
-  --o-glass: rgba(120, 180, 220, 0.35);
-  width: 58px;
-  height: 52px;
+.photoBadgeDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: $lightorange;
+  box-shadow: 0 0 8px 1px rgba(148, 163, 184, 0.8);
   flex-shrink: 0;
 }
 
-.openingFrame {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  border: 3px solid var(--o-frame);
-  border-radius: 2px;
-  background: #0b1220;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1), 0 3px 8px rgba(0, 0, 0, 0.35);
-  overflow: hidden;
-}
-
-.sashTop, .sashBot {
+.specCard {
   position: absolute;
-  left: 2px; right: 2px;
-  height: calc(50% - 3px);
-  background:
-    linear-gradient(125deg, rgba(255, 255, 255, 0.22), transparent 40%),
-    var(--o-glass);
-}
-.sashTop { top: 2px; }
-.sashBot { bottom: 2px; }
-.meetRail {
-  position: absolute; left: 0; right: 0; top: 50%; height: 3px;
-  margin-top: -1.5px; background: var(--o-frame); z-index: 2;
-}
-
-.caseGlass {
-  position: absolute; inset: 3px;
-  background:
-    linear-gradient(125deg, rgba(255, 255, 255, 0.25), transparent 42%),
-    var(--o-glass);
-}
-.caseHinge {
-  position: absolute; left: 1px; top: 30%; bottom: 30%; width: 3px;
-  background: rgba(255, 255, 255, 0.35);
-}
-.caseHandle {
-  position: absolute; right: 5px; top: 50%; width: 4px; height: 10px;
-  margin-top: -5px; border-radius: 1px; background: #d1d5db;
+  left: 0.9rem;
+  right: 0.9rem;
+  bottom: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  padding: 0.85rem 1rem;
+  border-radius: $radius-md;
+  background: rgba(15, 23, 42, 0.62);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(148, 163, 184, 0.24);
 }
 
-.slideFixed, .slideMove {
-  position: absolute; top: 3px; bottom: 6px; width: 46%;
-  background:
-    linear-gradient(125deg, rgba(255, 255, 255, 0.2), transparent 45%),
-    var(--o-glass);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-}
-.slideFixed { left: 3px; }
-.slideMove { right: 3px; opacity: 0.85; transform: translateX(-6%); }
-.slideTrack {
-  position: absolute; left: 4px; right: 4px; bottom: 2px; height: 3px;
-  background: var(--o-frame);
-}
+.specRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: $headerFont;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: rgba(241, 245, 249, 0.94);
 
-.doorPanel {
-  position: absolute; inset: 4px 8px 4px 4px;
-  background: linear-gradient(180deg, #3d342c, #1f1812);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
-}
-.doorLite {
-  position: absolute; top: 8px; left: 10px; right: 14px; height: 14px;
-  background: var(--o-glass);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-}
-.doorKnob {
-  position: absolute; right: 12px; top: 55%; width: 5px; height: 5px;
-  border-radius: 50%; background: radial-gradient(circle at 30% 30%, #f5d08a, #8a6a32);
-}
-
-.stormGlass {
-  position: absolute; inset: 4px;
-  background:
-    linear-gradient(125deg, rgba(255, 255, 255, 0.28), transparent 40%),
-    var(--o-glass);
-}
-.stormBar {
-  position: absolute; left: 0; right: 0; top: 55%; height: 4px; background: var(--o-frame);
-}
-.stormLatch {
-  position: absolute; right: 6px; top: 42%; width: 5px; height: 8px;
-  background: #9ca3af; border-radius: 1px;
-}
-
-.gridGlass {
-  position: absolute; inset: 3px;
-  display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 2px;
-  background: var(--o-frame);
-  i {
-    display: block;
-    background:
-      linear-gradient(125deg, rgba(255, 255, 255, 0.22), transparent 45%),
-      var(--o-glass);
+  svg {
+    color: $lightorange;
+    flex-shrink: 0;
   }
 }
 
-.openingCopy { min-width: 0; display: flex; flex-direction: column; gap: 0.1rem; }
-.openingNameRow { display: flex; justify-content: space-between; gap: 0.35rem; align-items: baseline; }
-.openingName {
-  font-family: $headerFont; font-size: 0.74rem; font-weight: 700;
-  color: $white; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
-.openingSku {
-  font-family: $textFont; font-size: 0.5rem; font-weight: 700;
-  letter-spacing: 0.08em; color: rgba($orange, 0.85); flex-shrink: 0;
-}
-.openingDetail {
-  font-family: $textFont; font-size: 0.6rem; color: rgba($white, 0.45);
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
-.frameChip {
-  width: 10px; height: 10px; border-radius: 2px;
-  border: 1px solid rgba(255, 255, 255, 0.2); flex-shrink: 0;
-}
-
-.rackFoot {
-  display: flex; align-items: center; justify-content: center; gap: 0.5rem;
-  padding: 0.5rem 0.85rem 0.65rem;
-  font-family: $textFont; font-size: 0.52rem; font-weight: 600;
-  letter-spacing: 0.08em; text-transform: uppercase; color: rgba($white, 0.32);
-  border-top: 1px solid rgba($white, 0.06);
-}
-.rackRule { width: 16px; height: 1px; background: rgba($orange, 0.35); }
-
-// Legacy stubs
-.windowGrid, .windowCard, .windowFrame, .glassImage, .mosaic, .tile {
-  /* unused */
-}
-
-/* === UNIQUENESS IDENTITY LAYER — window-door-template === */
-/* Auto-generated visual identity so shared archetypes diverge per brand. */
-
-.hero {
-  min-height: 96svh !important;
-  height: auto !important;
-}
-
-.layout {
-  grid-template-columns: minmax(0, 1.14fr) 1fr !important;
-  gap: clamp(1.96rem, 4vw, 3.46rem) !important;
-  padding-top: clamp(7.82rem, 11vh, 9.82rem) !important;
-}
-
-.shard {
-  clip-path: none !important;
-  opacity: 0.52 !important;
-}
-
-.headline {
-  letter-spacing: 0.06em !important;
-  text-transform: uppercase !important;
-  font-weight: 600 !important;
-  transform: skewX(-1deg);
-}
-
-.badge {
-  border-radius: 8px !important;
-}
-
-.chip {
-  border-radius: 999px !important;
-}
-
-.ctaPrimary,
-.ctaSecondary {
-  border-radius: 8px !important;
-}
-
-.visual {
-  transform: scale(1.033);
-}
-
-.statCard,
-.console,
-.dialCard,
-.baFrame,
-.tile,
-.jobCard,
-.stripCard,
-.metricBar {
-  box-shadow: 0 24px 60px rgba(0,0,0,0.4) !important;
-}
-
-/* end identity layer */
-
-/* === HERO PATTERN UNIQUENESS — window-door-template === */
-.hero {
-  &::before {
-    content: '' !important;
-    position: absolute !important;
-    inset: 0 !important;
-    background-image: radial-gradient(circle at 20% 30%, rgba($orange, 0.06) 0 1px, transparent 2px),
-      radial-gradient(circle at 70% 60%, rgba($white, 0.04) 0 1px, transparent 2px),
-      radial-gradient(circle at 40% 80%, rgba($orange, 0.05) 0 1.5px, transparent 2.5px) !important;
-    background-size: 48px 48px !important;
-    opacity: 0.69 !important;
-    pointer-events: none !important;
-    z-index: 0 !important;
-  }
-
-  &::after {
-    content: '' !important;
-    position: absolute !important;
-    inset: 0 !important;
-    background-image: radial-gradient(ellipse 50% 40% at 17% 36%, rgba($orange, 0.099), transparent 70%), radial-gradient(ellipse 40% 50% at 71% 73%, rgba($white, 0.03), transparent 65%) !important;
-    pointer-events: none !important;
-    z-index: 0 !important;
-  }
-}
-/* end hero pattern */
-
-/* === MOBILE HERO FOLD SAFETY (fleet QA) === */
 @media (max-width: 640px) {
-  .hero,
-  .section,
-  .welcome {
+  .hero {
     min-height: 100svh;
-    height: auto !important;
-  }
-  .headline,
-  .title,
-  .heroTitle {
-    font-size: clamp(2.05rem, 9vw, 2.85rem) !important;
-    line-height: 1.05 !important;
-  }
-  .layout,
-  .heroInner,
-  .contentWrap {
-    gap: 1.25rem !important;
-    padding-bottom: 2rem !important;
-  }
-  .ctaRow,
-  .actions,
-  .heroCtas {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  .visual,
-  .heroVisual,
-  .meter,
-  .statGrid {
-    min-height: 0 !important;
-  }
-}
-
-/* === TABLET + MOBILE HERO VISUAL DEFER (fleet QA) === */
-/* Hide side dials/meters on tablet & phone so the hero fold stays clean */
-@media (max-width: 960px) {
-  .visual,
-  .heroVisual,
-  .meterWrap,
-  .rightCol,
-  .heroArt {
-    display: none !important;
-  }
-}
-
-/* === MOBILE HERO COPY TIGHTEN (fleet QA) === */
-@media (max-width: 640px) {
-  .sub,
-  .heroSub,
-  .description {
-    font-size: 0.9rem !important;
-    line-height: 1.45 !important;
-    max-width: 34ch !important;
-  }
-  .chips {
-    display: none !important; /* trust chips below fold on phone — CTAs first */
-  }
-}
-
-/* === MOBILE SINGLE COLUMN FORCE (fleet QA) === */
-@media (max-width: 960px) {
-  .layout,
-  .heroLayout,
-  .grid {
-    grid-template-columns: 1fr !important;
-  }
-}
-@media (max-width: 640px) {
-  .hero,
-  .section {
-    height: auto !important;
-    min-height: 100svh !important;
-    overflow: visible !important;
+    height: auto;
   }
   .layout {
-    padding-top: 5rem !important;
-    padding-bottom: 2rem !important;
+    padding-top: 5.5rem;
+    padding-bottom: 2.5rem;
+    gap: 1.5rem;
   }
-}
-
-/* === MOBILE WELCOME STACK (fleet QA) === */
-/* Kill side-by-side hero chrome on phone: stack CTAs, rails, collages, dials */
-@media (max-width: 640px) {
-  .ctaRow,
-  .actions,
-  .heroCtas {
-    flex-direction: column !important;
-    align-items: stretch !important;
-    width: 100% !important;
-    max-width: 22rem !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
+  .headline {
+    font-size: clamp(2.2rem, 10vw, 3rem);
   }
-
+  .sub {
+    font-size: 0.95rem;
+  }
+  .chips {
+    justify-content: center;
+  }
+  .ctaRow {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    max-width: 22rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
   .ctaPrimary,
-  .ctaSecondary,
-  .ctaRow a,
-  .ctaRow button {
-    width: 100% !important;
-    justify-content: center !important;
-    box-sizing: border-box !important;
-  }
-
-  .jobRail,
-  .jobStrip,
-  .shotRail {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    gap: 0.65rem !important;
-    width: 100% !important;
-    max-width: 22rem !important;
-    margin: 0 auto !important;
-  }
-
-  .collageGrid,
-  .collage {
-    grid-template-columns: 1fr !important;
-    grid-template-rows: auto !important;
-    min-height: 0 !important;
-    max-width: 22rem !important;
-    width: 100% !important;
-  }
-
-  .tileMain,
-  .tileSide,
-  .tile {
-    grid-column: auto !important;
-    grid-row: auto !important;
-    min-height: 140px !important;
-  }
-
-  .plantDialGrid {
-    grid-template-columns: 1fr 1fr !important;
-    max-width: 100% !important;
-  }
-
-  .scanCard {
-    grid-template-columns: 1fr !important;
-    gap: 0.35rem !important;
-  }
-
-  .scanRight {
-    align-items: flex-start !important;
-  }
-
-  .materials,
-  .matGrid,
-  .swatchGrid {
-    grid-template-columns: 1fr 1fr !important;
-  }
-
-  .statGrid,
-  .statsRow {
-    grid-template-columns: 1fr 1fr !important;
+  .ctaSecondary {
+    width: 100%;
+    justify-content: center;
+    box-sizing: border-box;
   }
 }

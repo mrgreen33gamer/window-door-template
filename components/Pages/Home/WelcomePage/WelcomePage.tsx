@@ -1,199 +1,27 @@
-// ClearView Welcome — unique "Opening Spec Rack" (not photo materials grid).
-// CSS window/door constructions with unique glazing patterns. Zero stock photos.
+// ClearView Welcome — photographic parallax hero.
+// A scroll-linked window/door scene sits behind a slate scrim for legibility,
+// with an authentic installer photo framed as a spec card on the right.
+// Photos live in /public/pages/home/welcome (shipped with the template).
 'use client';
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef } from 'react';
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import Image from 'next/image';
 import Link from 'next/link';
 import { PhoneIcon, ChevronIcon, CheckIcon } from './_shared/icons';
 import styles from './styles.module.scss';
 
-type OpeningKind =
-  | 'double-hung'
-  | 'casement'
-  | 'slider'
-  | 'entry'
-  | 'storm'
-  | 'grid';
-
-type Opening = {
-  name: string;
-  detail: string;
-  kind: OpeningKind;
-  frame: string;
-  glass: string;
-  sku: string;
-};
-
-const OPENINGS: Opening[] = [
-  {
-    name: 'Double-Hung',
-    detail: 'Low-E double pane · tilt wash',
-    kind: 'double-hung',
-    frame: '#6b7280',
-    glass: 'rgba(120, 180, 220, 0.35)',
-    sku: 'CV-DH-01',
-  },
-  {
-    name: 'Casement',
-    detail: 'Multi-point lock · crank',
-    kind: 'casement',
-    frame: '#4b5563',
-    glass: 'rgba(100, 170, 210, 0.4)',
-    sku: 'CV-CS-03',
-  },
-  {
-    name: 'Patio Slider',
-    detail: '8′ opening · tempered',
-    kind: 'slider',
-    frame: '#374151',
-    glass: 'rgba(90, 160, 200, 0.38)',
-    sku: 'CV-PS-06',
-  },
-  {
-    name: 'Entry Door',
-    detail: 'Fiberglass · sidelites ready',
-    kind: 'entry',
-    frame: '#1f2937',
-    glass: 'rgba(200, 180, 140, 0.25)',
-    sku: 'CV-ED-02',
-  },
-  {
-    name: 'Storm / Security',
-    detail: 'Full-view · ventilated',
-    kind: 'storm',
-    frame: '#9ca3af',
-    glass: 'rgba(160, 200, 230, 0.3)',
-    sku: 'CV-ST-08',
-  },
-  {
-    name: 'Colonial Grid',
-    detail: 'SDL bars · 6-lite pattern',
-    kind: 'grid',
-    frame: '#d1d5db',
-    glass: 'rgba(140, 190, 220, 0.42)',
-    sku: 'CV-GR-05',
-  },
-];
-
-function OpeningFace({ o }: { o: Opening }) {
-  return (
-    <div
-      className={styles.openingFace}
-      data-kind={o.kind}
-      style={
-        {
-          '--o-frame': o.frame,
-          '--o-glass': o.glass,
-        } as React.CSSProperties
-      }
-      aria-hidden="true"
-    >
-      <div className={styles.openingFrame}>
-        {o.kind === 'double-hung' && (
-          <>
-            <div className={styles.sashTop} />
-            <div className={styles.sashBot} />
-            <span className={styles.meetRail} />
-          </>
-        )}
-        {o.kind === 'casement' && (
-          <>
-            <div className={styles.caseGlass} />
-            <span className={styles.caseHinge} />
-            <span className={styles.caseHandle} />
-          </>
-        )}
-        {o.kind === 'slider' && (
-          <>
-            <div className={styles.slideFixed} />
-            <div className={styles.slideMove} />
-            <span className={styles.slideTrack} />
-          </>
-        )}
-        {o.kind === 'entry' && (
-          <>
-            <div className={styles.doorPanel} />
-            <div className={styles.doorLite} />
-            <span className={styles.doorKnob} />
-          </>
-        )}
-        {o.kind === 'storm' && (
-          <>
-            <div className={styles.stormGlass} />
-            <span className={styles.stormBar} />
-            <span className={styles.stormLatch} />
-          </>
-        )}
-        {o.kind === 'grid' && (
-          <>
-            <div className={styles.gridGlass}>
-              <i /><i /><i /><i /><i /><i />
-            </div>
-          </>
-        )}
-      </div>
-    </div>
-  );
-}
-
-function OpeningSpecRack() {
-  return (
-    <div className={styles.specRack} aria-label="ClearView window and door opening styles">
-      <div className={styles.rackCap} aria-hidden="true">
-        <span className={styles.rackBolt} />
-        <span className={styles.rackBrand}>CLEARVIEW · OPENING RACK</span>
-        <span className={styles.rackBolt} />
-      </div>
-
-      <header className={styles.rackHead}>
-        <div>
-          <p className={styles.rackEyebrow}>In-home measure board</p>
-          <h2 className={styles.rackTitle}>Opening Specs</h2>
-        </div>
-        <span className={styles.rackMeta}>U-factor ready</span>
-      </header>
-
-      <ul className={styles.openingList} role="list">
-        {OPENINGS.map((o, i) => (
-          <motion.li
-            key={o.sku}
-            className={styles.openingRow}
-            role="listitem"
-            initial={{ opacity: 0, x: 18 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{
-              duration: 0.42,
-              delay: 0.28 + i * 0.06,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-          >
-            <OpeningFace o={o} />
-            <div className={styles.openingCopy}>
-              <div className={styles.openingNameRow}>
-                <span className={styles.openingName}>{o.name}</span>
-                <span className={styles.openingSku}>{o.sku}</span>
-              </div>
-              <span className={styles.openingDetail}>{o.detail}</span>
-            </div>
-            <span
-              className={styles.frameChip}
-              style={{ background: o.frame }}
-              aria-hidden="true"
-            />
-          </motion.li>
-        ))}
-      </ul>
-
-      <footer className={styles.rackFoot} aria-hidden="true">
-        <span>Free in-home measure</span>
-        <span className={styles.rackRule} />
-        <span>10-yr install warranty</span>
-      </footer>
-    </div>
-  );
-}
-
 export default function WelcomePage() {
+  const reduceMotion = useReducedMotion();
+  const heroRef = useRef<HTMLElement>(null);
+
+  // Scroll-linked parallax on the background photo. Disabled under reduced-motion.
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  });
+  const bgY = useTransform(scrollYProgress, [0, 1], ['0%', reduceMotion ? '0%' : '16%']);
+  const bgScale = useTransform(scrollYProgress, [0, 1], [1.08, reduceMotion ? 1.08 : 1.16]);
+
   const badgeText = "Waco's Most Trusted Window & Door Company — Since 2012";
   const headlineLines = ['Clearer Views.', 'Lower Bills.'];
   const headlineAccent = 'ClearView.';
@@ -210,8 +38,24 @@ export default function WelcomePage() {
   ];
 
   return (
-    <section className={styles.hero} aria-label="Hero">
-      <div className={styles.shard} aria-hidden="true" />
+    <section ref={heroRef} className={styles.hero} aria-label="Hero">
+      {/* Photographic parallax background — modern home with full-height glazing */}
+      <motion.div
+        className={styles.bgLayer}
+        style={{ y: bgY, scale: bgScale }}
+        aria-hidden="true"
+      >
+        <Image
+          src="/pages/home/welcome/hero-main.jpg"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className={styles.bgImage}
+        />
+      </motion.div>
+      {/* Slate scrim keeps the headline legible and on-brand */}
+      <div className={styles.scrim} aria-hidden="true" />
 
       <div className={styles.layout}>
         <div className={styles.content}>
@@ -277,13 +121,38 @@ export default function WelcomePage() {
           </motion.div>
         </div>
 
+        {/* Authentic installer photo — the ownable image, framed as a spec card */}
         <motion.div
           className={styles.visual}
-          initial={{ opacity: 0, x: 24 }}
-          animate={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.65, delay: 0.2, ease: 'easeOut' }}
         >
-          <OpeningSpecRack />
+          <div className={styles.photoCard}>
+            <Image
+              src="/pages/home/welcome/hero-installer.jpg"
+              alt="Factory-certified installer fitting a new replacement window in a Central Texas home"
+              fill
+              priority
+              sizes="(max-width: 960px) 88vw, 460px"
+              className={styles.photo}
+            />
+            <div className={styles.photoGlaze} aria-hidden="true" />
+
+            <div className={styles.photoBadge}>
+              <span className={styles.photoBadgeDot} />
+              Factory-Certified Installer · On-Site
+            </div>
+
+            <div className={styles.specCard}>
+              <span className={styles.specRow}>
+                <CheckIcon size={10} /> Free in-home measure
+              </span>
+              <span className={styles.specRow}>
+                <CheckIcon size={10} /> 10-year install warranty
+              </span>
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>
